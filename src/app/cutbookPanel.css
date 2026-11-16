@@ -1,0 +1,18 @@
+/* Geological cutbook (ARTIST-WORKFLOW 06) */
+.cutbook { margin: 6px 0; padding: 6px 8px; border: 1px solid #ffffff1a; border-radius: 6px; font-size: 12px; }
+.cutbook > summary { cursor: pointer; font-weight: 600; }
+.cutbook-exploring { border-color: var(--accent, #e0b84a); }
+.cutbook-note { margin: 4px 0 6px; color: var(--muted, #b7c7da); line-height: 1.4; }
+.cutbook-row { display: grid; grid-template-columns: 70px minmax(0, 1fr); gap: 6px; align-items: center; margin: 3px 0; }
+.cutbook-row select { min-width: 0; font-size: 12px; }
+.cutbook-readout { margin: 4px 0; color: var(--text, #d6e2f0); min-height: 15px; font-size: 11px; }
+.cutbook-buttons { display: flex; flex-wrap: wrap; gap: 4px; margin: 4px 0; }
+.cutbook-buttons button { font-size: 12px; padding: 3px 8px; }
+.cutbook-buttons button[aria-pressed=true] { background: color-mix(in srgb, var(--accent, #9bd0ff) 28%, var(--surface, #1a212d)); border-color: var(--accent, #9bd0ff); }
+.cutbook-strip { display: flex; gap: 6px; overflow-x: auto; padding: 4px 0; }
+.cutbook-card { position: relative; flex: 0 0 84px; display: flex; flex-direction: column; gap: 2px; }
+.cutbook-card > button:first-child { padding: 2px; }
+.cutbook-card img { display: block; width: 100%; height: auto; border-radius: 3px; }
+.cutbook-card small { text-align: center; color: var(--muted, #b7c7da); }
+.cutbook-card input[type=text] { width: 100%; box-sizing: border-box; font: inherit; font-size: 11px; padding: 1px 3px; }
+.cutbook-remove { position: absolute; top: 0; right: 0; padding: 0 4px; font-size: 11px; line-height: 14px; }

@@ -1,0 +1,9 @@
+.fimp { display: grid; gap: 6px; color: #eee; font-size: 13px; }
+.fimp-actions { display: flex; flex-wrap: wrap; gap: 6px; }
+.fimp-note { margin: 0; color: #ced0d7; }
+.fimp-table { width: 100%; border-collapse: collapse; }
+.fimp-table th, .fimp-table td { text-align: left; vertical-align: top; padding: 3px 6px; border-bottom: 1px solid #444852; overflow-wrap: anywhere; }
+.fimp-table tr[data-state="ok"] td:nth-child(2) { color: #69cb98; }
+.fimp-table tr[data-state="rejected"] td:nth-child(2) { color: #dfb968; }
+.fimp-heading { margin-top: 6px; font-weight: 600; }
+.fimp-item { display: flex; justify-content: space-between; gap: 8px; align-items: center; overflow-wrap: anywhere; }

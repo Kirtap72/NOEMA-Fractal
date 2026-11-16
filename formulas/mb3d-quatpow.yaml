@@ -1,0 +1,51 @@
+format: 3
+id: mb3d-quatpow
+name: QuatPow
+catalog:
+  category: fractals
+  tags: [ quaternion, power, 4D, Hamilton ]
+description: >-
+  Raises the quaternion to an arbitrary quaternion power according to the theory of Hamilton: S′ =
+  log S, each component is multiplied by apx..apw, S″ = S′ · P (non-commutative product), S‴ = exp
+  S″, result S‴ + C·Cmul. Slow, as the file itself warns.
+credits:
+  - {
+      name: Luca G.N.,
+      role: "Formula and implementation 2011 (according to the formula description)",
+      status: unverified
+    }
+sources:
+  - {
+      reference: "Mandelbulb 3D 1.9.9 (sr37), M3Formulas, file QuatPow.m3f: [OPTIONS] and the description
+        after [END]; the code block and code listings was never read.",
+      status: unverified
+    }
+  - { reference: NewFormulas/formula-07/BATCH-07.md, status: unverified }
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: The equations are the formula file's own description; implementation in
+  src/engine/formula/batch07Kernels.ts. No comparison with a running Mandelbulb 3D.
+reviewed: false
+provenance:
+  origin: mandelbulb3d
+  file: QuatPow.m3f
+  credited_author: Luca G.N.
+  credited_authors: [ Luca G.N. ]
+  collection: M3Formulas
+  note: Independent reimplementation from the equations in the formula file's own description. The
+    [CODE] section was not read. Native image equivalence unverified.
+  verified_against_mb3d: false
+parameters:
+  - { name: p, label: "p", default: 2, min: -100, max: 100 }
+  - { name: p_i, label: "p of i", default: 0, min: -100, max: 100 }
+  - { name: p_j, label: "p of j", default: 0, min: -100, max: 100 }
+  - { name: p_k, label: "p of k", default: 0, min: -100, max: 100 }
+  - { name: apx, label: "apx", default: 1, min: -100, max: 100 }
+  - { name: apy, label: "apy", default: 1, min: -100, max: 100 }
+  - { name: apz, label: "apz", default: 1, min: -100, max: 100 }
+  - { name: apw, label: "apw", default: 1, min: -100, max: 100 }
+  - { name: c_mul, label: "C mul", default: 1, min: -100, max: 100 }
+  - { name: slice_w, label: "4D slice / extra w", default: 0, min: -4, max: 4 }
+  - { name: constant_w, label: "Julia constant w", default: 0, min: -4, max: 4 }
+  - { name: bailout_squared, label: "Escape limit (radius²)", default: 16, min: 1, max: 65536 }
+iteration: { kernel: mb3d-quatpow, iterations: 16 }
+view: { camera_distance: 5 }

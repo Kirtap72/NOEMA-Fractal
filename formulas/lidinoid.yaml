@@ -1,0 +1,63 @@
+# Lidinoid. Format: see formulas/README.md
+format: 1
+id: lidinoid
+name: "Lidinoid"
+catalog:
+  category: difs
+description: >
+  The lidinoid, a triply periodic minimal surface, as a thick sheet cut to a
+  ball, in its trigonometric approximation. The distance is the value of the
+  function divided by a bound on how fast it changes, which keeps it on the safe
+  side.
+
+# NOTE: the AI assistant read Wikipedia (Lidinoid) on 2026-10-07: discovered by the
+# Swedish mathematician Sven Lidin (who called it the HG surface); approximated by
+# 1/2 [sin 2x cos y sin z + sin 2y cos z sin x + sin 2z cos x sin y] - 1/2 [cos 2x
+# cos 2y + cos 2y cos 2z + cos 2z cos 2x] + 0.15 = 0. The article's first reference
+# is Lidin and Larsson (1990). Each partial derivative is at most 4, so the gradient
+# is at most 4 sqrt(3) times the scale (the assistant's own bound). The thickness and
+# the cut to a ball are the assistant's own.
+# A person must still check each name and link before this is set to
+# "verified" (and reviewed: true).
+credits:
+  - name: Sven Lidin
+    role: "discovered the surface (the HG surface)"
+    status: unverified
+  - name: Stefan Larsson
+    role: "co-author with Sven Lidin of the 1990 paper on the surface"
+    status: unverified
+sources:
+  - url: https://en.wikipedia.org/wiki/Lidinoid
+    status: unverified
+  - reference: "Lidin, S.; Larsson, S. (1990). Bonnet transformation of infinite periodic minimal surfaces with hexagonal symmetry. J. Chem. Soc. Faraday Trans. (cited by Wikipedia, not opened)"
+    status: unverified
+
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: >
+  Mathematical idea, not claimed as owned. Written fresh for this project from
+  the published description; no code from any program was read or copied.
+  The thickness, the bound on the gradient and the cut to a ball are the assistant's own. Source details are unverified (see credits).
+reviewed: false
+
+parameters:
+  - { name: scale, label: Cells per unit, default: 3, min: 0.5, max: 12 }
+  - { name: thickness, label: Thickness, default: 0.3, min: 0.02, max: 1.4 }
+  - { name: bound, label: Radius of the ball, default: 1.5, min: 0.2, max: 10 }
+
+iteration:
+  iterations: 1
+  # A shape: it does not move the point, it measures the distance to the shape at the end of a chain.
+  carry: [z, dr]
+  variables:
+    - { name: z, type: vec3, init: pos }
+    - { name: dr, type: float, init: 1 }
+    - { name: g, type: float, init: 0 }
+    - { name: p, type: vec3, init: "vec3(0.0, 0.0, 0.0)" }
+  steps:
+    - "p = z * scale"
+    - "g = 0.5 * (sin(2.0 * p.x) * cos(p.y) * sin(p.z) + sin(2.0 * p.y) * cos(p.z) * sin(p.x) + sin(2.0 * p.z) * cos(p.x) * sin(p.y))"
+    - "g = g - 0.5 * (cos(2.0 * p.x) * cos(2.0 * p.y) + cos(2.0 * p.y) * cos(2.0 * p.z) + cos(2.0 * p.z) * cos(2.0 * p.x)) + 0.15"
+  distance: "max((abs(g) - thickness) / (6.928203230275509 * scale), length(z) - bound) / abs(dr)"
+
+view:
+  camera_distance: 4

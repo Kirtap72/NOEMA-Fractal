@@ -1,0 +1,56 @@
+# Octahedron fractal. Format: see formulas/README.md
+format: 1
+id: octahedron-fractal
+name: "Octahedron fractal"
+catalog:
+  category: ifs
+  tags:
+  - polyhedral
+  - IFS
+description: >
+  Six copies of an octahedron, each half the size, towards the six corners, and
+  the same again inside every copy (dimension log 6 / log 2, about 2.58). Each
+  iteration finds the nearest corner and stretches space by two away from it;
+  the distance is then measured to one octahedron and scaled back.
+
+# NOTE: the AI assistant read Paul Bourke's page Polyhedral fractals on 2026-10-07:
+# octahedron, 6 copies, scale factor 1/2, placed along the lines from the centre to each vertex. The inverse of "copy scaled by 1/s towards the vertex v" is
+# z -> s * z - (s - 1) * v for the nearest vertex. The corners are (+-1, 0, 0), (0, +-1, 0), (0, 0, +-1); the nearest is on the axis of the largest coordinate. The distance at the end is the
+# distance to the solid (largest of its face planes, a lower bound), divided by
+# the running derivative. The nearest-vertex rule and the distance are the
+# assistant's own derivation.
+# A person must still check each name and link before this is set to
+# "verified" (and reviewed: true).
+credits:
+  - name: Paul Bourke
+    role: "description of the polyhedral fractals (1993)"
+    status: unverified
+sources:
+  - url: https://paulbourke.net/fractals/polyhedral/
+    status: unverified
+
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: >
+  Mathematical idea, not claimed as owned. Written fresh for this project from
+  the published description; no code from any program was read or copied.
+  The nearest-corner rule and the distance are derived by the assistant. Source details are unverified (see credits).
+reviewed: false
+
+iteration:
+  iterations: 8
+  carry: [z, dr]
+  variables:
+    - { name: z, type: vec3, init: pos }
+    - { name: dr, type: float, init: 1 }
+    - { name: a, type: vec3, init: "vec3(0.0, 0.0, 0.0)" }
+    - { name: v, type: vec3, init: "vec3(0.0, 0.0, 0.0)" }
+  steps:
+    - "a = abs(z)"
+    # The corner on the axis of the largest coordinate, with its sign.
+    - "v = select(select(vec3(0.0, 0.0, sign(z.z)), vec3(0.0, sign(z.y), 0.0), a.y >= a.z), vec3(sign(z.x), 0.0, 0.0), a.x >= max(a.y, a.z))"
+    - "z = 2.0 * z - v"
+    - "dr = dr * 2.0"
+  distance: "(abs(z.x) + abs(z.y) + abs(z.z) - 1.0) / sqrt(3.0) / dr"
+
+view:
+  camera_distance: 3.5

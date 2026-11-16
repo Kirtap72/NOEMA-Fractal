@@ -1,0 +1,79 @@
+# Form: loxodrome. Format: see formulas/README.md
+format: 1
+id: loxodrome
+name: "Form: loxodrome"
+description: >
+  A tube along a loxodrome (rhumb line): the path on a sphere that crosses
+  every meridian at the same angle, winding towards both poles. In the Mercator
+  map it is a straight line, which is used to measure the distance; the distance
+  is approximate, so lower the step factor if the surface shows gaps. With
+  "Stereographic projection" (direction 0) in front, the loxodrome becomes a
+  logarithmic spiral in the horizontal plane.
+
+# NOTE: the AI assistant read Wikipedia (Rhumb line) and Wikipedia (Logarithmic spiral)
+# on 2026-10-07: the rhumb line was first discussed by Pedro Nunes in 1537, developed
+# further by Thomas Harriot in the 1590s; in the Mercator map it is a straight line,
+# psi = (lambda - lambda0) cot beta + gd^-1 phi0; on the stereographic projection it
+# is exactly a logarithmic spiral (r = a e^(k phi), described by Albrecht Dürer in
+# 1525, Descartes in 1638 and investigated by Jacob Bernoulli). The distance (across
+# the Mercator line, scaled by the radius times cos latitude) is the assistant's own
+# approximation.
+# A person must still check each name and link before this is set to
+# "verified" (and reviewed: true).
+credits:
+  - name: Pedro Nunes
+    role: "first discussed the rhumb line (1537)"
+    status: unverified
+  - name: Thomas Harriot
+    role: "further mathematical development of the rhumb line (1590s)"
+    status: unverified
+  - name: Albrecht Dürer
+    role: "first described the logarithmic spiral (1525)"
+    status: unverified
+  - name: René Descartes
+    role: "discussed the logarithmic spiral (1638)"
+    status: unverified
+  - name: Jacob Bernoulli
+    role: "investigated the logarithmic spiral (spira mirabilis)"
+    status: unverified
+sources:
+  - url: https://en.wikipedia.org/wiki/Rhumb_line
+    status: unverified
+  - url: https://en.wikipedia.org/wiki/Logarithmic_spiral
+    status: unverified
+
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: >
+  Mathematical idea, not claimed as owned. Written fresh for this project from
+  the published description; no code from any program was read or copied.
+  The distance is the assistant's own approximation. Source details are unverified (see credits).
+reviewed: false
+
+parameters:
+  - { name: radius, label: Sphere radius, default: 1, min: 0.1, max: 3 }
+  - { name: bearing, label: Angle to the meridians (degrees), default: 80, min: 5, max: 85 }
+  - { name: tube, label: Tube radius, default: 0.05, min: 0.005, max: 0.5 }
+
+iteration:
+  iterations: 1
+  # A shape: it does not move the point, it measures the distance to the shape at the end of a chain.
+  carry: [z, dr]
+  variables:
+    - { name: z, type: vec3, init: pos }
+    - { name: dr, type: float, init: 1 }
+    - { name: rho, type: float, init: 1 }
+    - { name: r, type: float, init: 1 }
+    - { name: w, type: float, init: 0 }
+    - { name: period, type: float, init: 1 }
+  steps:
+    - "rho = max(sqrt(z.x * z.x + z.z * z.z), 0.000001)"
+    - "r = max(length(z), 0.000001)"
+    # Mercator coordinates: longitude, and psi = asinh(tan latitude) = log((y + r) / rho).
+    # The distance across the straight Mercator line; the lines repeat with the period 2 pi cos(bearing).
+    - "w = log(max(z.y + r, 0.000000000001) / rho) * sin(bearing * pi / 180.0) - atan2(z.z, z.x) * cos(bearing * pi / 180.0)"
+    - "period = 2.0 * pi * cos(bearing * pi / 180.0)"
+    - "w = w - period * floor(w / period + 0.5)"
+  distance: "(length(vec3(r - radius, w * radius * rho / r, 0.0)) - tube) / abs(dr)"
+
+view:
+  camera_distance: 4

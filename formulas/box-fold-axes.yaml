@@ -1,0 +1,49 @@
+# Box fold per axis (transform). Format: see formulas/README.md
+format: 1
+id: box-fold-axes
+name: Box fold per axis (transform)
+description: >
+  The box fold of the Mandelbox with its own limit for each axis, so the box
+  becomes a rectangular block: every coordinate outside its limit is mirrored
+  at the nearest face. Distances are kept.
+
+# NOTE: the AI assistant generalised the box fold (Wikipedia: Mandelbox; Gregg Helt,
+# Bridges 2018: "conditional reflections across the planes that form the six
+# faces of a cube") to one limit per axis.
+# A person must still check each name and link before this is set to
+# "verified" (and reviewed: true).
+credits:
+  - name: Tom Lowe
+    role: "the box fold of the Mandelbox (2010); one limit per axis is a generalisation"
+    status: unverified
+sources:
+  - url: https://en.wikipedia.org/wiki/Mandelbox
+    status: unverified
+  - url: https://archive.bridgesmathart.org/2018/bridges2018-547.pdf
+    status: unverified
+
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: >
+  Mathematical idea, not claimed as owned. Written fresh for this project from
+  the published definition; no code from any program was read or copied. The
+  per-axis limits are the assistant's generalisation. Source details are
+  unverified (see credits).
+reviewed: false
+
+parameters:
+  - { name: lx, label: Limit x, default: 1, min: 0.1, max: 4 }
+  - { name: ly, label: Limit y, default: 1, min: 0.1, max: 4 }
+  - { name: lz, label: Limit z, default: 1, min: 0.1, max: 4 }
+
+iteration:
+  iterations: 1
+  # This is a transform: it has no distance. It passes the point on to the next step.
+  carry: [z, dr]
+  variables:
+    - { name: z, type: vec3, init: pos }
+    - { name: dr, type: float, init: 1 }
+  steps:
+    - "z = clamp(z, vec3(-lx, -ly, -lz), vec3(lx, ly, lz)) * 2.0 - z"
+
+view:
+  camera_distance: 4

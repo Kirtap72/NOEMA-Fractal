@@ -1,0 +1,54 @@
+format: 3
+id: mb3d-boxtiling
+name: _boxtiling
+catalog:
+  category: spatial
+description: 4D periodic space repetition
+credits:
+  - name: okänd
+    role: Authorship according to the authorised specification
+    status: unverified
+sources:
+  - reference: NewFormulas/essentials-40/37-_boxtiling.md
+    status: unverified
+added_by: Codex
+math_status: Independent implementation from authorised normalised mathematical material; the
+  licence of the project.
+reviewed: false
+provenance:
+  origin: mandelbulb3d
+  file: _boxtiling.m3f
+  credited_author: okänd
+  credited_authors:
+    - okänd
+  collection: M3Formulas
+  note: Independent reimplementation from the authorized normalized Essentials specifications. The
+    [CODE] section was not read, copied or translated. Mathematical validation is separate from MB3D
+    image verification.
+  verified_against_mb3d: false
+parameters:
+  - name: x_size
+    label: x size
+    default: 5
+    min: -64
+    max: 64
+  - name: y_size
+    label: y size
+    default: 5
+    min: -64
+    max: 64
+  - name: z_size
+    label: z size
+    default: 5
+    min: -64
+    max: 64
+  - name: w_size
+    label: w size
+    default: 5
+    min: -64
+    max: 64
+iteration:
+  kernel: mb3d-boxtiling
+  iterations: 1
+view:
+  camera_distance: 5

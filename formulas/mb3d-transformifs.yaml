@@ -1,0 +1,37 @@
+{
+  "format": 3,
+  "id": "mb3d-transformifs",
+  "name": "transformIFS",
+  "description": "Independent recovered MB3D mathematics.",
+  "credits": [ { "name": "okänd", "role": "Author of the distributed variant", "status": "unverified" } ],
+  "sources": [ { "reference": "NewFormulas/preset-compatibility/transformIFS.md", "status": "unverified" } ],
+  "added_by": "Codex",
+  "math_status": "Typed numeric reference verified; native picture similarity unverified.",
+  "reviewed": false,
+  "provenance":
+    {
+      "origin": "mandelbulb3d",
+      "file": "transformIFS.m3f",
+      "credited_author": "okänd",
+      "credited_authors": [ "okänd" ],
+      "collection": "M3Formulas",
+      "note": "Independent reimplementation of the mathematical formula. Explicitly authorized
+        mathematical recovery; original executable code is not distributed.",
+      "verified_against_mb3d": false
+    },
+  "parameters":
+    [
+      { "name": "add_x", "label": "Add X", "default": 0, "min": -10000, "max": 10000 },
+      { "name": "add_y", "label": "Add Y", "default": 0, "min": -10000, "max": 10000 },
+      { "name": "add_z", "label": "Add Z", "default": 0, "min": -10000, "max": 10000 },
+      { "name": "rotation_x", "label": "Rotation X", "default": 0, "min": -10000, "max": 10000 },
+      { "name": "rotation_y", "label": "Rotation Y", "default": 0, "min": -10000, "max": 10000 },
+      { "name": "rotation_z", "label": "Rotation Z", "default": 0, "min": -10000, "max": 10000 },
+      { "name": "abs_x", "label": "Abs X", "default": 0, "min": -10000, "max": 10000 },
+      { "name": "abs_y", "label": "Abs Y", "default": 1, "min": -10000, "max": 10000 },
+      { "name": "abs_z", "label": "Abs Z", "default": 0, "min": -10000, "max": 10000 },
+      { "name": "scale", "label": "Scale", "default": 1, "min": 1e-6, "max": 10000 }
+    ],
+  "iteration": { "kernel": "mb3d-transformifs", "iterations": 1 },
+  "view": { "camera_distance": 5 }
+}

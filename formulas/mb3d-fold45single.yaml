@@ -1,0 +1,73 @@
+# _Fold45single (transform). Format: see formulas/README.md
+# An independent reimplementation of the mathematics of a Mandelbulb 3D formula (CLAUDE.md section 10): written from the author's own description
+# in the formula file (the text after [END]) and the [OPTIONS] list only; the compiled code section was not used.
+format: 2
+id: mb3d-fold45single
+name: "_Fold45single: transform"
+description: >
+  Folding in the planes +-x +-y +-z - k = 0 (the eight octahedron planes) with an optional pre-rotation: the part of the point beyond the plane is moved back by 2/3 of its distance, which also rotates some regions. Mode 0 folds the side with positive signed distance, mode 1 the other. The pre-rotation is applied first.
+credits:
+  - name: Luca GN
+    role: "Formula by Luca GN 2011 (as stated in the formula description)"
+    status: unverified
+sources:
+  - reference: "Mandelbulb 3D 1.9.9 (sr37), collection M3Formulas, file _Fold45single.m3f: the [OPTIONS] list and the description after [END]; the compiled code section was not read."
+    status: unverified
+  - reference: NewFormulas/coverage-04/BATCH-02.md
+    status: unverified
+
+provenance:
+  origin: mandelbulb3d
+  file: _Fold45single.m3f
+  credited_author: Luca GN
+  collection: M3Formulas
+  note: >
+    An independent reimplementation of the mathematical formula from the equations written in the formula file's own description. The [CODE]
+    section was not read, copied or translated. No comparison with a running Mandelbulb 3D has been made.
+  verified_against_mb3d: false
+
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: >
+  Equations taken from the formula file's own description; reimplemented independently, not claimed as owned. No code from any program was
+  read or copied. No native MB3D comparison has been made. Source details are unverified (see credits).
+reviewed: false
+
+parameters:
+  - { name: k, label: "k", default: 1.0, min: -1000, max: 1000 }
+  - { name: mode, label: "Mode (0-1)", default: 0, min: 0, max: 1 }
+  - { name: opposite_x, label: "Opposite x", default: 0, min: 0, max: 1 }
+  - { name: opposite_y, label: "Opposite y", default: 0, min: 0, max: 1 }
+  - { name: opposite_z, label: "Opposite z", default: 0, min: 0, max: 1 }
+  - { name: enable_pre_rotation, label: "Enable pre-rotation", default: 0, min: 0, max: 1 }
+
+iteration:
+  iterations: 1
+  # A transform: it has no distance. It passes the point on. dr is not written (DEoption -1: the analytic derivative is left alone).
+  carry: [z, dr]
+  variables:
+    - { name: z, type: vec3, init: pos }
+    - { name: dr, type: float, init: 1 }
+    - { name: xs, type: float, init: 0 }
+    - { name: ys, type: float, init: 0 }
+    - { name: zs, type: float, init: 0 }
+    - { name: q, type: float, init: 0 }
+    - { name: h, type: float, init: 0 }
+    - { name: dd, type: float, init: 0 }
+    - { name: on, type: float, init: 0 }
+    - { name: pr, type: float, init: 0 }
+  steps:
+    - "xs = select(1.0, -1.0, opposite_x > 0.5)"
+    - "ys = select(1.0, -1.0, opposite_y > 0.5)"
+    - "zs = select(1.0, -1.0, opposite_z > 0.5)"
+    - "q = select(1.0, -1.0, mode > 0.5)"
+    - "h = 2.0 / 3.0"
+    - "pr = select(0.0, 1.0, enable_pre_rotation > 0.5)"
+    - "dd = -(z.x * xs + z.y * ys + z.z * zs) * h"
+    - "z = vec3(select(z.x, -(z.x - dd * xs), pr > 0.5), select(z.y, -(z.y - dd * ys), pr > 0.5), select(z.z, -(z.z - dd * zs), pr > 0.5))"
+    - "dd = z.x * xs + z.y * ys + z.z * zs - k"
+    - "on = select(0.0, 1.0, dd * q > 0.0)"
+    - "dd = dd * h"
+    - "z = vec3(select(z.x, z.x - dd * xs, on > 0.5), select(z.y, z.y - dd * ys, on > 0.5), select(z.z, z.z - dd * zs, on > 0.5))"
+
+view:
+  camera_distance: 4

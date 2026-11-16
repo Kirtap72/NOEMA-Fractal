@@ -1,0 +1,69 @@
+# Toroidal coordinates (transform). Format: see formulas/README.md
+format: 1
+id: toroidal-coordinates
+name: "Toroidal coordinates (transform)"
+description: >
+  Changes between ordinary coordinates and toroidal coordinates (tau, sigma, phi) around a ring of
+  radius a in the x-y plane (the z axis goes through the ring), as the spherical and cylindrical
+  steps do. Direction 0 goes to (tau, sigma, phi), direction 1 back. Toroidal coordinates are not
+  angle-preserving, so the running derivative is left unchanged and the distance of the next formula
+  is rough.
+
+# NOTE: the AI assistant read Wikipedia (Toroidal coordinates) on 2026-10-07 and wrote
+# this step from its formulas: forward x = a sinh(tau) cos(phi) / (cosh(tau) -
+# cos(sigma)), y the same with sin(phi), z = a sin(sigma) / (cosh(tau) -
+# cos(sigma)); back tau = ln(d1 / d2) with d1, d2 the distances to the focal
+# ring, sigma = sign(z) arccos((r^2 - a^2) / sqrt((r^2 - a^2)^2 + 4 a^2 z^2)),
+# phi = atan2(y, x). The guard against dividing by zero next to the ring is the
+# assistant's own.
+# A person must still check each name and link before this is set to
+# "verified" (and reviewed: true).
+credits:
+  - name: General mathematics (textbook)
+    role: "standard definitions found in any textbook; no single person is credited (the project owner
+      agreed that general mathematics is credited this way)"
+    status: unverified
+sources:
+  - url: https://en.wikipedia.org/wiki/Toroidal_coordinates
+    status: unverified
+
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: >
+  General mathematics: standard definitions, not claimed as owned. Written fresh for this project;
+  no code from any program was read or copied. Source details are unverified (see credits).
+reviewed: false
+
+parameters:
+  - { name: direction, label: Direction (0 to toroidal, 1 back), default: 0, min: 0, max: 1 }
+  - { name: a, label: Ring radius a, default: 1, min: 0.1, max: 4 }
+
+iteration:
+  iterations: 1
+  # This is a transform: it has no distance. It passes the point on to the next step.
+  carry: [ z, dr ]
+  variables:
+    - { name: z, type: vec3, init: pos }
+    - { name: dr, type: float, init: 1 }
+    - { name: rho, type: float, init: 0 }
+    - { name: d1, type: float, init: 1 }
+    - { name: d2, type: float, init: 1 }
+    - { name: r2, type: float, init: 0 }
+    - { name: w, type: float, init: 1 }
+    - { name: t, type: vec3, init: "vec3(0.0, 0.0, 0.0)" }
+    - { name: b, type: vec3, init: "vec3(0.0, 0.0, 0.0)" }
+  steps:
+    # To toroidal coordinates (tau, sigma, phi).
+    - "rho = sqrt(z.x * z.x + z.y * z.y)"
+    - "d1 = sqrt((rho + a) * (rho + a) + z.z * z.z)"
+    - "d2 = max(sqrt((rho - a) * (rho - a) + z.z * z.z), 0.000001)"
+    - "r2 = dot(z, z) - a * a"
+    - "t = vec3(log(d1 / d2), sign(z.z) * acos(clamp(r2 / max(sqrt(r2 * r2 + 4.0 * a * a * z.z *
+      z.z), 0.000001), -1.0, 1.0)), atan2(z.y, z.x))"
+    # Back to ordinary coordinates from (tau, sigma, phi) = (x, y, z).
+    - "w = a / max((exp(z.x) + exp(-z.x)) * 0.5 - cos(z.y), 0.000001)"
+    - "b = vec3(w * (exp(z.x) - exp(-z.x)) * 0.5 * cos(z.z), w * (exp(z.x) - exp(-z.x)) * 0.5 *
+      sin(z.z), w * sin(z.y))"
+    - "z = select(t, b, direction > 0.5)"
+
+view:
+  camera_distance: 4

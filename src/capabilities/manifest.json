@@ -1,0 +1,1944 @@
+{
+  "manifestVersion": "1.6.0",
+  "protocol": "noema-ai-bridge/1",
+  "mcp": {
+    "specification": "2026-07-28",
+    "sdk": "@modelcontextprotocol/server 2.4.0 (pinned)"
+  },
+  "limits": {
+    "maxDraftsAlive": 4,
+    "maxRevisionsPerDraft": 50,
+    "maxChangesPerCall": 32,
+    "maxPreviewsPerDraft": 30,
+    "callsPerMinute": 240,
+    "mutationsPerMinute": 120,
+    "previewsPerMinute": 12,
+    "maxResponseBytes": 200000,
+    "maxMaterialStops": 16,
+    "maxStoredDrafts": 60,
+    "maxLights": 8,
+    "polyHavenSearchesPerSession": 20,
+    "polyHavenDownloadsPerSession": 6,
+    "maxExperimentRecords": 1500
+  },
+  "approvalLevels": {
+    "session-opt-in": "The artist has turned on the AI bridge. No questions per call. Applies to reading and to changes of a separate draft.",
+    "user-confirmation": "The app shows the draft and asks the artist. Only after an explicit 'Use' does the live scene change (one undoable transaction).",
+    "polyhaven-opt-in": "The artist has explicitly allowed the AI to search and fetch materials from Poly Haven during this session, with fixed quotas. No questions per call. Nothing about the artist (scenes, pictures, texts) is sent."
+  },
+  "settings": [
+    {
+      "id": "camera.fov_degrees",
+      "name": {
+        "en": "Field of view"
+      },
+      "type": "number",
+      "unit": "grader",
+      "range": [
+        10,
+        120
+      ],
+      "explain": {
+        "en": "How wide the camera sees. Lower is telephoto (zoomed in), higher is wide angle."
+      },
+      "ui": "Camera & focus"
+    },
+    {
+      "id": "color.measure",
+      "name": {
+        "en": "Colour measure"
+      },
+      "type": "enum",
+      "values": [
+        "iterations",
+        "orbit_trap",
+        "slope",
+        "cavity",
+        "radius"
+      ],
+      "explain": {
+        "en": "What decides where on the gradient a surface point lands: iterations, orbit trap, slope, cavity or radius."
+      },
+      "ui": "Material & textures ▸ Colour"
+    },
+    {
+      "id": "color.cycles",
+      "name": {
+        "en": "Gradient cycles"
+      },
+      "type": "number",
+      "range": [
+        0.05,
+        20
+      ],
+      "default": 1,
+      "explain": {
+        "en": "How many times the gradient repeats over the measure's range. Higher gives denser colour bands."
+      },
+      "ui": "Material & textures ▸ Colour"
+    },
+    {
+      "id": "color.offset",
+      "name": {
+        "en": "Gradient offset"
+      },
+      "type": "number",
+      "range": [
+        -100,
+        100
+      ],
+      "default": 0,
+      "explain": {
+        "en": "Shifts the gradient along the measure."
+      },
+      "ui": "Material & textures ▸ Colour"
+    },
+    {
+      "id": "color.wrap",
+      "name": {
+        "en": "Wrap"
+      },
+      "type": "enum",
+      "values": [
+        "repeat",
+        "mirror"
+      ],
+      "default": "mirror",
+      "explain": {
+        "en": "How the gradient continues beyond 0 to 1: repeat or mirror."
+      },
+      "ui": "Material & textures ▸ Colour"
+    },
+    {
+      "id": "color.gradient.stop.color",
+      "name": {
+        "en": "Gradient stop colour"
+      },
+      "type": "string",
+      "pattern": "^#[0-9a-fA-F]{6}$",
+      "needsIndex": true,
+      "explain": {
+        "en": "The colour (#rrggbb, sRGB) of a gradient stop. Index counts from 0."
+      },
+      "ui": "Material & textures ▸ Colour ▸ the gradient editor"
+    },
+    {
+      "id": "color.gradient.stop.position",
+      "name": {
+        "en": "Gradient stop position"
+      },
+      "type": "number",
+      "range": [
+        0,
+        1
+      ],
+      "needsIndex": true,
+      "explain": {
+        "en": "Where the stop sits along the gradient (0 to 1). The first and last stop cannot be moved."
+      },
+      "ui": "Material & textures ▸ Colour ▸ the gradient editor"
+    },
+    {
+      "id": "color.gradient.stop.transition",
+      "name": {
+        "en": "Transition width to the next stop"
+      },
+      "type": "number",
+      "range": [
+        0,
+        1
+      ],
+      "default": 1,
+      "needsIndex": true,
+      "explain": {
+        "en": "1 blends over the whole interval, lower concentrates the blend at the middle, 0 is a hard boundary."
+      },
+      "ui": "Material & textures ▸ Colour ▸ Material gradient"
+    },
+    {
+      "id": "color.gradient.stop.softness",
+      "name": {
+        "en": "Transition softness"
+      },
+      "type": "number",
+      "range": [
+        0,
+        1
+      ],
+      "needsIndex": true,
+      "explain": {
+        "en": "How soft the edges of the blend to the next stop are: 0 a crisp linear ramp, 1 a smooth step. Without a value the ordinary blend applies."
+      },
+      "ui": "Material & textures ▸ Colour ▸ Material gradient"
+    },
+    {
+      "id": "color.gradient.stop.texture_scale",
+      "name": {
+        "en": "Texture scale of the stop's material"
+      },
+      "type": "number",
+      "range": [
+        0.001,
+        100000
+      ],
+      "needsIndex": true,
+      "explain": {
+        "en": "Repetitions per unit for all image maps of the stop's material; they share it so they stay aligned. Needs a material with image maps."
+      },
+      "ui": "Material & textures ▸ Colour ▸ Material gradient"
+    },
+    {
+      "id": "color.gradient.stop.kind",
+      "name": {
+        "en": "Stop type"
+      },
+      "type": "enum",
+      "values": [
+        "color",
+        "material"
+      ],
+      "needsIndex": true,
+      "explain": {
+        "en": "Colour or Material. A material must first be chosen for the stop."
+      },
+      "ui": "Material & textures ▸ Colour ▸ Material gradient"
+    },
+    {
+      "id": "material.metallic",
+      "name": {
+        "en": "Metallic"
+      },
+      "type": "number",
+      "range": [
+        0,
+        1
+      ],
+      "default": 0,
+      "explain": {
+        "en": "0 is dielectric, 1 is metal."
+      },
+      "ui": "Material & texturer"
+    },
+    {
+      "id": "material.roughness",
+      "name": {
+        "en": "Roughness"
+      },
+      "type": "number",
+      "range": [
+        0,
+        1
+      ],
+      "default": 1,
+      "explain": {
+        "en": "0 is mirror-like, 1 is fully matte."
+      },
+      "ui": "Material & texturer"
+    },
+    {
+      "id": "material.reflectivity",
+      "name": {
+        "en": "Reflectivity"
+      },
+      "type": "number",
+      "range": [
+        0,
+        1
+      ],
+      "default": 0,
+      "explain": {
+        "en": "How much the surface mirrors its surroundings."
+      },
+      "ui": "Material & texturer"
+    },
+    {
+      "id": "chain.step.parameter",
+      "name": {
+        "en": "Formula parameter"
+      },
+      "type": "number",
+      "needsIndex": true,
+      "needsName": true,
+      "rangeFrom": "formula",
+      "explain": {
+        "en": "A parameter value in one step of the formula chain; the valid range comes from the formula's own min and max."
+      },
+      "ui": "Fraktal & geometri ▸ formelkedjan"
+    },
+    {
+      "id": "chain.step.iterations",
+      "name": {
+        "en": "Step iterations"
+      },
+      "type": "integer",
+      "range": [
+        1,
+        64
+      ],
+      "needsIndex": true,
+      "explain": {
+        "en": "How many times the step runs per round."
+      },
+      "ui": "Fraktal & geometri ▸ formelkedjan"
+    },
+    {
+      "id": "chain.step.formula",
+      "name": {
+        "en": "Change step formula"
+      },
+      "type": "string",
+      "pattern": "^[A-Za-z0-9_.-]{1,100}$",
+      "needsIndex": true,
+      "explain": {
+        "en": "Replaces the formula of a step; the step starts with the new formula's defaults."
+      },
+      "ui": "Fraktal & geometri ▸ formelkedjan"
+    },
+    {
+      "id": "chain.step.add",
+      "name": {
+        "en": "Add step"
+      },
+      "type": "string",
+      "pattern": "^[A-Za-z0-9_.-]{1,100}$",
+      "explain": {
+        "en": "Appends a step to the chain (at most 8). The value is a formula id."
+      },
+      "ui": "Fraktal & geometri ▸ formelkedjan"
+    },
+    {
+      "id": "chain.step.remove",
+      "name": {
+        "en": "Remove step"
+      },
+      "type": "boolean",
+      "needsIndex": true,
+      "explain": {
+        "en": "Removes a step (value true). The last step cannot be removed."
+      },
+      "ui": "Fraktal & geometri ▸ formelkedjan"
+    },
+    {
+      "id": "chain.step.insert",
+      "name": {
+        "en": "Insert step at a position"
+      },
+      "type": "string",
+      "pattern": "^[A-Za-z0-9_.-]{1,100}$",
+      "needsIndex": true,
+      "explain": {
+        "en": "Inserts a step with the formula's defaults at index; later steps move. At most 8 steps. Order matters."
+      },
+      "ui": "Fraktal & geometri ▸ formelkedjan"
+    },
+    {
+      "id": "chain.step.move",
+      "name": {
+        "en": "Move step"
+      },
+      "type": "integer",
+      "range": [
+        0,
+        7
+      ],
+      "needsIndex": true,
+      "explain": {
+        "en": "Moves the step at index to the position given as value."
+      },
+      "ui": "Fraktal & geometri ▸ formelkedjan"
+    },
+    {
+      "id": "chain.group.repeat",
+      "name": {
+        "en": "Group repeat point"
+      },
+      "type": "integer",
+      "range": [
+        0,
+        7
+      ],
+      "needsIndex": true,
+      "explain": {
+        "en": "For scenes with grouped execution. Index is the group (0 or 1); the value is the chain position where the repeated part starts."
+      },
+      "ui": "Fractal & geometry ▸ the formula chain ▸ execution groups"
+    },
+    {
+      "id": "chain.group.max_iterations",
+      "name": {
+        "en": "Group call limit"
+      },
+      "type": "integer",
+      "range": [
+        1,
+        256
+      ],
+      "needsIndex": true,
+      "explain": {
+        "en": "For scenes with grouped execution. Index is the group; the value is the maximum number of counted formula calls."
+      },
+      "ui": "Fractal & geometry ▸ the formula chain ▸ execution groups"
+    },
+    {
+      "id": "chain.group.append_step",
+      "name": {
+        "en": "Append step to group"
+      },
+      "type": "string",
+      "pattern": "^[A-Za-z0-9_.-]{1,100}$",
+      "needsIndex": true,
+      "explain": {
+        "en": "For scenes with grouped execution. Appends a step at the end of the group; group borders follow."
+      },
+      "ui": "Fractal & geometry ▸ the formula chain ▸ execution groups"
+    },
+    {
+      "id": "chain.group.prepend_step",
+      "name": {
+        "en": "Prepend step to group"
+      },
+      "type": "string",
+      "pattern": "^[A-Za-z0-9_.-]{1,100}$",
+      "needsIndex": true,
+      "explain": {
+        "en": "For scenes with grouped execution. Prepends a step to the group; group borders follow."
+      },
+      "ui": "Fractal & geometry ▸ the formula chain ▸ execution groups"
+    },
+    {
+      "id": "chain.rounds",
+      "name": {
+        "en": "Chain rounds"
+      },
+      "type": "integer",
+      "range": [
+        1,
+        64
+      ],
+      "explain": {
+        "en": "How many times the whole chain runs per point (1 to 64)."
+      },
+      "ui": "Fraktal & geometri ▸ formelkedjan"
+    },
+    {
+      "id": "chain.mode",
+      "name": {
+        "en": "Chain mode"
+      },
+      "type": "enum",
+      "values": [
+        "sequence",
+        "alternate",
+        "interpolate"
+      ],
+      "explain": {
+        "en": "sequence runs every step in order each round; alternate runs steps on a schedule; interpolate blends the steps."
+      },
+      "ui": "Fraktal & geometri ▸ formelkedjan"
+    }
+  ],
+  "operations": [
+    {
+      "id": "capabilities.list",
+      "mcpTool": "noema_get_capabilities",
+      "kind": "read",
+      "name": {
+        "en": "List capabilities"
+      },
+      "purpose": "Lists the operations and settings this NOEMA version implements, with limits and approval rules. Start here. detail 'compact' (default) is short; 'full' adds descriptions.",
+      "params": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "detail": {
+            "type": "string",
+            "enum": [
+              "compact",
+              "full"
+            ],
+            "default": "compact"
+          }
+        }
+      },
+      "approval": "session-opt-in",
+      "undo": "none",
+      "status": "implemented",
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      },
+      "sources": [
+        "src/capabilities/manifest.json",
+        "src/app/aiBridge/appService.ts"
+      ],
+      "tests": [
+        "tests/aiBridgeService.test.ts",
+        "tests/aiBridgeManifest.test.ts"
+      ]
+    },
+    {
+      "id": "formulas.list",
+      "mcpTool": "noema_list_formulas",
+      "kind": "read",
+      "name": {
+        "en": "List formulas"
+      },
+      "purpose": "Searches the formula library. Returns id, name, credits, review status and parameters (name, min, max, default). Never returns formula code.",
+      "params": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "query": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50,
+            "default": 20
+          },
+          "offset": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 100000,
+            "default": 0
+          }
+        }
+      },
+      "approval": "session-opt-in",
+      "undo": "none",
+      "status": "implemented",
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      },
+      "sources": [
+        "src/engine/formula/library.ts buildLibrary",
+        "src/app/formulaFiles.ts loadLibrary"
+      ],
+      "tests": [
+        "tests/aiBridgeService.test.ts"
+      ]
+    },
+    {
+      "id": "settings.explain",
+      "mcpTool": "noema_explain_setting",
+      "kind": "read",
+      "name": {
+        "en": "Explain setting"
+      },
+      "purpose": "Explains one setting from the manifest: what it does, type, range, default and where it is in the interface. Search by id or by words.",
+      "params": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "setting_id": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "query": {
+            "type": "string",
+            "maxLength": 100
+          }
+        }
+      },
+      "approval": "session-opt-in",
+      "undo": "none",
+      "status": "implemented",
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      },
+      "sources": [
+        "src/capabilities/manifest.json settings"
+      ],
+      "tests": [
+        "tests/aiBridgeService.test.ts"
+      ]
+    },
+    {
+      "id": "help.search",
+      "mcpTool": "noema_search_help",
+      "kind": "read",
+      "name": {
+        "en": "Search the user manual"
+      },
+      "purpose": "Searches the user manual of NOEMA (the same text the artist can read under Help). Use it to explain WHERE a setting is and WHAT it does, in the artist's words, especially in Learn mode. Returns up to 3 short sections. Only describes what the program really has.",
+      "params": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "query"
+        ],
+        "properties": {
+          "query": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 3,
+            "default": 2
+          }
+        }
+      },
+      "approval": "session-opt-in",
+      "undo": "none",
+      "status": "implemented",
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      },
+      "sources": [
+        "src/capabilities/helpIndex.json",
+        "docs/manual/user-manual.md"
+      ],
+      "tests": [
+        "tests/releaseDocs.test.ts"
+      ]
+    },
+    {
+      "id": "knowledge.search",
+      "mcpTool": "noema_search_knowledge",
+      "kind": "read",
+      "name": {
+        "en": "Search the knowledge atlas"
+      },
+      "purpose": "Searches built-in formula metadata and general engine guidance, plus the current user's own recorded experiments. No preset corpus or research experiment collection is distributed. Returns at most 6 entries; ask for details with noema_get_knowledge.",
+      "params": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "query"
+        ],
+        "properties": {
+          "query": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+          },
+          "kinds": {
+            "type": "array",
+            "maxItems": 11,
+            "items": {
+              "type": "string",
+              "enum": [
+                "formula",
+                "fact",
+                "observation",
+                "hypothesis",
+                "reference",
+                "experiment",
+                "own_works",
+                "case",
+                "trial",
+                "relation",
+                "gap"
+              ]
+            }
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 6,
+            "default": 5
+          }
+        }
+      },
+      "approval": "session-opt-in",
+      "undo": "none",
+      "status": "implemented",
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      },
+      "sources": [
+        "src/knowledge/atlas.json",
+        "src/knowledge/knowledge.ts"
+      ],
+      "tests": [
+        "tests/knowledgeAtlas.test.ts"
+      ]
+    },
+    {
+      "id": "knowledge.get",
+      "mcpTool": "noema_get_knowledge",
+      "kind": "read",
+      "name": {
+        "en": "Get one knowledge record"
+      },
+      "purpose": "Returns ONE full knowledge record by id (an id from noema_search_knowledge): a formula profile with parameters and usage, a finding with its evidence and source details, a measured trial, a case study or a source. Small and targeted; never the whole database.",
+      "params": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9:._-]{1,80}$"
+          }
+        }
+      },
+      "approval": "session-opt-in",
+      "undo": "none",
+      "status": "implemented",
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      },
+      "sources": [
+        "src/knowledge/kb.ts"
+      ],
+      "tests": [
+        "tests/knowledgeBase.test.ts"
+      ]
+    },
+    {
+      "id": "chain.check",
+      "mcpTool": "noema_check_chain",
+      "kind": "read",
+      "name": {
+        "en": "Check a formula chain"
+      },
+      "purpose": "Asks NOEMA's own engine rules whether a chain of library formulas can run, BEFORE you build a draft: unknown formulas, mixed distance models, kernel and step formulas mixed, helper-only chains, unsupported modes. Also returns measured advice as warnings (for example camera distance for big cube-shaped formulas, that only the first main formula often shows) with ids to read in noema_get_knowledge. Costs no preview.",
+      "params": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "formulas"
+        ],
+        "properties": {
+          "formulas": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 8,
+            "items": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.-]{1,100}$"
+            }
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "sequence",
+              "alternate",
+              "interpolate"
+            ],
+            "default": "sequence"
+          }
+        }
+      },
+      "approval": "session-opt-in",
+      "undo": "none",
+      "status": "implemented",
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      },
+      "sources": [
+        "src/knowledge/kb.ts",
+        "src/engine/formula/kernelChain.ts"
+      ],
+      "tests": [
+        "tests/knowledgeBase.test.ts"
+      ]
+    },
+    {
+      "id": "experiment.record",
+      "mcpTool": "noema_record_experiment",
+      "kind": "draft",
+      "name": {
+        "en": "Record an experiment"
+      },
+      "purpose": "Saves a compact, local record of what you tried in a draft: the formula chain, your idea, what you SAW in the preview and a verdict (promising, neutral, poor). It is stored only on the artist's computer, holds no pictures or conversation, and later searches (noema_search_knowledge kinds experiment) can reuse it with any model. Call it once per promising or failed direction, after you have looked at the preview.",
+      "params": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "draft_id",
+          "observation",
+          "verdict"
+        ],
+        "properties": {
+          "draft_id": {
+            "type": "string",
+            "pattern": "^draft-[a-z0-9]{6,32}$"
+          },
+          "observation": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 400
+          },
+          "verdict": {
+            "type": "string",
+            "enum": [
+              "promising",
+              "neutral",
+              "poor"
+            ]
+          },
+          "tags": {
+            "type": "array",
+            "maxItems": 6,
+            "items": {
+              "type": "string",
+              "maxLength": 30
+            }
+          }
+        }
+      },
+      "approval": "session-opt-in",
+      "undo": "none",
+      "status": "implemented",
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false
+      },
+      "sources": [
+        "src/knowledge/experiments.ts",
+        "desktop/knowledge.cjs"
+      ],
+      "tests": [
+        "tests/knowledgeAtlas.test.ts"
+      ]
+    },
+    {
+      "id": "scene.inspect",
+      "mcpTool": "noema_inspect_scene",
+      "kind": "read",
+      "name": {
+        "en": "Inspect scene"
+      },
+      "purpose": "Summarises the live scene (target 'current') or a draft (target = draft id) in chosen sections. Images and file paths are never included.",
+      "params": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "target": {
+            "type": "string",
+            "pattern": "^(current|draft-[a-z0-9]{6,32})$",
+            "default": "current"
+          },
+          "sections": {
+            "type": "array",
+            "maxItems": 8,
+            "uniqueItems": true,
+            "items": {
+              "enum": [
+                "camera",
+                "color",
+                "material",
+                "chain",
+                "render",
+                "lights",
+                "credits"
+              ]
+            }
+          }
+        }
+      },
+      "approval": "session-opt-in",
+      "undo": "none",
+      "status": "implemented",
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      },
+      "sources": [
+        "src/app/aiBridge/sceneSummary.ts",
+        "src/engine/scene.ts collectCredits"
+      ],
+      "tests": [
+        "tests/aiBridgeService.test.ts"
+      ]
+    },
+    {
+      "id": "materials.list",
+      "mcpTool": "noema_list_materials",
+      "kind": "read",
+      "name": {
+        "en": "List materials"
+      },
+      "purpose": "Lists built-in and saved materials (id, title, group). Use the id with noema_apply_material_to_draft.",
+      "params": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "query": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50,
+            "default": 30
+          }
+        }
+      },
+      "approval": "session-opt-in",
+      "undo": "none",
+      "status": "implemented",
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      },
+      "sources": [
+        "src/app/materialGradientSource.ts createMaterialSource",
+        "src/engine/material.ts MATERIAL_PRESETS"
+      ],
+      "tests": [
+        "tests/aiBridgeService.test.ts"
+      ]
+    },
+    {
+      "id": "artworks.list",
+      "mcpTool": "noema_list_artworks",
+      "kind": "read",
+      "name": {
+        "en": "List artworks"
+      },
+      "purpose": "Lists the artist's saved fractal artworks (presets): id, title, type. Pictures are never returned. Use an id with noema_create_draft from 'artwork:<id>' to start a draft from a COPY of it; the original and its thumbnail are never changed.",
+      "params": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "query": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 30,
+            "default": 15
+          },
+          "offset": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 100000,
+            "default": 0
+          }
+        }
+      },
+      "approval": "session-opt-in",
+      "undo": "none",
+      "status": "implemented",
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      },
+      "sources": [
+        "src/app/discoveryLibraryStore.ts",
+        "src/app/main.ts (artworks port)"
+      ],
+      "tests": [
+        "tests/aiBridgeMcp02.test.ts"
+      ]
+    },
+    {
+      "id": "polyhaven.search",
+      "mcpTool": "noema_search_polyhaven",
+      "kind": "read",
+      "name": {
+        "en": "Search Poly Haven materials"
+      },
+      "purpose": "Searches the public Poly Haven texture catalogue (CC0 PBR materials). Needs the artist's session permission for Poly Haven (the app tells you if it is off). Returns id, name, categories, authors and whether the material is already downloaded; at most 20 searches per session. Nothing about the artist is sent.",
+      "params": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "query": {
+            "type": "string",
+            "maxLength": 80
+          },
+          "category": {
+            "type": "string",
+            "maxLength": 40
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 20,
+            "default": 10
+          }
+        }
+      },
+      "approval": "polyhaven-opt-in",
+      "undo": "none",
+      "status": "implemented",
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": true
+      },
+      "sources": [
+        "desktop/polyHaven.cjs",
+        "src/app/polyHavenImport.ts"
+      ],
+      "tests": [
+        "tests/polyHavenAi.test.ts"
+      ]
+    },
+    {
+      "id": "polyhaven.import",
+      "mcpTool": "noema_import_polyhaven_material",
+      "kind": "read",
+      "name": {
+        "en": "Import a Poly Haven material"
+      },
+      "purpose": "Downloads one Poly Haven material (1k or 2k jpg maps: base colour, roughness, metallic, ambient occlusion; the normal map is kept but switched off) into the artist's material library and returns its material_id ('saved:...'), which noema_apply_material_to_draft takes (as surface material, or with stop_index as a Material Gradient stop where its maps are blended). Reports per channel what was found, what is missing and what is not blended. Needs the artist's Poly Haven session permission; at most 6 downloads per session. Credit and CC0 licence are stored with the material.",
+      "params": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9_]{2,80}$"
+          },
+          "resolution": {
+            "type": "string",
+            "enum": [
+              "1k",
+              "2k"
+            ],
+            "default": "1k"
+          }
+        }
+      },
+      "approval": "polyhaven-opt-in",
+      "undo": "none",
+      "status": "implemented",
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": true
+      },
+      "sources": [
+        "desktop/polyHaven.cjs",
+        "src/app/polyHavenImport.ts"
+      ],
+      "tests": [
+        "tests/polyHavenAi.test.ts"
+      ]
+    },
+    {
+      "id": "draft.list",
+      "mcpTool": "noema_list_drafts",
+      "kind": "read",
+      "name": {
+        "en": "List drafts"
+      },
+      "purpose": "Lists the drafts: id, label, state (editing, awaiting_user_confirmation, applied, declined, discarded), revisions, whether the live scene changed since it was made, and previews used.",
+      "params": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {}
+      },
+      "approval": "session-opt-in",
+      "undo": "none",
+      "status": "implemented",
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      },
+      "sources": [
+        "src/app/aiBridge/drafts.ts"
+      ],
+      "tests": [
+        "tests/aiBridgeService.test.ts"
+      ]
+    },
+    {
+      "id": "draft.create",
+      "mcpTool": "noema_create_draft",
+      "kind": "draft",
+      "name": {
+        "en": "Create draft"
+      },
+      "purpose": "Creates a separate draft: a copy of the live scene, of another draft, or of a saved artwork from the artist's library (from 'artwork:<id>', see noema_list_artworks). Edit and preview it freely; the live scene and the original artwork are never touched until the artist confirms. Optional idea: one sentence naming the geometric idea this draft tests (shown to the artist and saved with the draft).",
+      "params": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "from": {
+            "type": "string",
+            "pattern": "^(current|draft-[a-z0-9]{6,32}|artwork:[-A-Za-z0-9_:]{1,128})$",
+            "default": "current"
+          },
+          "label": {
+            "type": "string",
+            "maxLength": 80
+          },
+          "idea": {
+            "type": "string",
+            "maxLength": 300
+          }
+        }
+      },
+      "approval": "session-opt-in",
+      "undo": "none",
+      "status": "implemented",
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false
+      },
+      "sources": [
+        "src/app/aiBridge/drafts.ts"
+      ],
+      "tests": [
+        "tests/aiBridgeService.test.ts"
+      ]
+    },
+    {
+      "id": "draft.create_grouped",
+      "mcpTool": "noema_create_grouped_draft",
+      "kind": "draft",
+      "name": {
+        "en": "Create grouped-execution draft"
+      },
+      "purpose": "Creates a NEW draft whose fractal is a grouped execution (the structure of imported Mandelbulb 3D hybrids), built from a starting point (template, see noema_list_group_templates) or from your own description (kind + groups). Kinds: mapped-field (2 groups: group 1 moves the point with analytic formulas or imported transforms as helpers, group 2 measures dIFS shapes), independent-field (2 groups: analytic and inverted dIFS, combined as max), difs-sequence (1 group: dIFS shapes with uncounted transforms). Each group: steps [{formula, iterations?, parameters?}], repeat (position inside the group where the repeated part starts, default 0), max_iterations (call limit). The engine's own rules decide: an invalid proposal returns the engine's sentence and creates nothing, and no formula is ever replaced. check_only:true validates without creating. Camera, colour and material are copied from the source, so drafts from the same source differ in geometry only. The live scene is never touched. camera: keep (default; same camera as the source, for direct geometry comparison), template_hint (the starting point's own camera) or auto_frame (the engine proposes a framing for this fractal; the result reports when that is not possible). A blank preview does not by itself mean the formula failed: noema_render_preview now returns diagnostics (visible-surface detection, possible ray-marching failures), and noema_frame_draft explains framing problems.",
+      "params": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "from": {
+            "type": "string",
+            "pattern": "^(current|draft-[a-z0-9]{6,32}|artwork:[-A-Za-z0-9_:]{1,128})$",
+            "default": "current"
+          },
+          "template": {
+            "type": "string",
+            "pattern": "^[a-z0-9-]{1,60}$"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "mapped-field",
+              "independent-field",
+              "difs-sequence"
+            ]
+          },
+          "groups": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 2,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "steps"
+              ],
+              "properties": {
+                "steps": {
+                  "type": "array",
+                  "minItems": 1,
+                  "maxItems": 8,
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "formula"
+                    ],
+                    "properties": {
+                      "formula": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z0-9_.-]{1,100}$"
+                      },
+                      "iterations": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 64
+                      },
+                      "parameters": {
+                        "type": "object",
+                        "maxProperties": 40,
+                        "additionalProperties": {
+                          "type": "number"
+                        }
+                      }
+                    }
+                  }
+                },
+                "repeat": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 7
+                },
+                "max_iterations": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 256
+                }
+              }
+            }
+          },
+          "julia": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "enabled",
+              "c"
+            ],
+            "properties": {
+              "enabled": {
+                "type": "boolean"
+              },
+              "c": {
+                "type": "array",
+                "minItems": 3,
+                "maxItems": 3,
+                "items": {
+                  "type": "number"
+                }
+              }
+            }
+          },
+          "check_only": {
+            "type": "boolean",
+            "default": false
+          },
+          "label": {
+            "type": "string",
+            "maxLength": 80
+          },
+          "idea": {
+            "type": "string",
+            "maxLength": 300
+          },
+          "camera": {
+            "type": "string",
+            "enum": [
+              "keep",
+              "template_hint",
+              "auto_frame"
+            ],
+            "default": "keep"
+          }
+        }
+      },
+      "undo": "none",
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false
+      },
+      "approval": "session-opt-in",
+      "status": "implemented",
+      "sources": [
+        "src/engine/formula/groupCreate.ts",
+        "src/app/aiBridge/appService.ts"
+      ],
+      "tests": [
+        "tests/groupCreate.test.ts"
+      ]
+    },
+    {
+      "id": "draft.list_group_templates",
+      "mcpTool": "noema_list_group_templates",
+      "kind": "read",
+      "name": {
+        "en": "List grouped-execution starting points"
+      },
+      "purpose": "Lists the editable technical starting points for noema_create_grouped_draft (taken from the project's own Mandelbulb 3D example presets) with their groups, formulas, iterations, repeat points and call limits. They are examples to modify, not restrictions.",
+      "params": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {}
+      },
+      "approval": "session-opt-in",
+      "undo": "none",
+      "status": "implemented",
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      },
+      "sources": [
+        "src/engine/formula/groupTemplates.json"
+      ],
+      "tests": [
+        "tests/groupCreate.test.ts"
+      ]
+    },
+    {
+      "id": "draft.frame",
+      "mcpTool": "noema_frame_draft",
+      "kind": "draft",
+      "name": {
+        "en": "Frame the fractal in a draft"
+      },
+      "purpose": "Frame Fractal for a draft: finds visible geometry with the engine's own CPU ray marcher and proposes a camera (target and distance that fit the geometry into the field of view, keeping the viewing direction). With apply true (default) the draft's camera becomes the proposal as one draft step (noema_undo_draft_step undoes it); apply false only returns the proposal. The live scene is never touched. Status values: ok, low-confidence, marching-unreliable (geometry exists but sphere tracing steps over it because the distance estimate is too large - not a camera problem), no-geometry, camera-inside, unavailable. When framing is not possible nothing is changed and the reason is returned: a blank preview is NOT proof of a failed formula. Use it when drafts of different fractals have different scales; keep one shared camera instead when comparing geometry directly.",
+      "params": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "draft_id"
+        ],
+        "properties": {
+          "draft_id": {
+            "type": "string",
+            "pattern": "^draft-[a-z0-9]{6,32}$"
+          },
+          "apply": {
+            "type": "boolean",
+            "default": true
+          },
+          "note": {
+            "type": "string",
+            "maxLength": 300
+          }
+        }
+      },
+      "approval": "session-opt-in",
+      "undo": "draft-step",
+      "status": "implemented",
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false
+      },
+      "sources": [
+        "src/engine/framing/frame.ts",
+        "src/engine/framing/rayMarch.ts"
+      ],
+      "tests": [
+        "tests/framing.test.ts"
+      ]
+    },
+    {
+      "id": "draft.set_parameters",
+      "mcpTool": "noema_set_draft_parameters",
+      "kind": "draft",
+      "name": {
+        "en": "Set draft parameters"
+      },
+      "purpose": "Changes settings in a draft. Each change names a setting from noema_get_capabilities (+ index, and name for formula parameters). All changes are validated first; if any is invalid nothing is applied.",
+      "params": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "draft_id",
+          "changes"
+        ],
+        "properties": {
+          "draft_id": {
+            "type": "string",
+            "pattern": "^draft-[a-z0-9]{6,32}$"
+          },
+          "changes": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 32,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "setting_id",
+                "value"
+              ],
+              "properties": {
+                "setting_id": {
+                  "type": "string",
+                  "maxLength": 100
+                },
+                "value": {},
+                "index": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 255
+                },
+                "name": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9_]{1,64}$"
+                }
+              }
+            }
+          },
+          "note": {
+            "type": "string",
+            "maxLength": 300
+          }
+        }
+      },
+      "approval": "session-opt-in",
+      "undo": "draft-step",
+      "status": "implemented",
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false
+      },
+      "sources": [
+        "src/engine/sceneEdit.ts",
+        "src/engine/scene.ts withColor/parseScene",
+        "src/app/gradientEditing.ts"
+      ],
+      "tests": [
+        "tests/aiBridgeService.test.ts"
+      ]
+    },
+    {
+      "id": "draft.apply_material",
+      "mcpTool": "noema_apply_material_to_draft",
+      "kind": "draft",
+      "name": {
+        "en": "Apply material to draft"
+      },
+      "purpose": "Applies a saved or built-in material to a draft: as the surface material, or (stop_index) to a colour-gradient stop, which makes it a Material stop. A stop takes the material's metallic, roughness, reflectivity and tint AND its PBR image maps (base colour, roughness, metallic, ambient occlusion) with one shared texture scale. Normal, bump, emission maps, displacement, procedural detail and transmission are NOT blended; they are listed in the result (notBlended). At most 4 different textured materials per gradient (an error says so). Tune the blend with the gradient stop settings (transition, softness, texture_scale). The saved material is only read.",
+      "params": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "draft_id",
+          "material_id"
+        ],
+        "properties": {
+          "draft_id": {
+            "type": "string",
+            "pattern": "^draft-[a-z0-9]{6,32}$"
+          },
+          "material_id": {
+            "type": "string",
+            "maxLength": 128
+          },
+          "stop_index": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 255
+          }
+        }
+      },
+      "approval": "session-opt-in",
+      "undo": "draft-step",
+      "status": "implemented",
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false
+      },
+      "sources": [
+        "src/app/materialGradientSource.ts",
+        "src/app/gradientEditing.ts setStopMaterial",
+        "src/engine/materialRampApply.ts"
+      ],
+      "tests": [
+        "tests/aiBridgeService.test.ts"
+      ]
+    },
+    {
+      "id": "draft.set_camera",
+      "mcpTool": "noema_set_draft_camera",
+      "kind": "draft",
+      "name": {
+        "en": "Move the draft camera"
+      },
+      "purpose": "Moves the camera of a draft by safe, relative moves, applied in this order: look_at (a new target point), orbit around the target (yaw positive = camera moves to its right, pitch positive = from above, limited to +-85 degrees), dolly (factor 2 = twice as close), roll (positive = camera rolls clockwise), field of view. Only position, target, up and fov change; lens, depth of field and projection are untouched. One undoable step.",
+      "params": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "draft_id"
+        ],
+        "properties": {
+          "draft_id": {
+            "type": "string",
+            "pattern": "^draft-[a-z0-9]{6,32}$"
+          },
+          "look_at": {
+            "type": "array",
+            "minItems": 3,
+            "maxItems": 3,
+            "items": {
+              "type": "number",
+              "minimum": -10000,
+              "maximum": 10000
+            }
+          },
+          "orbit_yaw_degrees": {
+            "type": "number",
+            "minimum": -360,
+            "maximum": 360
+          },
+          "orbit_pitch_degrees": {
+            "type": "number",
+            "minimum": -170,
+            "maximum": 170
+          },
+          "dolly_factor": {
+            "type": "number",
+            "minimum": 0.1,
+            "maximum": 10
+          },
+          "roll_degrees": {
+            "type": "number",
+            "minimum": -180,
+            "maximum": 180
+          },
+          "fov_degrees": {
+            "type": "number",
+            "minimum": 10,
+            "maximum": 120
+          },
+          "note": {
+            "type": "string",
+            "maxLength": 300
+          }
+        }
+      },
+      "approval": "session-opt-in",
+      "undo": "draft-step",
+      "status": "implemented",
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false
+      },
+      "sources": [
+        "src/app/aiBridge/cameraMoves.ts",
+        "src/engine/camera.ts"
+      ],
+      "tests": [
+        "tests/aiBridgeMcp02.test.ts"
+      ]
+    },
+    {
+      "id": "draft.set_light",
+      "mcpTool": "noema_set_draft_light",
+      "kind": "draft",
+      "name": {
+        "en": "Edit a draft light"
+      },
+      "purpose": "Edits one light of a draft, or adds one (omit index; at most 8 lights), or removes one (remove true). Fields are those of NOEMA's own lights: enabled, type (directional, point, spot), color (#rrggbb), intensity, direction (directional and spot), position (point and spot), cone_degrees and cone_softness (spot), shadows (none, hard, soft) and shadow_softness. Values are checked against NOEMA's light limits. Use noema_inspect_scene with sections lights to see the current lights.",
+      "params": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "draft_id"
+        ],
+        "properties": {
+          "draft_id": {
+            "type": "string",
+            "pattern": "^draft-[a-z0-9]{6,32}$"
+          },
+          "index": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 7
+          },
+          "remove": {
+            "type": "boolean"
+          },
+          "enabled": {
+            "type": "boolean"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "directional",
+              "point",
+              "spot"
+            ]
+          },
+          "color": {
+            "type": "string",
+            "pattern": "^#[0-9a-fA-F]{6}$"
+          },
+          "intensity": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 10000
+          },
+          "direction": {
+            "type": "array",
+            "minItems": 3,
+            "maxItems": 3,
+            "items": {
+              "type": "number",
+              "minimum": -10000,
+              "maximum": 10000
+            }
+          },
+          "position": {
+            "type": "array",
+            "minItems": 3,
+            "maxItems": 3,
+            "items": {
+              "type": "number",
+              "minimum": -10000,
+              "maximum": 10000
+            }
+          },
+          "cone_degrees": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 89
+          },
+          "cone_softness": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "shadows": {
+            "type": "string",
+            "enum": [
+              "none",
+              "hard",
+              "soft"
+            ]
+          },
+          "shadow_softness": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "note": {
+            "type": "string",
+            "maxLength": 300
+          }
+        }
+      },
+      "approval": "session-opt-in",
+      "undo": "draft-step",
+      "status": "implemented",
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false
+      },
+      "sources": [
+        "src/engine/lights.ts",
+        "src/engine/scene.ts parseScene"
+      ],
+      "tests": [
+        "tests/aiBridgeMcp02.test.ts"
+      ]
+    },
+    {
+      "id": "draft.set_ambient",
+      "mcpTool": "noema_set_draft_ambient",
+      "kind": "draft",
+      "name": {
+        "en": "Edit draft ambient light"
+      },
+      "purpose": "Changes the ambient light of a draft: color (#rrggbb) and/or intensity (0 to 10; NOEMA's default is 0.12).",
+      "params": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "draft_id"
+        ],
+        "properties": {
+          "draft_id": {
+            "type": "string",
+            "pattern": "^draft-[a-z0-9]{6,32}$"
+          },
+          "color": {
+            "type": "string",
+            "pattern": "^#[0-9a-fA-F]{6}$"
+          },
+          "intensity": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 10
+          },
+          "note": {
+            "type": "string",
+            "maxLength": 300
+          }
+        }
+      },
+      "approval": "session-opt-in",
+      "undo": "draft-step",
+      "status": "implemented",
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false
+      },
+      "sources": [
+        "src/engine/lights.ts"
+      ],
+      "tests": [
+        "tests/aiBridgeMcp02.test.ts"
+      ]
+    },
+    {
+      "id": "draft.undo_step",
+      "mcpTool": "noema_undo_draft_step",
+      "kind": "draft",
+      "name": {
+        "en": "Undo draft step"
+      },
+      "purpose": "Undoes the last change inside the draft. Never touches the live scene or the app's own Undo.",
+      "params": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "draft_id"
+        ],
+        "properties": {
+          "draft_id": {
+            "type": "string",
+            "pattern": "^draft-[a-z0-9]{6,32}$"
+          }
+        }
+      },
+      "approval": "session-opt-in",
+      "undo": "draft-step",
+      "status": "implemented",
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false
+      },
+      "sources": [
+        "src/app/aiBridge/drafts.ts"
+      ],
+      "tests": [
+        "tests/aiBridgeService.test.ts"
+      ]
+    },
+    {
+      "id": "draft.discard",
+      "mcpTool": "noema_discard_draft",
+      "kind": "draft",
+      "name": {
+        "en": "Discard draft"
+      },
+      "purpose": "Throws away a draft. The live scene is not affected.",
+      "params": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "draft_id"
+        ],
+        "properties": {
+          "draft_id": {
+            "type": "string",
+            "pattern": "^draft-[a-z0-9]{6,32}$"
+          }
+        }
+      },
+      "approval": "session-opt-in",
+      "undo": "none",
+      "status": "implemented",
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": true,
+        "openWorldHint": false
+      },
+      "sources": [
+        "src/app/aiBridge/drafts.ts"
+      ],
+      "tests": [
+        "tests/aiBridgeService.test.ts"
+      ]
+    },
+    {
+      "id": "draft.request_apply",
+      "mcpTool": "noema_request_apply_draft",
+      "kind": "draft",
+      "name": {
+        "en": "Ask the artist to apply the draft"
+      },
+      "purpose": "Asks the artist to apply the draft to the live scene. This only shows the draft and a confirmation in the app; the artist decides (Use / Reject). It returns immediately with state awaiting_user_confirmation; poll noema_list_drafts to see the outcome. There is no way for the AI to apply a draft by itself.",
+      "params": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "draft_id"
+        ],
+        "properties": {
+          "draft_id": {
+            "type": "string",
+            "pattern": "^draft-[a-z0-9]{6,32}$"
+          },
+          "message": {
+            "type": "string",
+            "maxLength": 300
+          }
+        }
+      },
+      "approval": "user-confirmation",
+      "undo": "scene-transaction",
+      "status": "implemented",
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      },
+      "sources": [
+        "src/app/aiBridge/appService.ts",
+        "src/app/sceneSync.ts editWithUndo"
+      ],
+      "tests": [
+        "tests/aiBridgeService.test.ts"
+      ]
+    },
+    {
+      "id": "render.preview",
+      "mcpTool": "noema_render_preview",
+      "kind": "render",
+      "name": {
+        "en": "Render preview"
+      },
+      "purpose": "Renders a small still of the live scene or a draft through the app's LookDev path: 256 px wide (fast) or 512 px, 1 or 2 samples, Geometry Detail off. The image is returned to you: look at it. Uses the GPU, one at a time, never while a main render runs; the first render after a scene change takes longer (shader compile). At most 30 previews per draft and 12 per minute. The answer also carries colour-independent shape measurements (objectShare, edgeDensity, brightness). The result includes diagnostics from the engine's own CPU ray marcher for the draft's camera: status (surface-visible, sparse, nothing-hit-normal-march, camera-inside-solid, unavailable), hit share, a finer-march check for sphere-tracing overshoot, possible causes and a hint. A blank picture is not proof of a failed formula.",
+      "params": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "target": {
+            "type": "string",
+            "pattern": "^(current|draft-[a-z0-9]{6,32})$",
+            "default": "current"
+          },
+          "samples": {
+            "type": "integer",
+            "enum": [
+              1,
+              2
+            ],
+            "default": 1
+          },
+          "width": {
+            "type": "integer",
+            "enum": [
+              256,
+              512
+            ],
+            "default": 512
+          }
+        }
+      },
+      "approval": "session-opt-in",
+      "undo": "none",
+      "status": "implemented",
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false
+      },
+      "sources": [
+        "src/engine/lookDev.ts lookDevRequest",
+        "src/app/main.ts (render port)"
+      ],
+      "tests": [
+        "tests/aiBridgeService.test.ts"
+      ]
+    },
+    {
+      "id": "render.compare",
+      "mcpTool": "noema_compare_renders",
+      "kind": "render",
+      "name": {
+        "en": "Compare two renders"
+      },
+      "purpose": "Renders two targets (the live scene and/or drafts) and returns ONE image with A on the left and B on the right, so you can judge a change. Costs two renders against the preview budget (256 px each by default). Same GPU rules as noema_render_preview. The answer also says how different the SHAPES are (silhouette overlap, structure density, a verdict), independent of colour.",
+      "params": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "a",
+          "b"
+        ],
+        "properties": {
+          "a": {
+            "type": "string",
+            "pattern": "^(current|draft-[a-z0-9]{6,32})$"
+          },
+          "b": {
+            "type": "string",
+            "pattern": "^(current|draft-[a-z0-9]{6,32})$"
+          },
+          "width": {
+            "type": "integer",
+            "enum": [
+              256,
+              512
+            ],
+            "default": 256
+          },
+          "samples": {
+            "type": "integer",
+            "enum": [
+              1,
+              2
+            ],
+            "default": 1
+          }
+        }
+      },
+      "approval": "session-opt-in",
+      "undo": "none",
+      "status": "implemented",
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false
+      },
+      "sources": [
+        "src/app/aiBridge/appService.ts",
+        "src/app/aiBridge/connect.ts"
+      ],
+      "tests": [
+        "tests/aiBridgeMcp02.test.ts"
+      ]
+    }
+  ],
+  "notImplemented": [
+    "ui.show_setting",
+    "looks.list",
+    "scene.request_save",
+    "feedback.draft"
+  ]
+}

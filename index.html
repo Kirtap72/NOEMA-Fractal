@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NOEMA Fractal</title>
+    <style>
+      html, body { margin: 0; height: 100%; background: #111; overflow: hidden; font-family: system-ui, sans-serif; }
+      #view { display: block; position: fixed; left: 0; top: 0; width: 100vw; height: 100vh; touch-action: none; cursor: grab; }
+      #controls[hidden],body.panel-hidden #sidebar-resize { display:none!important; }
+      #controls { top:42px!important; }
+      #panel-toggle { position:fixed;left:12px;top:8px;z-index:4;padding:5px 10px;cursor:pointer; }
+      #camera-panel { position:static;padding:6px 8px;display:flex;flex-direction:column;gap:6px;font-size:13px; }
+      #camera-panel label { display:grid;grid-template-columns:1fr minmax(5rem,1fr);gap:5px;align-items:center; }
+      #camera-panel input:not([type=checkbox]),#camera-panel select { min-width:0;width:100%;box-sizing:border-box; }
+      #camera-panel button { margin:2px; }
+      #camera-panel .camera-lenses { display:grid; grid-template-columns:repeat(3,1fr); gap:4px; }
+      #composition-overlay { position:fixed;top:0;pointer-events:none;z-index:1; }
+      #fps,#viewport-quality { z-index:3; }
+      #camera-frame-label { position:fixed;bottom:32px;z-index:2;color:#fff;background:#111a;padding:3px 6px;font:12px system-ui;pointer-events:none; }
+      #dof-preview { position:fixed;pointer-events:none;z-index:0; }
+      #preview-diagnostics { position:fixed;right:12px;top:72px;z-index:3;color:#ddd;background:#17191deb;max-width:430px;padding:5px 8px;font-size:11px;border-radius:4px; }
+      #preview-diagnostics pre { white-space:pre-wrap;max-height:40vh;overflow:auto; }
+      #preview-diagnostics:not([open]) > :not(summary) { display:none; }
+      #view.framed { outline: 1px solid #667; }
+      #view:active { cursor: grabbing; }
+      .panel { position: fixed; color: #fff; background: rgba(0,0,0,0.55); border-radius: 4px; }
+      #fps { top: 8px; right: 12px; padding: 2px 8px; font: 14px ui-monospace, monospace; }
+      #viewport-quality { position:fixed; top:38px; right:12px; color:#ddd; background:#202329; padding:4px 6px; border-radius:4px; font-size:12px; }
+      #controls { position: fixed; top: 8px; left: 12px; bottom: 28px; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; width: 21rem; }
+      #chain { position: static; padding: 6px 8px; font-size: 13px; display: flex; flex-direction: column; gap: 6px; }
+      #chain .ctitle { font-weight: 600; }
+      #chain .step { background: rgba(255,255,255,0.08); border-radius: 4px; padding: 4px 6px; display: flex; flex-direction: column; gap: 3px; }
+      #chain .stephead { display: grid; grid-template-columns: 1.2rem 1fr 1.8rem 1.8rem 1.8rem; gap: 3px; align-items: center; }
+      #chain .num { font-weight: 600; text-align: center; }
+      #chain .addrow { display: grid; grid-template-columns: 1fr auto; gap: 4px; }
+      #chain .roundsrow input { width: 3.5rem; }
+      #chain .total { color: #bbb; }
+      #controls button, #controls .open { font-size: 13px; padding: 2px 8px; cursor: pointer; }
+      .slider { display: grid; grid-template-columns: 5.5rem 1fr 2.8rem; align-items: center; gap: 6px; color: #fff; font-size: 13px; }
+      .slider .value { font-family: ui-monospace, monospace; }
+      #color { position: static; padding: 6px 8px; font-size: 13px; display: flex; flex-direction: column; gap: 5px; }
+      #color .row { display: grid; grid-template-columns: 6.5rem 1fr 3rem; align-items: center; gap: 6px; }
+      #color select { grid-column: 2 / 4; font-size: 13px; }
+      #gradient-preview { height: 14px; border-radius: 3px; border: 1px solid rgba(255,255,255,0.4); }
+      #color input[type=file] { grid-column: 2 / 4; min-width: 0; font-size: 12px; }
+      #color .tname { grid-column: 2; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #ddd; }
+      #color .note { color: #bbb; font-size: 12px; }
+      #color .value { font-family: ui-monospace, monospace; }
+      #primitives, #fractal-displacement, #cutout, #details, #animation, #lights, #fog, #environment, #material, #format, #still, #render, #mesh, #random, #formulas { position: static; padding: 6px 8px; font-size: 13px; display: flex; flex-direction: column; gap: 5px; }
+      #cutout .ctitle, #details .ctitle, #animation .ctitle, #lights .ctitle, #fog .ctitle, #environment .ctitle, #material .ctitle, #formulas .ctitle, #format .ctitle, #still .ctitle, #render .ctitle, #mesh .ctitle, #random .ctitle { font-weight: 600; }
+      .lightcard { background: rgba(255,255,255,0.08); border-radius: 4px; padding: 4px 6px; display: flex; flex-direction: column; gap: 4px; }
+      .lighthead { display: grid; grid-template-columns: 1.4rem 1fr 1.8rem; gap: 4px; align-items: center; }
+      .lighttitle { font-weight: 600; }
+      #lights .value { font-family: ui-monospace, monospace; }
+      .fgrid { position: fixed; top: 8px; right: 12px; z-index: 5; max-height: calc(100vh - 40px); overflow-y: auto; padding: 8px; font-size: 13px; display: flex; flex-direction: column; gap: 6px; width: min(520px, calc(100vw - 24px)); box-sizing: border-box; }
+      .matbox { background: rgba(255,255,255,0.06); border-radius: 4px; padding: 4px 6px; display: flex; flex-direction: column; gap: 4px; }
+      #material .value { font-family: ui-monospace, monospace; }
+      #cutout fieldset { min-width: 0; display: flex; flex-direction: column; gap: 5px; border: 1px solid #62666e; }
+      #cutout label, #details label { display: grid; grid-template-columns: minmax(0, 1fr) 7rem; align-items: center; gap: 8px; }
+      #cutout input, #details input { justify-self: end; max-width: 100%; }
+      #details input[type=range] { width: 7rem; }
+      .fgrid[hidden] { display: none; }
+      .fgridhead { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+      .fgridhead input[type=number] { width: 9rem; }
+      .fgridcells { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+      .fcell { position: relative; aspect-ratio: 4 / 3; background: rgba(255,255,255,0.06); border: 2px solid transparent; border-radius: 4px; cursor: pointer; overflow: hidden; }
+      .fcell canvas { width: 100%; height: 100%; display: block; }
+      .fcell.selected { border-color: #ffc83d; }
+      .fcell.locked::after { content: "kept"; position: absolute; right: 4px; bottom: 2px; font-size: 10px; color: #8f8; text-shadow: 0 0 3px #000; }
+      .fcell img { width: 100%; height: 100%; display: block; }
+      .fsel { display: flex; flex-direction: column; gap: 4px; border-top: 1px solid #556; padding-top: 6px; }
+      .fsaved { display: flex; flex-direction: column; gap: 3px; max-height: 14rem; overflow-y: auto; }
+      .fsavedrow { display: grid; grid-template-columns: 48px 1fr auto auto; gap: 6px; align-items: center; }
+      .fsavedrow img { width: 48px; height: 36px; display: block; }
+      .fsavedname { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .fcell:focus-visible { outline: 2px solid #8cf; }
+      .fcelllabel { position: absolute; left: 4px; top: 2px; font-size: 11px; color: #ffe680; text-shadow: 0 0 3px #000; }
+      .arow.dense { grid-template-columns: 6.5rem 1fr 3rem; }
+      #fog .value { font-family: ui-monospace, monospace; }
+      .arow.four { grid-template-columns: 6.5rem 1fr 1fr 1fr 1fr; }
+      .stillpreview { max-height: 18rem; overflow: auto; border: 1px solid #556; background: #000; }
+      .stillpreview canvas { display: block; }
+      .arow.three { grid-template-columns: 6.5rem 1fr 1fr 1fr; }
+      .arow { display: grid; grid-template-columns: 6.5rem 1fr; align-items: center; gap: 6px; }
+      #format .arow:has(input + input) { grid-template-columns: 6.5rem 1fr 1fr; }
+      #still progress, #format progress { width: 100%; }
+      #still fieldset { min-width: 0; max-width: 100%; box-sizing: border-box; border: 1px solid #62666e; margin: 6px 0; }
+      #quality-effective { padding: 8px; border-left: 3px solid #9cb7d4; overflow-wrap: anywhere; }
+      #quality-image > #format { padding: 0; }
+      #geometry-detail > label { display: grid !important; grid-template-columns: minmax(0, 1fr) 100px; gap: 4px; align-items: center; }
+      #geometry-detail input[type=range] { grid-column: 1 / -1; width: 100%; }
+      #geometry-detail > label:has(#geometry-enabled) { display: block !important; }
+      #geometry-detail > label[hidden] { display: none !important; }
+      #quality-advanced > summary { cursor: pointer; }
+      .arow input[type=number], .arow select { width: 100%; min-width: 0; box-sizing: border-box; }
+      #controls { overflow-x: hidden; }
+      .numeric-range { display:grid; grid-template-columns:minmax(2rem,1fr) 5.5rem; gap:4px; min-width:0; align-items:center; }
+      .numeric-range input[type=range] { width:100%!important; min-width:0; }
+      .numeric-range .exact-number { width:100%; min-width:0; box-sizing:border-box; font:12px ui-monospace,monospace; }
+      .exact-number:invalid { outline:1px solid #ec9b5f; }
+      .slider:has(.numeric-range), #color .row:has(.numeric-range), .arow.dense:has(.numeric-range) { grid-template-columns:5.5rem minmax(0,1fr); }
+      .numeric-range + .value { display:none; }
+      #details label:has(.numeric-range) { grid-template-columns:minmax(0,1fr) 10rem; }
+      #navigation { padding:6px 8px; position:static; display:flex; flex-direction:column; gap:5px; font-size:13px; }
+      #navigation label { display:grid; grid-template-columns:5.5rem minmax(0,1fr); }
+      .gradient-editor { display:flex; flex-direction:column; gap:5px; }
+      .gradient-track { position:relative; height:28px; margin:6px 8px; border:1px solid #888; touch-action:none; cursor:crosshair; }
+      .gradient-stop { position:absolute; top:16px; width:13px; height:17px; padding:0!important; transform:translateX(-50%); border:2px solid white; border-radius:3px; touch-action:none; }
+      .gradient-stop[aria-pressed=true] { outline:2px solid #ffbf53; z-index:1; }
+      .ai-bridge-panel { border:1px solid #556; border-radius:4px; padding:4px 8px; margin:6px 0; }
+      .ai-bridge-panel, .ai-bridge-panel summary, .ai-bridge-panel h4, .ai-draft strong, .ai-draft small, .ai-draft-message, .ai-bridge-log li { color:#e6e9ee; }
+      .ai-bridge-panel h4 { margin:8px 0 2px; font-size:13px; }
+      .ai-bridge-panel ul { margin:2px 0 2px 14px; padding:0; font-size:12px; }
+      .ai-bridge-panel.on { border-color:#3aa66a; }
+      .ai-bridge-status { font-weight:600; margin:4px 0; }
+      .ai-bridge-panel.on .ai-bridge-status { color:#7be0a4; }
+      .ai-bridge-info, .ai-bridge-config small { display:block; line-height:1.3; color:#cfd6dc; }
+      .ai-draft { border:1px solid #445; border-radius:4px; padding:4px 6px; margin:4px 0; display:flex; flex-direction:column; gap:3px; }
+      .ai-draft.awaiting_user_confirmation { border-color:#ffbf53; }
+      .ai-draft-buttons { display:flex; gap:4px; flex-wrap:wrap; }
+      .ai-bridge-warning { color:#ffbf53; }
+      .ai-chat-panel, #ai-bridge-panel { color:#eee; font-size:13px; line-height:1.35; } .ai-chat-panel summary, #ai-bridge-panel summary { color:#fff; font-weight:600; cursor:pointer; }
+      .ai-chat-progress { list-style:none; display:flex; gap:4px; padding:0; margin:6px 0; flex-wrap:wrap; } .ai-chat-progress li { flex:1 1 45%; padding:3px 6px; border:1px solid #555; border-radius:12px; font-size:.85em; opacity:.85; text-align:center; color:#cfd3da; background:#1b1d22; }
+      .ai-chat-progress li.active { opacity:1; border-color:#ffbf53; color:#ffbf53; font-weight:600; } .ai-chat-progress li.done { opacity:1; border-color:#6fbf73; color:#6fbf73; }
+      .ai-chat-big[hidden], .ai-chat-thumbs:empty, .ai-chat-log:empty, .ai-chat-explain[hidden] { display:none!important; } .ai-chat-model-row { flex-wrap:wrap; } .ai-chat-model-row select { flex:1 1 100%; min-width:0; max-width:100%; } .ai-chat-panel select { max-width:100%; }
+      .ai-chat-stage { margin:6px 0; } .ai-chat-big { width:100%; border-radius:6px; border:1px solid #555; display:block; background:#111; } .ai-chat-stage figcaption { font-size:.85em; opacity:.85; margin:3px 0; }
+      .ai-chat-thumbs { display:flex; gap:4px; flex-wrap:wrap; } .ai-chat-thumb { width:56px; height:auto; border-radius:3px; border:2px solid transparent; cursor:pointer; } .ai-chat-thumb.on { border-color:#ffbf53; }
+      .ai-chat-explain { background:#262626; border-radius:6px; padding:6px 8px; margin:6px 0; display:flex; flex-direction:column; gap:4px; } .ai-chat-explain-text { white-space:pre-wrap; } .ai-chat-changes { margin:2px 0; padding-left:1.2em; font-size:.85em; }
+      .ai-chat-actions { display:flex; gap:4px; flex-wrap:wrap; align-items:center; margin:6px 0; } .ai-chat-actions small { flex-basis:100%; } .ai-chat-apply { font-weight:600; }
+      .ai-chat-ref { display:flex; gap:6px; flex-wrap:wrap; align-items:center; margin:4px 0; } .ai-chat-ref-thumb { max-height:48px; border-radius:3px; }
+      #preview-access[data-collapsed="true"] #lookdev-preview > :not(#lookdev-state) { display:none!important; }
+      #preview-access[data-collapsed="true"] #lookdev-preview { gap:0!important; }
+      #preview-access[data-collapsed="true"] #lookdev-state:empty { display:none; }
+      #preview-access[hidden], #lookdev-restore[hidden] { display:none!important; }
+      #artist-lookbook { color:#edf2f6; background:#17212b; border:1px solid #657987; border-radius:12px; padding:20px; width:min(920px,90vw); max-height:85vh; overflow:auto; box-shadow:0 20px 80px #000b; }
+      #artist-lookbook::backdrop { background:#0009; }
+      .lookbook-head { display:flex; align-items:center; justify-content:space-between; gap:16px; }
+      .lookbook-head h2 { margin:0; font-size:22px; }
+      .lookbook-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; margin:18px 0; }
+      .lookbook-card { margin:0; background:#0e161e; border:1px solid #3b5060; border-radius:8px; padding:10px; }
+      .lookbook-card canvas { width:100%; height:210px; object-fit:contain; background:#0b1016; display:block; }
+      .lookbook-card h3 { font-size:15px; margin:10px 0; }
+      .lookbook-card button { width:100%; padding:9px; }
+      .lookbook-card [aria-pressed="true"] { background:#83c5b8; color:#0b1920; }
+      #artist-lookbook p { font-size:13px; line-height:1.5; color:#b7c9d5; }
+      #lookbook-status { min-height:1.5em; }
+      #artist-lookbook button { cursor:pointer; }
+      @media(max-width:650px) { .lookbook-grid { grid-template-columns:1fr; } }
+      #preview-controls-toggle { white-space:nowrap; }
+      #ai-dock { position:fixed; top:0; bottom:28px; right:0; z-index:6; display:flex; flex-direction:column; background:#14181d; color:#eee; border-left:2px solid #5a6a78; box-shadow:-6px 0 18px #0008; min-width:300px; max-width:70vw; }
+      #ai-dock[hidden], #ai-dock-toggle[hidden] { display:none!important; }
+      .ai-dock-head { display:flex; justify-content:space-between; align-items:center; padding:6px 10px; border-bottom:1px solid #3b4752; font-size:15px; }
+      .ai-dock-body { overflow-y:auto; overflow-x:hidden; padding:6px 10px 12px; flex:1; }
+      .ai-dock-grip { position:absolute; left:-6px; top:0; bottom:0; width:10px; cursor:col-resize; z-index:7; }
+      #ai-dock-toggle { position:fixed; right:16px; bottom:64px; z-index:6; padding:10px 18px; font-size:15px; font-weight:600; color:#14181d; background:#ffbf53; border:0; border-radius:22px; box-shadow:0 2px 10px #0009; cursor:pointer; }
+      .ai-chat-key { margin:4px 0; } .ai-chat-keyform { display:flex; flex-direction:column; gap:4px; margin-top:4px; padding:6px; background:#1f262d; border-radius:6px; } .ai-chat-keyform input { width:100%; box-sizing:border-box; }
+      .ai-chat-row { display:flex; gap:6px; align-items:center; margin:3px 0; } .ai-chat-row label { min-width:7em; }
+      .ai-chat-modes { display:flex; gap:4px; flex-wrap:wrap; margin:4px 0; } .ai-chat-modes button.on { outline:2px solid #ffbf53; }
+      .ai-chat-log { max-height:280px; overflow:auto; border:1px solid #555; border-radius:6px; padding:6px; margin:6px 0; display:flex; flex-direction:column; gap:4px; }
+      .ai-chat-user { align-self:flex-end; background:#2d4a63; border-radius:8px; padding:4px 8px; max-width:90%; white-space:pre-wrap; }
+      .ai-chat-ai { background:#333; border-radius:8px; padding:4px 8px; max-width:95%; white-space:pre-wrap; } .ai-chat-tool, .ai-chat-system { font-size:.85em; opacity:.8; }
+      .ai-chat-preview { max-width:100%; border-radius:4px; align-self:flex-start; } .ai-chat-panel textarea { width:100%; box-sizing:border-box; }
+      .ai-bridge-recovery { border:1px solid #ffbf53; border-radius:6px; padding:6px; margin:4px 0; display:flex; flex-direction:column; gap:4px; }
+      .ai-bridge-error { color:#ff8b8b; }
+      .ai-draft-diff { margin:2px 0 0 14px; padding:0; font-size:12px; }
+      .gradient-stop-material { border-radius:50%!important; border-color:#ffd27a!important; box-shadow:0 0 0 1px #000; }
+      .material-gradient label { display:inline-flex; gap:4px; align-items:center; }
+      .material-gradient select { max-width:11rem; }
+      .material-gradient-info { display:block; color:#cfd6dc; line-height:1.3; }
+      .gradient-fields { display:flex; gap:4px; flex-wrap:wrap; align-items:center; }
+      .gradient-fields input[type=number] { width:5.5rem; }
+      .gradient-fields input[type=text] { width:9rem; }
+
+      #controls, #fps, #viewport-quality, #hint, #message { z-index: 2; }
+      #clip-gizmo { z-index: 1; }
+      #cutout summary { cursor: pointer; color: #ccc; }
+      #primitives h3, #fractal-displacement h3 {margin:0;font-size:13px;}
+      #fractal-displacement > label.arow { display:flex; gap:6px; align-items:flex-start; }
+      #fractal-displacement .fd-layer > summary { cursor:pointer; color:#ccc; }
+      #primitives .object-controls {display:flex;flex-direction:column;gap:5px;}
+      #primitives .object-controls[hidden] {display:none;}
+      #primitives .clip-actions {display:flex;gap:4px;flex-wrap:wrap;}
+      #primitives select {max-width:100%;}
+      #primitives .arow input {max-width:8rem;}
+      #cutout .clip-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+      #cutout fieldset[data-selected=true] { border-color: #ffc453; }
+      .transport { display: flex; align-items: center; gap: 6px; }
+      .timelabel { font-family: ui-monospace, monospace; }
+      .track { position: relative; }
+      .track input[type=range] { width: 100%; margin: 0; }
+      .markers { position: relative; height: 8px; }
+      .marker { position: absolute; top: 0; width: 3px; height: 8px; margin-left: -1px; background: #ffc83d; border-radius: 1px; }
+      .kflist { display: flex; flex-direction: column; gap: 2px; max-height: 10rem; overflow-y: auto; }
+      .kfrow { display: grid; grid-template-columns: 1.4rem 1fr auto auto; gap: 3px; align-items: center; }
+      .kfnum { font-weight: 600; text-align: center; }
+      .ainfo, .rstatus { color: #bbb; min-height: 1em; }
+      .rbuttons { display: flex; gap: 6px; flex-wrap: wrap; }
+      #render progress { width: 100%; }
+      #info { width: 24px; height: 24px; padding: 0; border-radius: 50%; border: 1px solid #888; background: #222; color: #fff;
+              font: italic 700 14px Georgia, serif; cursor: pointer; line-height: 1; }
+      #info[aria-expanded="true"] { background: #345; border-color: #9cf; }
+      #info.needs-check { border-color: #fc8; color: #fc8; }
+      #preview-access button[data-preview-mode][aria-pressed="true"] { background:#ffb454; color:#161616; border-color:#ffb454; font-weight:600; }
+      #hint { position: fixed; bottom: 8px; left: 12px; color: #aaa; font-size: 13px; }
+      #credits { bottom: 8px; right: 12px; max-width: min(34rem, 50vw); max-height: 45vh; overflow-y: auto; padding: 8px 12px; font-size: 13px; line-height: 1.4; }
+      #credits .title { font-weight: 600; font-size: 14px; margin: 6px 0 4px; }
+      #credits a { color: #9cf; word-break: break-all; }
+      #credits .unverified { color: #fc8; }
+      #credits .warn { margin-top: 6px; color: #fc8; font-weight: 600; }
+      #message { cursor: pointer; position: fixed; top: 20%; left: 50%; transform: translateX(-50%); max-width: 40rem;
+                 color: #fff; background: #833; padding: 1rem; border-radius: 0.5rem; white-space: pre-wrap; font-size: 13px; }
+    </style>
+  </head>
+  <body>
+    <canvas id="view"></canvas>
+    <div id="fps" class="panel">– FPS</div>
+    <label id="viewport-quality">Quality in Explore <select id="viewport-mode" aria-label="Quality in Explore" title="Temporary quality in Explore. Final view shows a quick whole picture and refines with up to 16 lens/AA samples within the budget. The final render always uses the full saved final quality and at least 16 samples when depth of field is on."><option value="automatic">Automatic</option><option value="navigate">Fast</option><option value="lookdev">Detailed</option><option value="final">Final view</option></select></label>
+    <button id="panel-toggle" aria-controls="controls" title="Hide/show settings (H)">◀ Hide panel</button>
+    <div id="controls">
+      <div id="navigation" class="panel"></div>
+      <div id="camera-panel" class="panel"></div>
+      <div id="camera-flight" class="panel"></div>
+      <div id="chain" class="panel"></div>
+      <div id="random" class="panel"></div>
+      <div id="formulas" class="panel"></div>
+      <div id="color" class="panel">
+        <div class="row"><span>Gradient</span><select id="gradient"></select></div>
+        <div id="gradient-preview"></div>
+        <div class="row"><span>Colour by</span><select id="measure"></select></div>
+        <label class="row"><span>Repeats</span><input id="cycles" data-numeric-min="0.05" data-numeric-max="20" type="range" min="0.1" max="10" step="0.05" /><span id="cycles-value" class="value"></span></label>
+        <label class="row"><span>Offset</span><input id="offset" data-numeric-min="-100" data-numeric-max="100" type="range" min="0" max="1" step="0.005" /><span id="offset-value" class="value"></span></label>
+        <div class="row"><span>Texture</span><input id="texture-file" type="file" accept="image/png,image/jpeg" /></div>
+        <div class="row"><span>Chosen picture</span><span id="texture-name" class="tname">none</span><button id="texture-clear" type="button">Remove</button></div>
+        <div class="row"><span>Mapping</span><select id="texture-mapping"><option value="triplanar">From three directions</option><option value="spherical">All around (like a globe)</option></select></div>
+        <label class="row"><span>Picture scale</span><input id="texture-scale" data-numeric-max="16777216" type="range" min="0.05" max="50" step="0.05" /><span id="texture-scale-value" class="value"></span></label>
+        <label class="row"><span>Strength</span><input id="texture-strength" type="range" min="0" max="1" step="0.01" /><span id="texture-strength-value" class="value"></span></label>
+        <div class="note">The picture is saved inside the scene file. Only use pictures you have the right to use.</div>
+        <div class="row"><span>Edges</span><select id="wrap"><option value="mirror">Mirror</option><option value="repeat">Repeat</option></select></div>
+      </div>
+      <div id="lights" class="panel"></div>
+      <div id="fog" class="panel"></div>
+      <div id="environment" class="panel"></div>
+      <div id="material" class="panel"></div>
+      <div id="primitives" class="panel"></div>
+      <div id="fractal-displacement" class="panel"></div>
+      <div id="cutout" class="panel"></div>
+      <div id="details" class="panel"></div>
+      <details><summary>Older animation / export</summary><div id="animation" class="panel"></div></details>
+      <div id="format" class="panel"></div>
+      <div id="still" class="panel"></div>
+      <details><summary>Older film export</summary><div id="render" class="panel"></div></details>
+      <div id="mesh" class="panel"></div>
+      <div><button id="save">Save scene</button> <label class="open" style="color:#fff;font-size:13px">Open scene: <input id="open" type="file" accept=".json,application/json" /></label></div>
+      <div><button id="info" type="button" aria-expanded="false" aria-controls="credits" title="Show authors and sources">i</button></div>
+    </div>
+    <div id="hint">Drag to rotate · right button or Shift+drag to move the view point · double-click a detail for focus · scroll to dolly · Shift/Ctrl+scroll for fine control</div>
+    <div id="credits" class="panel" hidden role="region" aria-label="Authors and sources"></div>
+    <div id="message" hidden></div>
+    <script type="module" src="/src/app/main.ts"></script>
+  </body>
+</html>

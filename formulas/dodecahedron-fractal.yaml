@@ -1,0 +1,72 @@
+# Dodecahedron fractal. Format: see formulas/README.md
+format: 1
+id: dodecahedron-fractal
+name: "Dodecahedron fractal"
+catalog:
+  category: ifs
+  tags:
+  - polyhedral
+  - IFS
+description: >
+  Twenty copies of a dodecahedron, each 1/(2 + phi) of the size (phi is the
+  golden ratio), towards its twenty corners, and the same again inside every
+  copy. Each iteration finds the nearest corner and stretches space by 2 + phi
+  away from it; the distance is then measured to one dodecahedron and scaled
+  back.
+
+# NOTE: the AI assistant read Paul Bourke's page Polyhedral fractals on 2026-10-07:
+# dodecahedron, 20 copies, scale factor 1/(2 + phi), placed along the lines from
+# the centre to each vertex. The corners are (+-1, +-1, +-1), (0, +-1/phi, +-phi)
+# and its cyclic permutations; the face planes have the normals (0, +-phi, +-1)
+# and its cyclic permutations, at the distance 1.376382 from the centre (checked
+# by computing which corners lie on each plane). The nearest-corner rule and the
+# distance are the assistant's own derivation.
+# A person must still check each name and link before this is set to
+# "verified" (and reviewed: true).
+credits:
+  - name: Paul Bourke
+    role: "description of the polyhedral fractals (1993)"
+    status: unverified
+sources:
+  - url: https://paulbourke.net/fractals/polyhedral/
+    status: unverified
+  - url: https://en.wikipedia.org/wiki/Regular_dodecahedron
+    status: unverified
+
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: >
+  Mathematical idea, not claimed as owned. Written fresh for this project from
+  the published description; no code from any program was read or copied.
+  The nearest-corner rule, the face planes and the distance are derived by the assistant. Source details are unverified (see credits).
+reviewed: false
+
+iteration:
+  iterations: 5
+  carry: [z, dr]
+  variables:
+    - { name: z, type: vec3, init: pos }
+    - { name: dr, type: float, init: 1 }
+    - { name: a, type: vec3, init: "vec3(0.0, 0.0, 0.0)" }
+    - { name: v, type: vec3, init: "vec3(0.0, 0.0, 0.0)" }
+    - { name: best, type: float, init: 0 }
+    - { name: dk, type: float, init: 0 }
+  steps:
+    - "a = abs(z)"
+    # The nearest corner: the largest dot product with the four corner patterns, signs from the point.
+    - "v = vec3(1.0, 1.0, 1.0)"
+    - "best = a.x + a.y + a.z"
+    - "dk = 0.618033988749895 * a.y + 1.618033988749895 * a.z"
+    - "v = select(v, vec3(0.0, 0.618033988749895, 1.618033988749895), dk > best)"
+    - "best = max(best, dk)"
+    - "dk = 0.618033988749895 * a.x + 1.618033988749895 * a.y"
+    - "v = select(v, vec3(0.618033988749895, 1.618033988749895, 0.0), dk > best)"
+    - "best = max(best, dk)"
+    - "dk = 1.618033988749895 * a.x + 0.618033988749895 * a.z"
+    - "v = select(v, vec3(1.618033988749895, 0.0, 0.618033988749895), dk > best)"
+    - "v = v * vec3(select(-1.0, 1.0, z.x >= 0.0), select(-1.0, 1.0, z.y >= 0.0), select(-1.0, 1.0, z.z >= 0.0))"
+    - "z = 3.618033988749895 * z - 2.618033988749895 * v"
+    - "dr = dr * 3.618033988749895"
+  distance: "(max(dot(abs(z), vec3(0.0, 1.618033988749895, 1.0)), max(dot(abs(z), vec3(1.618033988749895, 1.0, 0.0)), dot(abs(z), vec3(1.0, 0.0, 1.618033988749895)))) / 1.902113032590307 - 1.376381920471173) / dr"
+
+view:
+  camera_distance: 5

@@ -1,0 +1,16 @@
+{
+  "name": "noema-mcp",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "NOEMA Fractal MCP shim (stdio). Isolated from the app's node_modules; pinned exactly.",
+  "license": "Apache-2.0",
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/client": "2.4.0",
+    "@modelcontextprotocol/server": "2.4.0",
+    "zod": "4.6.7"
+  }
+}

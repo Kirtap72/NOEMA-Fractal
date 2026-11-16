@@ -1,0 +1,43 @@
+format: 3
+id: mb3d-msltoesym2
+name: MsltoeSym2
+catalog:
+  category: fractals
+  tags: [ Msltoe, triplex, symmetry ]
+description: >-
+  Msltoe's symmetry formula: swap y and z if |y| < |z|, change sign of x if y > z, zr = 1 -
+  z²/(x²+y²+z²), x′ = (x²-y²)·zr + Cx, y′ = 2xy·zr·Y multiplier + Cy, z′ = 2z·√(x²+y²). Z gets no C
+  term, exactly as the file writes.
+credits:
+  - {
+      name: Msltoe,
+      role: "Formula author (fractalforums.com, according to the formula description)",
+      status: unverified
+    }
+sources:
+  - {
+      reference: "Mandelbulb 3D 1.9.9 (sr37), M3Formulas, file MsltoeSym2.m3f: [OPTIONS] and the
+        description after [END]; the code block and code listings was never read.",
+      status: unverified
+    }
+  - { reference: NewFormulas/formula-07/BATCH-07.md, status: unverified }
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: The equations are the formula file's own description; implementation in
+  src/engine/formula/batch07Kernels.ts. No comparison with a running Mandelbulb 3D.
+reviewed: false
+provenance:
+  origin: mandelbulb3d
+  file: MsltoeSym2.m3f
+  credited_author: Msltoe
+  credited_authors: [ Msltoe ]
+  collection: M3Formulas
+  note: Independent reimplementation from the equations in the formula file's own description. The
+    [CODE] section was not read. Native image equivalence unverified.
+  verified_against_mb3d: false
+parameters:
+  - { name: y_multiplier, label: "Y multiplier", default: 1, min: -100, max: 100 }
+  - { name: slice_w, label: "4D slice / extra w", default: 0, min: -4, max: 4 }
+  - { name: constant_w, label: "Julia constant w", default: 0, min: -4, max: 4 }
+  - { name: bailout_squared, label: "Escape limit (radius²)", default: 16, min: 1, max: 65536 }
+iteration: { kernel: mb3d-msltoesym2, iterations: 16 }
+view: { camera_distance: 5 }

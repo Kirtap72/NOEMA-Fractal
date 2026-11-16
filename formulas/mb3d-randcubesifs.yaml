@@ -1,0 +1,124 @@
+format: 3
+id: mb3d-randcubesifs
+name: RandCubesIFS
+catalog:
+  category: difs
+  tags:
+    - IFS
+    - shape
+    - hash
+    - random
+description: hashstyrda periodiska dIFS-solider
+credits:
+  - name: Luca GN
+    role: Authorship according to the authorised specification
+    status: unverified
+sources:
+  - reference: NewFormulas/essentials-40/20-RandCubesIFS.md
+    status: unverified
+added_by: Codex
+math_status: Independent implementation from authorised normalised mathematical material; the
+  licence of the project.
+reviewed: false
+provenance:
+  origin: mandelbulb3d
+  file: RandCubesIFS.m3f
+  credited_author: Luca GN
+  credited_authors:
+    - Luca GN
+  collection: M3Formulas
+  note: Independent reimplementation from the authorized normalized Essentials specifications. The
+    [CODE] section was not read, copied or translated. Mathematical validation is separate from MB3D
+    image verification.
+  verified_against_mb3d: false
+parameters:
+  - name: xvtn_0_1
+    label: XVtn (0-1)
+    default: 0.8
+    min: -8
+    max: 8
+  - name: scale
+    label: Scale
+    default: 2
+    min: -10000
+    max: 10000
+  - name: z_add
+    label: Z add
+    default: 0
+    min: -8
+    max: 8
+  - name: y_add
+    label: Y add
+    default: 0
+    min: -8
+    max: 8
+  - name: x_add
+    label: X add
+    default: 0
+    min: -8
+    max: 8
+  - name: yvtn_0_1
+    label: YVtn (0-1)
+    default: 0.8
+    min: -8
+    max: 8
+  - name: apply_scale_add
+    label: Apply scale+add
+    default: 1
+    min: -8
+    max: 8
+  - name: zmaxsz
+    label: ZMaxSz
+    default: 2
+    min: -8
+    max: 8
+  - name: randomizerx
+    label: RandomizerX
+    default: 127
+    min: -2147483648
+    max: 2147483647
+  - name: randomizery
+    label: RandomizerY
+    default: 172
+    min: -2147483648
+    max: 2147483647
+  - name: shapetype_1
+    label: ShapeType 1
+    default: 0
+    min: -8
+    max: 8
+  - name: shapetype_2
+    label: ShapeType 2
+    default: 0
+    min: -8
+    max: 8
+  - name: zflight
+    label: ZFlight
+    default: 0
+    min: -8
+    max: 8
+  - name: slice_w
+    label: 4D slice / extra w
+    default: 0
+    min: -4
+    max: 4
+  - name: constant_w
+    label: Julia constant w
+    default: 0
+    min: -4
+    max: 4
+  - name: de_stop
+    label: dIFS distance threshold
+    default: 0.0001
+    min: 0
+    max: 0.1
+  - name: inside_render
+    label: dIFS inside rendering (0/1)
+    default: 0
+    min: 0
+    max: 1
+iteration:
+  kernel: mb3d-randcubesifs
+  iterations: 16
+view:
+  camera_distance: 5

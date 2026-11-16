@@ -1,0 +1,41 @@
+format: 3
+id: mb3d-bpolyhedronfromsphere
+name: _BPolyhedronFromSphere
+catalog:
+  category: transforms
+  tags: [ transform, polyhedron, sphere ]
+description: >-
+  Sphere to polyhedron: the angles in the yz plane and from the x axis are reduced modulo the number
+  of sides and the point is scaled with the cosine of the remainder. With four sides it becomes a
+  cube. Inverse function of _BPolyhedronToSphere.
+credits:
+  - {
+      name: M. Benesi,
+      role: "Formula author (according to the formula description)",
+      status: unverified
+    }
+sources:
+  - {
+      reference: "Mandelbulb 3D 1.9.9 (sr37), M3Formulas, file _BPolyhedronFromSphere.m3f: [OPTIONS] and
+        the description after [END]; the code block was never read.",
+      status: unverified
+    }
+  - { reference: NewFormulas/formula-05/BATCH-05.md, status: unverified }
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: The equations are the formula file's own description; implementation in
+  src/engine/formula/batch05Kernels.ts. No comparison with a running Mandelbulb 3D.
+reviewed: false
+provenance:
+  origin: mandelbulb3d
+  file: _BPolyhedronFromSphere.m3f
+  credited_author: M. Benesi
+  credited_authors: [ M. Benesi ]
+  collection: M3Formulas
+  note: Independent reimplementation from the equations in the formula file's own description. The
+    [CODE] section was not read. Native image equivalence unverified.
+  verified_against_mb3d: false
+parameters:
+  - { name: sides, label: "Sides", default: 4, min: 0.01, max: 1000 }
+  - { name: sides2, label: "Sides 2", default: 4, min: 0.01, max: 1000 }
+iteration: { kernel: mb3d-bpolyhedronfromsphere, iterations: 1 }
+view: { camera_distance: 5 }

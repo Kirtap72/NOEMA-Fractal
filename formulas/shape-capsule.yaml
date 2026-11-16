@@ -1,0 +1,50 @@
+# Form: capsule. Format: see formulas/README.md
+format: 1
+id: shape-capsule
+name: "Form: capsule"
+catalog:
+  category: difs
+  tags:
+    - shape
+    - SDF
+description: >
+  A capsule (a line segment with rounded ends, like a pill) along the vertical axis, as the end of a
+  chain: the distance to the segment minus the radius, divided by the running derivative. Useful for
+  tree-like and tube-like combinations.
+
+# NOTE: the distance to a line segment is the textbook formula: the distance to the
+# nearest point of the segment.
+# A person must still check each name and link before this is set to
+# "verified" (and reviewed: true).
+credits:
+  - name: General mathematics (textbook)
+    role: "standard definitions found in any textbook; no single person is credited (the project owner
+      agreed that general mathematics is credited this way)"
+    status: unverified
+sources:
+  - reference: "Distance to a line segment (textbook geometry)"
+    status: unverified
+
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: >
+  General mathematics: standard definitions, not claimed as owned. Written fresh for this project;
+  no code from any program was read or copied. Source details are unverified (see credits).
+reviewed: false
+
+parameters:
+  - { name: radius, label: Radius, default: 0.3, min: 0.01, max: 2 }
+  - { name: height, label: Half length, default: 1, min: 0, max: 5 }
+
+iteration:
+  iterations: 1
+  # A shape: it does not move the point, it measures the distance to the shape at the end of a chain.
+  carry: [ z, dr ]
+  variables:
+    - { name: z, type: vec3, init: pos }
+    - { name: dr, type: float, init: 1 }
+  steps:
+    - "dr = dr"
+  distance: "(length(vec3(z.x, z.y - clamp(z.y, -height, height), z.z)) - radius) / abs(dr)"
+
+view:
+  camera_distance: 4

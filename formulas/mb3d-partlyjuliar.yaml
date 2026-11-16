@@ -1,0 +1,89 @@
+format: 3
+id: mb3d-partlyjuliar
+name: _PartlyJuliaR
+catalog:
+  category: julia
+description: gradual radial/solid Julia lens
+credits:
+  - name: Luca GN
+    role: Authorship according to the authorised specification
+    status: unverified
+sources:
+  - reference: NewFormulas/essentials-40/30-2-_PartlyJuliaR.md
+    status: unverified
+added_by: Codex
+math_status: Independent implementation from authorised normalised mathematical material; the
+  licence of the project.
+reviewed: false
+provenance:
+  origin: mandelbulb3d
+  file: _PartlyJuliaR.m3f
+  credited_author: Luca GN
+  credited_authors:
+    - Luca GN
+  collection: M3Formulas
+  note: Independent reimplementation from the authorized normalized Essentials specifications. The
+    [CODE] section was not read, copied or translated. Mathematical validation is separate from MB3D
+    image verification.
+  verified_against_mb3d: false
+parameters:
+  - name: x_center
+    label: X Center
+    default: 0
+    min: -8
+    max: 8
+  - name: y_center
+    label: Y Center
+    default: 0.5
+    min: -8
+    max: 8
+  - name: z_center
+    label: Z Center
+    default: 0
+    min: -8
+    max: 8
+  - name: r_max
+    label: R Max
+    default: 1
+    min: -8
+    max: 8
+  - name: speed_max_1
+    label: Speed (max 1)
+    default: 0.5
+    min: -8
+    max: 8
+  - name: x_seed
+    label: X Seed
+    default: 0
+    min: -8
+    max: 8
+  - name: y_seed
+    label: Y Seed
+    default: 0
+    min: -8
+    max: 8
+  - name: z_seed
+    label: Z Seed
+    default: 0
+    min: -8
+    max: 8
+  - name: inside_mode
+    label: Inside mode
+    default: 0
+    min: -8
+    max: 8
+  - name: recenter
+    label: Recenter
+    default: 0
+    min: -8
+    max: 8
+  - name: shape
+    label: Shape
+    default: 0
+    min: -8
+    max: 8
+iteration:
+  kernel: mb3d-partlyjuliar
+  iterations: 1
+view:
+  camera_distance: 5

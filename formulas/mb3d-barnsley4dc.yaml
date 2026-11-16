@@ -1,0 +1,52 @@
+format: 3
+id: mb3d-barnsley4dc
+name: Barnsley4Dc
+catalog:
+  category: fractals
+  tags: [ Barnsley, quaternion, 4D ]
+description: >-
+  Four-dimensional extension of Barnsley's conditional formula with a commutative quaternion
+  product: if Sx is larger than the threshold, S′ = (S+K)·C, otherwise (S-K)·C. Conj and Flip modes
+  temporarily mirror Cy and swap Cx and Cy respectively; the Tent mode gives the tent map. The
+  formula is discontinuous (like scissors), so the shapes get sharp edges.
+credits:
+  - {
+      name: Luca GN,
+      role: "Formula and implementation 2011 (according to the formula description)",
+      status: unverified
+    }
+sources:
+  - {
+      reference: "Mandelbulb 3D 1.9.9 (sr37), M3Formulas, file Barnsley4Dc.m3f: [OPTIONS] and the
+        description after [END]; the code block and code listings was never read.",
+      status: unverified
+    }
+  - { reference: NewFormulas/formula-06/BATCH-06.md, status: unverified }
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: The equations are the formula file's own description; implementation in
+  src/engine/formula/batch06Kernels.ts. No comparison with a running Mandelbulb 3D.
+reviewed: false
+provenance:
+  origin: mandelbulb3d
+  file: Barnsley4Dc.m3f
+  credited_author: Luca GN
+  credited_authors: [ Luca GN ]
+  collection: M3Formulas
+  note: Independent reimplementation from the equations in the formula file's own description. The
+    [CODE] section was not read. Native image equivalence unverified.
+  verified_against_mb3d: false
+parameters:
+  - { name: dx, label: "dx", default: 1, min: -1000, max: 1000 }
+  - { name: dy, label: "dy", default: 0, min: -1000, max: 1000 }
+  - { name: dz, label: "dz", default: 0, min: -1000, max: 1000 }
+  - { name: dw, label: "dw", default: 0, min: -1000, max: 1000 }
+  - { name: w_add, label: "w add", default: 0, min: -1000, max: 1000 }
+  - { name: threshold, label: "Threshold", default: 0, min: -1000, max: 1000 }
+  - { name: conj_mode, label: "Conj mode", default: 0, min: 0, max: 1 }
+  - { name: flip_mode, label: "Flip mode", default: 0, min: 0, max: 1 }
+  - { name: tent_mode, label: "Tent mode", default: 0, min: 0, max: 1 }
+  - { name: slice_w, label: "4D slice / extra w", default: 0, min: -4, max: 4 }
+  - { name: constant_w, label: "Julia constant w", default: 0, min: -4, max: 4 }
+  - { name: bailout_squared, label: "Escape limit (radius²)", default: 16, min: 1, max: 65536 }
+iteration: { kernel: mb3d-barnsley4dc, iterations: 16 }
+view: { camera_distance: 5 }

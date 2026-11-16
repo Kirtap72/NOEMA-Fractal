@@ -1,0 +1,65 @@
+# IQ-bulb: the Mandelbulb with the y axis as the pole. Format: see formulas/README.md
+format: 1
+id: iq-bulb
+name: IQ-bulb (Mandelbulb, y axis as pole)
+description: >
+  The Mandelbulb iteration z -> z^n + c in spherical coordinates, written with
+  the y axis as the pole: the polar angle is measured from y, and the azimuth
+  is atan2(x, z). The radius is raised to the power n and both angles are
+  multiplied by n, then c is added. It is the same shape family as the White
+  and Nylander formula, turned so that y is up.
+
+# NOTE: the AI assistant read the pages below on 2026-10-06 and wrote this
+# formula from the mathematics they describe (angle definitions and the rule
+# "radius to the power n, angles times n"). Nothing was copied from program
+# code. A person must still open the sources and check each name and link
+# before this is set to "verified" (and reviewed: true).
+credits:
+  - name: Inigo Quilez
+    role: "wrote the article on the Mandelbulb that defines the angles used here (about 2009)"
+    status: unverified
+  - name: Daniel White
+    role: "with Paul Nylander, developed the Mandelbulb formula in spherical coordinates (2009)"
+    status: unverified
+  - name: Paul Nylander
+    role: "with Daniel White, developed the Mandelbulb formula in spherical coordinates (2009)"
+    status: unverified
+sources:
+  - url: https://iquilezles.org/articles/mandelbulb/
+    status: unverified
+  - url: https://en.wikipedia.org/wiki/Mandelbulb
+    status: unverified
+
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: >
+  Mathematical idea, not claimed as owned. Written fresh for this project from
+  the public description of the formula; no code from any program was read or
+  copied. Source details are unverified (see credits).
+reviewed: false
+
+parameters:
+  - { name: power, label: Power, default: 8, min: 2, max: 16 }
+
+iteration:
+  iterations: 12
+  # Passed on to the next step when formulas are chained.
+  carry: [z, dr]
+  variables:
+    - { name: z, type: vec3, init: pos }
+    - { name: dr, type: float, init: 1 }
+    - { name: r, type: float, init: 0 }
+    - { name: theta, type: float, init: 0 }
+    - { name: phi, type: float, init: 0 }
+  steps:
+    - "r = length(z)"
+    - break_if: "r > 4.0"
+    # Polar angle from the y axis, and azimuth around it, both multiplied by the power.
+    - "theta = acos(clamp(z.y / r, -1.0, 1.0)) * power"
+    - "phi = atan2(z.x, z.z) * power"
+    # Running derivative for the distance estimate below.
+    - "dr = pow(r, power - 1.0) * power * dr + 1.0"
+    - "z = pow(r, power) * vec3(sin(theta) * sin(phi), cos(theta), sin(theta) * cos(phi)) + pos"
+  distance: "0.5 * log(r) * r / dr"
+
+view:
+  camera_distance: 3.5

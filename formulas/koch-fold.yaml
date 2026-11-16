@@ -1,0 +1,65 @@
+# Koch fold (transform). Format: see formulas/README.md
+format: 1
+id: koch-fold
+name: "Koch fold (transform)"
+description: >
+  One step of the Koch curve in the x-y plane, as a building block: the curve
+  from (-1, 0) to (1, 0) is made of four copies of a third of the size, the two
+  middle ones forming a 60 degree bump. The step finds which copy the point is
+  nearest to and stretches it back by three. The z coordinate is left alone, so
+  with "Form: box" (thin in y) after it, the result is a Koch wall; combined with
+  other folds, Koch-like surfaces.
+
+# NOTE: the AI assistant read Wikipedia (Koch snowflake) on 2026-10-07: Helge von
+# Koch, 1904; each segment is split in three, an equilateral triangle is raised on
+# the middle third. For the base from (-1, 0) to (1, 0) the four copies are
+# (-1,0)-(-1/3,0), (-1/3,0)-(0,sqrt(3)/3), (0,sqrt(3)/3)-(1/3,0) and (1/3,0)-(1,0).
+# After mirroring in x = 0, the point belongs to the nearer of the last two; their
+# inverse maps are 3p - (2, 0) and 3 R(60 deg) (p - (1/6, sqrt(3)/6)). Choosing the
+# nearer copy, and leaving z unchanged (so the derivative 3 is a safe bound), are
+# the assistant's own.
+# A person must still check each name and link before this is set to
+# "verified" (and reviewed: true).
+credits:
+  - name: Helge von Koch
+    role: "described the curve (1904)"
+    status: unverified
+sources:
+  - url: https://en.wikipedia.org/wiki/Koch_snowflake
+    status: unverified
+
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: >
+  Mathematical idea, not claimed as owned. Written fresh for this project from
+  the published description; no code from any program was read or copied.
+  The nearest-copy rule and the inverse maps are derived by the assistant. Source details are unverified (see credits).
+reviewed: false
+
+iteration:
+  iterations: 1
+  # This is a transform: it has no distance. It passes the point on to the next step.
+  carry: [z, dr]
+  variables:
+    - { name: z, type: vec3, init: pos }
+    - { name: dr, type: float, init: 1 }
+    - { name: p, type: vec3, init: "vec3(0.0, 0.0, 0.0)" }
+    - { name: ta, type: float, init: 0 }
+    - { name: tb, type: float, init: 0 }
+    - { name: da, type: float, init: 0 }
+    - { name: db, type: float, init: 0 }
+    - { name: q, type: vec3, init: "vec3(0.0, 0.0, 0.0)" }
+  steps:
+    - "p = vec3(abs(z.x), z.y, 0.0)"
+    # Distance to the flat copy from (1/3, 0) to (1, 0).
+    - "ta = clamp((p.x - 0.333333333333333) / 0.666666666666667, 0.0, 1.0)"
+    - "da = length(p - vec3(0.333333333333333 + 0.666666666666667 * ta, 0.0, 0.0))"
+    # Distance to the sloping copy from (0, sqrt(3)/3) to (1/3, 0).
+    - "tb = clamp(dot(p - vec3(0.0, 0.577350269189626, 0.0), vec3(0.333333333333333, -0.577350269189626, 0.0)) / 0.444444444444444, 0.0, 1.0)"
+    - "db = length(p - vec3(0.333333333333333 * tb, 0.577350269189626 - 0.577350269189626 * tb, 0.0))"
+    # Stretch back the nearer copy.
+    - "q = p - vec3(0.166666666666667, 0.288675134594813, 0.0)"
+    - "z = select(vec3(3.0 * (0.5 * q.x - 0.866025403784439 * q.y), 3.0 * (0.866025403784439 * q.x + 0.5 * q.y), z.z), vec3(3.0 * p.x - 2.0, 3.0 * p.y, z.z), da <= db)"
+    - "dr = dr * 3.0"
+
+view:
+  camera_distance: 4

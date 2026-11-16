@@ -1,0 +1,89 @@
+format: 3
+id: mb3d-aboxsmoothfold
+name: ABoxSmoothFold
+description: rationally soft box and sphere fold
+credits:
+  - name: Luca GN
+    role: implementation, 2011
+    status: unverified
+  - name: Jesse
+    role: speedup modification, 19.03.2013
+    status: unverified
+  - name: Buddhi
+    role: inspiration
+    status: unverified
+sources:
+  - reference: NewFormulas/essentials-40/13-ABoxSmoothFold.md
+    status: unverified
+added_by: Codex
+math_status: Independent implementation from authorised normalised mathematical material; the
+  licence of the project.
+reviewed: false
+provenance:
+  origin: mandelbulb3d
+  file: ABoxSmoothFold.m3f
+  credited_author: Luca GN; Jesse
+  credited_authors:
+    - Luca GN
+    - Jesse
+  collection: M3Formulas
+  note: Independent reimplementation from the authorized normalized Essentials specifications. The
+    [CODE] section was not read, copied or translated. Mathematical validation is separate from MB3D
+    image verification.
+  verified_against_mb3d: false
+parameters:
+  - name: scale
+    label: Scale
+    default: 2
+    min: -8
+    max: 8
+  - name: min_r
+    label: Min R
+    default: 0.5
+    min: -8
+    max: 8
+  - name: fold
+    label: Fold
+    default: 1
+    min: -8
+    max: 8
+  - name: scale_vary
+    label: Scale vary
+    default: 0
+    min: -8
+    max: 8
+  - name: sharpness_integer_2
+    label: Sharpness (Integer 2+)
+    default: 6
+    min: -8
+    max: 8
+  - name: fix_boxfold
+    label: Fix (BoxFold)
+    default: 1
+    min: -8
+    max: 8
+  - name: sh_of_ballfold_int_3
+    label: Sh. of BallFold (Int 3+)
+    default: 4
+    min: -8
+    max: 8
+  - name: fix_ballfold
+    label: Fix (BallFold)
+    default: 0.3
+    min: -8
+    max: 8
+  - name: constant_w
+    label: Julia constant w
+    default: 0
+    min: -4
+    max: 4
+  - name: bailout_squared
+    label: Escape limit (radius²)
+    default: 1024
+    min: 1
+    max: 65536
+iteration:
+  kernel: mb3d-aboxsmoothfold
+  iterations: 16
+view:
+  camera_distance: 5

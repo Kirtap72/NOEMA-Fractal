@@ -1,0 +1,15 @@
+#camera-flight{position:static;padding:6px 8px;font-size:13px}
+.camera-flight-body{display:flex;flex-direction:column;gap:7px;padding:8px 0}
+.camera-flight-body p{margin:0;color:#c5ccd5;line-height:1.4}
+.camera-flight-body small{color:#b7c5d1;line-height:1.4}
+.camera-flight-body .arow{display:grid;grid-template-columns:minmax(0,1fr) 100px;gap:8px}
+.camera-flight-body input[type=number],.camera-flight-body select{width:100%;min-width:0}
+.camera-flight-body input[type=range]{width:100%}
+.camera-flight-track{position:relative;height:52px;margin:2px 14px;background:#19222d;border-bottom:2px solid #5d748c}
+.flight-ruler{display:flex;justify-content:space-between;color:#aebdcd;font-size:10px;white-space:nowrap}
+.flight-markers{position:absolute;inset:18px 0 0}.flight-marker{position:absolute;top:0;transform:translateX(-50%);border:0;background:transparent;color:#bdc7d6;padding:1px 4px;touch-action:none}
+.flight-head{position:absolute;top:15px;bottom:0;width:2px;background:#f5b755;pointer-events:none}
+.flight-key-list{display:flex;flex-wrap:wrap;gap:5px}.camera-flight-body .selected{color:#fff;background:#335d87;outline:1px solid #a8d9ff}
+.camera-flight-body output{font-variant-numeric:tabular-nums;color:#f4d99e;font-size:12px}
+
+.math-animation,.math-track{display:flex;flex-direction:column;gap:6px}.math-animation{border-top:1px solid #526172;padding-top:9px}.math-track{padding:8px;background:#19222d;border-radius:4px;margin-top:8px}.math-track summary{font-size:12px;line-height:1.4}.math-track input[type=number]{max-width:100%}.math-markers{display:flex;flex-wrap:wrap;gap:5px}.math-unresolved{color:#ffce8a!important}

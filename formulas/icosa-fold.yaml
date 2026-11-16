@@ -1,0 +1,64 @@
+# Icosahedral fold (transform). Format: see formulas/README.md
+format: 1
+id: icosa-fold
+name: Icosahedral fold (transform)
+description: >
+  Folds space into one of the 120 equal parts of an icosahedron (or dodecahedron), by repeating the
+  reflections in three mirror planes that meet at the angles of the icosahedral symmetry group: 90
+  degrees between the first and the third, 60 degrees between the second and the third, and 36
+  degrees (180/5) between the first and the second. Shapes drawn after this step get the symmetry of
+  the icosahedron, the most symmetric of the Platonic solids. Distances are kept.
+
+# NOTE: the AI assistant derived the three mirror normals from the angles of the
+# Coxeter group H3, written [5,3] (Wikipedia: Coxeter group, Icosahedral
+# symmetry): n1 = (1,0,0), n3 = (0,0,1) and n2 = (-phi/2, 1/(2 phi), -1/2),
+# where phi is the golden ratio. n1.n2 = -cos(36 deg), n2.n3 = -cos(60 deg),
+# n1.n3 = 0. The reflections are repeated five times, which is enough to reach
+# the fundamental region from any starting point (checked by the tests).
+# A person must still check each name and link before this is set to
+# "verified" (and reviewed: true).
+credits:
+  - name: General mathematics (textbook)
+    role: "standard definitions found in any textbook; no single person is credited (the project owner
+      agreed that general mathematics is credited this way)"
+    status: unverified
+sources:
+  - url: https://en.wikipedia.org/wiki/Coxeter_group
+    status: unverified
+  - url: https://en.wikipedia.org/wiki/Icosahedral_symmetry
+    status: unverified
+
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: >
+  General mathematics: standard definitions, not claimed as owned. Written fresh for this project;
+  no code from any program was read or copied. Source details are unverified (see credits).
+reviewed: false
+
+iteration:
+  iterations: 1
+  # This is a transform: it has no distance. It passes the point on to the next step.
+  carry: [ z, dr ]
+  variables:
+    - { name: z, type: vec3, init: pos }
+    - { name: dr, type: float, init: 1 }
+    - { name: t, type: float, init: 0 }
+  steps:
+    # Mirror in x = 0 and z = 0 (absolute values), then in the plane with normal n2 when on its negative side; five times.
+    - "z = vec3(abs(z.x), z.y, abs(z.z))"
+    - "t = dot(z, vec3(-0.809016994374947, 0.309016994374947, -0.5))"
+    - "z = z - 2.0 * min(t, 0.0) * vec3(-0.809016994374947, 0.309016994374947, -0.5)"
+    - "z = vec3(abs(z.x), z.y, abs(z.z))"
+    - "t = dot(z, vec3(-0.809016994374947, 0.309016994374947, -0.5))"
+    - "z = z - 2.0 * min(t, 0.0) * vec3(-0.809016994374947, 0.309016994374947, -0.5)"
+    - "z = vec3(abs(z.x), z.y, abs(z.z))"
+    - "t = dot(z, vec3(-0.809016994374947, 0.309016994374947, -0.5))"
+    - "z = z - 2.0 * min(t, 0.0) * vec3(-0.809016994374947, 0.309016994374947, -0.5)"
+    - "z = vec3(abs(z.x), z.y, abs(z.z))"
+    - "t = dot(z, vec3(-0.809016994374947, 0.309016994374947, -0.5))"
+    - "z = z - 2.0 * min(t, 0.0) * vec3(-0.809016994374947, 0.309016994374947, -0.5)"
+    - "z = vec3(abs(z.x), z.y, abs(z.z))"
+    - "t = dot(z, vec3(-0.809016994374947, 0.309016994374947, -0.5))"
+    - "z = z - 2.0 * min(t, 0.0) * vec3(-0.809016994374947, 0.309016994374947, -0.5)"
+
+view:
+  camera_distance: 4

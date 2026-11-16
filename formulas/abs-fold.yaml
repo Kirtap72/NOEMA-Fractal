@@ -1,0 +1,45 @@
+# Absolute value fold (transform). Format: see formulas/README.md
+format: 1
+id: abs-fold
+name: Absolute value fold (transform)
+description: >
+  Takes the absolute value of the chosen coordinates, so that everything on the negative side is
+  mirrored onto the positive side. Each axis has a strength from 0 (unchanged) to 1 (fully folded);
+  values in between blend the two. It moves the point only and keeps distances, and it has no
+  distance estimate of its own, so it is used in front of a formula that has one.
+
+# NOTE: the AI assistant wrote this step from the definition of the absolute value.
+# A person must still check each name and link before this is set to "verified".
+credits:
+  - name: General mathematics (textbook)
+    role: "standard definitions found in any textbook; no single person is credited (the project owner
+      agreed that general mathematics is credited this way)"
+    status: unverified
+sources:
+  - reference: "Absolute value, any textbook of mathematics (definition |x| = x for x >= 0 and -x otherwise)"
+    status: unverified
+
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: >
+  General mathematics: standard definitions, not claimed as owned. Written fresh for this project;
+  no code from any program was read or copied. Source details are unverified (see credits).
+reviewed: false
+
+parameters:
+  - { name: ax, label: Fold x, default: 1, min: 0, max: 1 }
+  - { name: ay, label: Fold y, default: 1, min: 0, max: 1 }
+  - { name: az, label: Fold z, default: 1, min: 0, max: 1 }
+
+iteration:
+  iterations: 1
+  # This is a transform: it has no distance. It passes the point on to the next step.
+  carry: [ z, dr ]
+  variables:
+    - { name: z, type: vec3, init: pos }
+    - { name: dr, type: float, init: 1 }
+
+  steps:
+    - "z = vec3(mix(z.x, abs(z.x), ax), mix(z.y, abs(z.y), ay), mix(z.z, abs(z.z), az))"
+
+view:
+  camera_distance: 4

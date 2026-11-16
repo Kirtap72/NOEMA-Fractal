@@ -1,0 +1,63 @@
+# Jerusalem cube. Format: see formulas/README.md
+format: 1
+id: jerusalem-cube
+name: "Jerusalem cube"
+catalog:
+  category: ifs
+description: >
+  A cube with a cross cut through each side, leaving eight corner cubes of
+  relative size k = sqrt(2) - 1 and twelve smaller cubes of size k^2 in the
+  middle of the edges; the same again in every remaining cube (dimension about
+  2.529). Each iteration folds the point into one corner, then stretches it
+  towards the corner cube or the edge cube it is nearest to.
+
+# NOTE: the AI assistant read Wikipedia (Jerusalem cube) on 2026-10-07: "Cut a cross
+# through each side of the cube, leaving eight cubes (of rank +1) at the corners
+# of the original cube, as well as twelve smaller cubes (of rank +2) centered on
+# the edges of the original cube between cubes of rank +1", with k^2 + 2k = 1.
+# For the cube [-1, 1]^3 the corner cube spans [1 - 2k, 1] = [k^2, 1] on each
+# axis (because 1 - 2k = k^2), and the edge cube spans [-k^2, k^2] along its
+# edge and [1 - 2k^2, 1] across it (the assistant reads "centered on the edges"
+# as centered along the edge, flush with the outside). After folding into
+# x >= y >= z >= 0, the point belongs to the corner cube when z >= k^2,
+# otherwise to the edge cube along z; each is stretched back to the whole cube.
+# A person must still check each name and link before this is set to
+# "verified" (and reviewed: true).
+credits:
+  - name: Eric Baird
+    role: "described the Jerusalem cube (2011)"
+    status: unverified
+sources:
+  - url: https://en.wikipedia.org/wiki/Jerusalem_cube
+    status: unverified
+  - url: https://paulbourke.net/fractals/polyhedral/
+    status: unverified
+
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: >
+  Mathematical idea, not claimed as owned. Written fresh for this project from
+  the published description; no code from any program was read or copied.
+  The folding form and the reading of the edge cube position are the assistant's own. Source details are unverified (see credits).
+reviewed: false
+
+iteration:
+  iterations: 6
+  carry: [z, dr]
+  variables:
+    - { name: z, type: vec3, init: pos }
+    - { name: dr, type: float, init: 1 }
+    - { name: corner, type: float, init: 0 }
+  steps:
+    - "z = abs(z)"
+    - "z = select(z, z.yxz, z.x < z.y)"
+    - "z = select(z, z.zyx, z.x < z.z)"
+    - "z = select(z, z.xzy, z.y < z.z)"
+    # k = sqrt(2) - 1 = 0.41421356..., k^2 = 0.17157287...
+    - "corner = step(0.17157287525381, z.z)"
+    # Corner cube: centre (1 - k) on every axis, half size k. Edge cube: centre (1 - k^2, 1 - k^2, 0), half size k^2.
+    - "z = select((z - vec3(0.82842712474619, 0.82842712474619, 0.0)) / 0.17157287525381, (z - vec3(0.58578643762691, 0.58578643762691, 0.58578643762691)) / 0.41421356237310, corner > 0.5)"
+    - "dr = dr / select(0.17157287525381, 0.41421356237310, corner > 0.5)"
+  distance: "(length(max(abs(z) - vec3(1.0, 1.0, 1.0), vec3(0.0, 0.0, 0.0))) + min(max(abs(z).x - 1.0, max(abs(z).y - 1.0, abs(z).z - 1.0)), 0.0)) / dr"
+
+view:
+  camera_distance: 3.5

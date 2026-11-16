@@ -1,0 +1,35 @@
+format: 3
+id: mb3d-rotatec
+name: _RotateC
+catalog:
+  category: spatial
+description: >
+  Rotates the iteration constant C (x, y, z) with a rotation matrix generated from three angles, C'
+  = M C; the point and the derivative are not touched. Meant to be combined with _Rotate to rotate
+  the whole coordinate system (as the formula description says). Uncounted helper.
+credits:
+  - { name: okänd, role: "author not named in the formula file", status: unverified }
+sources:
+  - { reference: NewFormulas/coverage-04/C-VECTOR.md, status: unverified }
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: >
+  Equations taken from the formula file's own description; reimplemented independently, not claimed
+  as owned. No code from any program was read or copied. No native MB3D comparison has been made.
+reviewed: false
+provenance:
+  origin: mandelbulb3d
+  file: _RotateC.m3f
+  credited_author: okänd
+  credited_authors: [ okänd ]
+  collection: M3Formulas
+  note: >
+    An independent reimplementation from the equations in the formula file's own description (the
+    text after [END]) and its [OPTIONS] list. The [CODE] section was not read, copied or translated.
+    No comparison with a running Mandelbulb 3D has been made.
+  verified_against_mb3d: false
+parameters:
+  - { name: rotation_c_x, label: "Rotation C X (degrees)", default: 0, min: -180, max: 180 }
+  - { name: rotation_c_y, label: "Rotation C Y (degrees)", default: 0, min: -180, max: 180 }
+  - { name: rotation_c_z, label: "Rotation C Z (degrees)", default: 0, min: -180, max: 180 }
+iteration: { kernel: mb3d-rotatec, iterations: 1 }
+view: { camera_distance: 5 }

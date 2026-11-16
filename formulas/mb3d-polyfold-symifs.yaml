@@ -1,0 +1,98 @@
+{
+  "format": 3,
+  "id": "mb3d-polyfold-symifs",
+  "name": "PolyFold-symIFS",
+  "description": "Poly fold reflects objects belonging to a quadrant to all other quadrants.\nThe \"sym\" means that it is a \"symmetrized\" version of normal polyfold; You can use \"Add Y\" without adding discontinuity!\nThis is done using a \"reflection cheat\" on even/odd quadrants, it works perfectly for even orders and fairly good for odd ones.\nYou can get Sierpinski and Barnsley style fractals with this.\nTry to put it as 1st transform...",
+  "credits": [
+    {
+      "name": "okänd",
+      "role": "creator not identified in recovered source",
+      "status": "unverified"
+    }
+  ],
+  "sources": [
+    {
+      "reference": "NewFormulas/preset-compatibility/PolyFold-symIFS.md",
+      "status": "unverified"
+    }
+  ],
+  "added_by": "Codex",
+  "math_status": "Independent equations from authorized recovered mathematics; project license.",
+  "reviewed": false,
+  "provenance": {
+    "origin": "mandelbulb3d",
+    "file": "PolyFold-symIFS.m3f",
+    "credited_author": "okänd",
+    "credited_authors": [
+      "okänd"
+    ],
+    "collection": "M3Formulas",
+    "note": "Independent reimplementation. Explicitly authorized mathematical recovery; normalized equations validated against the typed reference pipeline. No legacy executable code copied.",
+    "verified_against_mb3d": false
+  },
+  "parameters": [
+    {
+      "name": "add_x",
+      "label": "Add X",
+      "default": 0,
+      "min": -10000,
+      "max": 10000
+    },
+    {
+      "name": "add_y",
+      "label": "Add Y",
+      "default": 0,
+      "min": -10000,
+      "max": 10000
+    },
+    {
+      "name": "add_z",
+      "label": "Add Z",
+      "default": 0,
+      "min": -10000,
+      "max": 10000
+    },
+    {
+      "name": "rotation_x",
+      "label": "Rotation X",
+      "default": 0,
+      "min": -10000,
+      "max": 10000
+    },
+    {
+      "name": "rotation_y",
+      "label": "Rotation Y",
+      "default": 0,
+      "min": -10000,
+      "max": 10000
+    },
+    {
+      "name": "rotation_z",
+      "label": "Rotation Z",
+      "default": 0,
+      "min": -10000,
+      "max": 10000
+    },
+    {
+      "name": "polyfold_order",
+      "label": "PolyFold Order",
+      "default": 5,
+      "min": -16777216,
+      "max": 16777216
+    },
+    {
+      "name": "atan2_fixer",
+      "label": "Atan2 fixer",
+      "default": 3.141592653589793,
+      "min": -10000,
+      "max": 10000
+    }
+  ],
+  "iteration": {
+    "kernel": "mb3d-polyfold-symifs",
+    "iterations": 1
+  },
+  "view": {
+    "camera_distance": 5
+  }
+}

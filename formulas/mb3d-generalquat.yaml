@@ -1,0 +1,87 @@
+format: 3
+id: mb3d-generalquat
+name: GeneralQuat
+description: valbar 4D-produktalgebra
+credits:
+  - name: okänd
+    role: Authorship according to the authorised specification
+    status: unverified
+sources:
+  - reference: NewFormulas/essentials-40/07-GeneralQuat.md
+    status: unverified
+added_by: Codex
+math_status: Independent implementation from authorised normalised mathematical material; the
+  licence of the project.
+reviewed: false
+provenance:
+  origin: mandelbulb3d
+  file: GeneralQuat.m3f
+  credited_author: okänd
+  credited_authors:
+    - okänd
+  collection: M3Formulas
+  note: Independent reimplementation from the authorized normalized Essentials specifications. The
+    [CODE] section was not read, copied or translated. Mathematical validation is separate from MB3D
+    image verification.
+  verified_against_mb3d: false
+parameters:
+  - name: ij_yz
+    label: IJ yz
+    default: 4
+    min: -8
+    max: 8
+  - name: ji_yz
+    label: JI yz
+    default: 4
+    min: -8
+    max: 8
+  - name: jj_zz
+    label: JJ zz
+    default: -2
+    min: -8
+    max: 8
+  - name: ik_yw
+    label: IK yw
+    default: -3
+    min: -8
+    max: 8
+  - name: ki_yw
+    label: KI yw
+    default: -3
+    min: -8
+    max: 8
+  - name: jk_zw
+    label: JK zw
+    default: 1
+    min: -8
+    max: 8
+  - name: kj_zw
+    label: KJ zw
+    default: 1
+    min: -8
+    max: 8
+  - name: kk_ww
+    label: KK ww
+    default: 2
+    min: -8
+    max: 8
+  - name: slice_w
+    label: 4D slice / extra w
+    default: 0
+    min: -4
+    max: 4
+  - name: constant_w
+    label: Julia constant w
+    default: 0
+    min: -4
+    max: 4
+  - name: bailout_squared
+    label: Escape limit (radius²)
+    default: 16
+    min: 1
+    max: 65536
+iteration:
+  kernel: mb3d-generalquat
+  iterations: 16
+view:
+  camera_distance: 5

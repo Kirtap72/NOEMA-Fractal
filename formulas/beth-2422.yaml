@@ -1,0 +1,52 @@
+format: 3
+id: beth-2422
+name: Beth2422
+description: Symmetric coupled quintic 4D recursion. See the batch specification for domains and states.
+credits:
+  - name: Bethchen
+    role: Credited author according to the specification
+    status: unverified
+sources:
+  - reference: "NewFormulas/batch-02/01-Beth2422.md; authorised normalised mathematical specification
+      from M3Formulas/Beth2422.m3f. Provenance and recovery evidence:
+      NewFormulas/batch-02/manifest.json (m3formulas--beth2422--71605da3)."
+    status: unverified
+added_by: Codex
+math_status: Independent implementation from the authorised mathematical migration package of the
+  project owner; the licence of the project.
+reviewed: false
+provenance:
+  origin: mandelbulb3d
+  file: Beth2422.m3f
+  credited_author: Bethchen
+  collection: M3Formulas
+  note: Independent reimplementation from the normalized mathematical migration specification
+    authorized by the project owner. The [CODE] section was not read, copied or translated by this
+    implementation. Mathematical recovery validation is not native MB3D or image verification.
+  verified_against_mb3d: false
+parameters:
+  - name: w_add
+    label: W add
+    default: 0
+    min: -8
+    max: 8
+  - name: slice_w
+    label: 4D slice / extra w
+    default: 0
+    min: -4
+    max: 4
+  - name: constant_w
+    label: Julia constant w
+    default: 0
+    min: -4
+    max: 4
+  - name: bailout_squared
+    label: Escape limit (radius²)
+    default: 16
+    min: 1
+    max: 65536
+iteration:
+  kernel: beth-2422
+  iterations: 16
+view:
+  camera_distance: 5

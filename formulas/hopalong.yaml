@@ -1,0 +1,66 @@
+format: 3
+id: hopalong
+name: _hopalong
+description: Branched Hopalong dynamics in 3D/hybrid. A helper call without its own DE; requires a
+  counted main formula with numeric DE.
+credits:
+  - name: Luca GN
+    role: Credited author according to the specification
+    status: unverified
+  - name: UF database
+    role: source collection acknowledged in description; unnamed original contributor
+    status: unverified
+sources:
+  - reference: "NewFormulas/batch-03/10-_hopalong.md; authorised normalised mathematical specification
+      from M3Formulas/_hopalong.m3f. Provenance and recovery evidence:
+      NewFormulas/batch-03/manifest.json (m3formulas--hopalong--3b15f2d4)."
+    status: unverified
+added_by: Codex
+math_status: Independent implementation from the authorised mathematical migration package of the
+  project owner; the licence of the project.
+reviewed: false
+provenance:
+  origin: mandelbulb3d
+  file: _hopalong.m3f
+  credited_author: Luca GN
+  collection: M3Formulas
+  note: Independent reimplementation from the normalized mathematical migration specification
+    authorized by the project owner. The [CODE] section was not read, copied or translated by this
+    implementation. Mathematical recovery validation is not native MB3D or image verification.
+  verified_against_mb3d: false
+parameters:
+  - name: strength
+    label: Strength
+    default: 1
+    min: -8
+    max: 8
+  - name: alpha
+    label: Alpha
+    default: -0.4
+    min: -8
+    max: 8
+  - name: beta
+    label: Beta
+    default: 1
+    min: -8
+    max: 8
+  - name: gamma
+    label: Gamma
+    default: 0.1
+    min: -8
+    max: 8
+  - name: delta
+    label: Delta
+    default: 0.1
+    min: -8
+    max: 8
+  - name: epsilon
+    label: Epsilon
+    default: 0.2
+    min: -8
+    max: 8
+iteration:
+  kernel: hopalong
+  iterations: 1
+view:
+  camera_distance: 5

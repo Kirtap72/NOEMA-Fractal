@@ -1,0 +1,82 @@
+format: 3
+id: manowar-bulb
+name: ManowarBulb
+description: Triplex map with persistent history; the first call only initialises.
+credits:
+  - name: Luca G.N.
+    role: Credited in the handoff
+    status: unverified
+sources:
+  - reference: NewFormulas/claude-handoff-batch-01/09-ManowarBulb.md; normalised validated mathematical
+      specification, from M3Formulas/ManowarBulb.m3f
+    status: unverified
+added_by: Codex
+math_status: Independent implementation from the authorised mathematical migration package of the
+  project owner; the licence of the project.
+reviewed: false
+provenance:
+  origin: mandelbulb3d
+  file: ManowarBulb.m3f
+  credited_author: Luca G.N.
+  collection: M3Formulas
+  note: Independent reimplementation from the normalized mathematical migration specification
+    authorized by the project owner. The [CODE] section was not read, copied or translated by this
+    implementation. The handoff documents recovered mathematics; it is not an MB3D image
+    verification.
+  verified_against_mb3d: false
+parameters:
+  - name: power
+    label: Power
+    default: 8
+    min: 1
+    max: 16
+  - name: z_mul
+    label: z-Mul
+    default: -1
+    min: -8
+    max: 8
+  - name: manowar_strength
+    label: Manowar strength
+    default: -0.5
+    min: -8
+    max: 8
+  - name: phoenix_strength
+    label: Phoenix strength
+    default: 0.5
+    min: -8
+    max: 8
+  - name: manowar_rot_x
+    label: manowar_rot X (degrees)
+    default: 0
+    min: -180
+    max: 180
+  - name: manowar_rot_y
+    label: manowar_rot Y (degrees)
+    default: 0
+    min: -180
+    max: 180
+  - name: manowar_rot_z
+    label: manowar_rot Z (degrees)
+    default: 0
+    min: -180
+    max: 180
+  - name: slice_w
+    label: 4D slice / extra w
+    default: 0
+    min: -4
+    max: 4
+  - name: constant_w
+    label: Julia constant w
+    default: 0
+    min: -4
+    max: 4
+  - name: bailout_squared
+    label: Escape limit (radius²)
+    default: 16
+    min: 1
+    max: 65536
+iteration:
+  kernel: manowar-bulb
+  iterations: 16
+view:
+  camera_distance: 5

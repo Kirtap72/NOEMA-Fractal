@@ -1,0 +1,86 @@
+format: 3
+id: mb3d-amazing-surf
+name: Amazing Surf
+description: Kali's surface box with variable scale
+credits:
+  - name: Kali
+    role: proposal for a base formula
+    status: unverified
+  - name: Luca GN
+    role: addition and implementation, 2012
+    status: unverified
+sources:
+  - reference: NewFormulas/essentials-40/03-Amazing-Surf.md
+    status: unverified
+added_by: Codex
+math_status: Independent implementation from authorised normalised mathematical material; the
+  licence of the project.
+reviewed: false
+provenance:
+  origin: mandelbulb3d
+  file: Amazing Surf.m3f
+  credited_author: Kali; Luca GN
+  credited_authors:
+    - Kali
+    - Luca GN
+  collection: M3Formulas
+  note: Independent reimplementation from the authorized normalized Essentials specifications. The
+    [CODE] section was not read, copied or translated. Mathematical validation is separate from MB3D
+    image verification.
+  verified_against_mb3d: false
+parameters:
+  - name: scale
+    label: Scale
+    default: 1.5
+    min: -8
+    max: 8
+  - name: min_r
+    label: Min R
+    default: 0.5
+    min: -8
+    max: 8
+  - name: fold
+    label: Fold
+    default: 1
+    min: -8
+    max: 8
+  - name: rotation1_x
+    label: Rotation1 X (degrees)
+    default: 5
+    min: -180
+    max: 180
+  - name: rotation1_y
+    label: Rotation1 Y (degrees)
+    default: 5
+    min: -180
+    max: 180
+  - name: rotation1_z
+    label: Rotation1 Z (degrees)
+    default: 5
+    min: -180
+    max: 180
+  - name: scale_vary
+    label: Scale vary
+    default: 0
+    min: -8
+    max: 8
+  - name: sphere_or_cylinder
+    label: Sphere or Cylinder
+    default: 1
+    min: -8
+    max: 8
+  - name: constant_w
+    label: Julia constant w
+    default: 0
+    min: -4
+    max: 4
+  - name: bailout_squared
+    label: Escape limit (radius²)
+    default: 20
+    min: 1
+    max: 65536
+iteration:
+  kernel: mb3d-amazing-surf
+  iterations: 16
+view:
+  camera_distance: 5

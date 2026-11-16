@@ -1,0 +1,77 @@
+#controls { width: min(var(--sidebar-width, 460px), calc(100vw - 28px)); }
+#chain { padding: 12px; gap: 10px; }
+#chain .chain-steps { display: flex; flex-direction: column; gap: 10px; }
+#chain .step { border: 1px solid #ffffff25; padding: 10px; gap: 7px; border-radius: 8px; }
+#chain .stephead { grid-template-columns: 24px 20px minmax(0, 1fr) 30px 30px; gap: 5px; align-items: start; }
+#chain button { background: #252b35; color: #eee; border: 1px solid #566070; border-radius: 5px; min-height: 28px; }
+#chain button:hover:not(:disabled), .formula-picker button:hover { background: #344255; }
+#chain button:disabled { opacity: .35; cursor: default; }
+#chain .step-name { text-align: left; white-space: normal; overflow-wrap: anywhere; padding: 4px 6px; font-weight: 600; line-height: 1.4; border-color: transparent; background: transparent; }
+#chain .drag-handle { cursor: grab; touch-action: none; user-select: none; padding: 2px; font-size: 20px; }
+#chain .dragging { opacity: .45; }
+#chain .drop-target { outline: 2px dashed #9bd0ff; background: #324154; }
+#chain .step-badge { color: #adc5de; font-size: 11px; margin-left: 54px; }
+#chain .step-actions { display: flex; gap: 5px; justify-content: flex-end; }
+#chain .step-parameters summary { cursor: pointer; color: #d4dfea; padding: 4px 0; }
+#chain .step-parameters[open] { display: flex; flex-direction: column; gap: 6px; }
+#chain .step-parameters .slider { grid-template-columns: minmax(110px, 1fr) minmax(70px, 1.3fr) minmax(45px, auto); margin: 5px 0; }
+#chain .step-parameters .slider input { min-width: 0; width: 100%; }
+#chain .remove-step { color: #ffb5b5; font-size: 19px; padding: 0; }
+#chain .add-formula { padding: 9px; font-weight: 600; border-color: #77a4cd; background: #203c55; }
+#chain .roundsrow { display: flex; flex-wrap: wrap; gap: 5px; align-items: center; }
+#chain .roundsrow select { min-width: 0; max-width: 100%; }
+.favorite-toggle[aria-pressed=true] { color: #ffd36e !important; }
+#sidebar-resize { position: fixed; top: 8px; bottom: 28px; width: 8px; border-radius: 3px; background: #53637880; cursor: ew-resize; touch-action: none; z-index: 3; }
+#sidebar-resize:hover, #sidebar-resize:focus-visible { background: #9bd0ff; }
+.formula-picker { color-scheme: dark; color: #edf1f6; background: #171e29; border: 1px solid #586b83; border-radius: 12px; padding: 18px; width: min(720px, calc(100vw - 48px)); max-height: calc(100dvh - 64px); box-sizing: border-box; }
+.formula-picker::backdrop { background: #030810b3; }
+.formula-picker .picker-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.formula-picker h2 { font-size: 19px; margin: 0 0 12px; }
+.formula-picker button { cursor: pointer; color: #edf1f6; background: #253041; border: 1px solid #536078; border-radius: 5px; padding: 6px 10px; font: inherit; }
+.formula-picker button:focus-visible, #chain button:focus-visible, #chain summary:focus-visible { outline: 2px solid #9bd0ff; outline-offset: 2px; }
+.formula-picker input[type=search] { width: 100%; box-sizing: border-box; font: inherit; padding: 10px 12px; border: 1px solid #758ba5; border-radius: 6px; background: #101722; color: #fff; }
+.picker-filters { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; margin: 10px 0; font-size: 13px; }
+.picker-filters button[aria-pressed=true] { background: color-mix(in srgb, var(--accent, #9bd0ff) 28%, var(--surface, #1a212d)); border-color: var(--accent, #9bd0ff); }
+.picker-filters label { display: flex; align-items: center; gap: 4px; }
+.picker-count { font-size: 12px; color: var(--muted, #b7c7da); min-height: 18px; }
+.picker-results { max-height: min(58dvh, 560px); overflow-y: auto; overscroll-behavior: contain; margin-top: 6px; padding-right: 4px; }
+.picker-results h3 { font-size: 13px; color: #b6d6f5; padding: 10px 0 6px; margin: 0; }
+.picker-formula { display: grid; grid-template-columns: minmax(0, 1fr) 38px; gap: 6px; margin: 4px 0; }
+.formula-picker .formula-choice { display: grid; grid-template-columns: 56px minmax(0, 1fr); column-gap: 10px; align-items: center; text-align: left; padding: 8px 12px; background: #202938; border-color: #ffffff15; }
+.formula-text { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.formula-preview { position: relative; display: block; width: 56px; height: 56px; border-radius: 6px; overflow: hidden; background: #141b27; border: 1px solid #ffffff12; }
+.formula-preview img { display: block; width: 56px; height: 56px; object-fit: cover; }
+.formula-preview-none { background: repeating-linear-gradient(45deg, #172030, #172030 6px, #1b2536 6px, #1b2536 12px); }
+.formula-preview-host { position: absolute; left: 0; right: 0; bottom: 0; padding: 1px 3px; font-size: 9px; line-height: 1.2; color: #e8f0fa; background: #0b1119cc; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.formula-name { white-space: normal; overflow-wrap: anywhere; font-weight: 600; }
+.formula-meta { font-size: 11px; color: #b9c8d9; line-height: 1.4; }
+.formula-picker .favorite-toggle { font-size: 20px; padding: 4px; }
+.picker-place { font-size: 13px; color: #b6d6f5; margin: -4px 0 10px; }
+.picker-incompatible { grid-template-columns: minmax(0, 1fr); }
+.formula-picker .picker-incompatible .formula-choice { cursor: not-allowed; opacity: 0.62; background: #1a212d; }
+.formula-picker .picker-incompatible .formula-preview { filter: grayscale(1); }
+.formula-reason { font-size: 12px; line-height: 1.4; color: #f0c28a; }
+@media (max-width: 480px) { #chain .stephead { grid-template-columns: 20px 18px minmax(0,1fr) 26px 26px; } .formula-picker { padding: 12px; width: calc(100vw - 24px); } }
+
+.gx { display: grid; gap: 6px; margin: 8px 0; padding: 8px; border: 1px solid #727680; border-radius: 6px; color: #eee; font-size: 13px; }
+.gx-text { margin: 0; color: #ced0d7; }
+.gx-group { display: grid; gap: 4px; padding-top: 6px; border-top: 1px solid #444852; }
+.gx-group h4 { margin: 0; font-size: 13px; }
+.gx-steps { margin: 0; padding-left: 22px; }
+.gx-badge { margin-left: 6px; padding: 0 5px; border: 1px solid #727680; border-radius: 8px; font-size: 11px; color: #ced0d7; }
+.gx-imported { border-color: #85b8ed; color: #85b8ed; }
+.gx-row { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.gx-row input { width: 5em; }
+.gx-actions { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.gx-error, .gx-note:not(:empty) { color: #dfb968; }
+
+/* Camera postcards (ARTIST-WORKFLOW 02) */
+.postcards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin: 8px 0; }
+.postcard { display: grid; gap: 4px; padding: 6px; border: 1px solid #ffffff1a; border-radius: 6px; background: #1a212d; }
+.postcard-picture { display: flex; align-items: center; justify-content: center; min-height: 48px; font-size: 11px; color: #9fb0c4; background: #101722; border-radius: 4px; overflow: hidden; }
+.postcard-picture img { display: block; width: 100%; height: auto; }
+.postcard input[type=text] { width: 100%; box-sizing: border-box; font: inherit; font-size: 12px; padding: 3px 6px; }
+.postcard-buttons { display: grid; gap: 3px; }
+.postcard-buttons button { font-size: 11px; padding: 2px 4px; }
+.postcard-empty { opacity: 0.7; }
+.postcard-other .postcard-picture { filter: grayscale(0.7); }

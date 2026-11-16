@@ -1,0 +1,9 @@
+node_modules/
+dist/
+desktop-dist/
+desktop-code/
+release/
+Profile/
+.env
+.env.*
+*.log

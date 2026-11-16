@@ -1,0 +1,67 @@
+format: 3
+id: mb3d-aboxmodkali
+name: ABoxModKali
+description: Kalis absolutfold/inversion
+credits:
+  - name: Kali
+    role: proposal; distributed implementer unknown
+    status: unverified
+sources:
+  - reference: NewFormulas/essentials-40/12-ABoxModKali.md
+    status: unverified
+added_by: Codex
+math_status: Independent implementation from authorised normalised mathematical material; the
+  licence of the project.
+reviewed: false
+provenance:
+  origin: mandelbulb3d
+  file: ABoxModKali.m3f
+  credited_author: Kali
+  credited_authors:
+    - Kali
+  collection: M3Formulas
+  note: Independent reimplementation from the authorized normalized Essentials specifications. The
+    [CODE] section was not read, copied or translated. Mathematical validation is separate from MB3D
+    image verification.
+  verified_against_mb3d: false
+parameters:
+  - name: scale
+    label: Scale
+    default: 1.5
+    min: -8
+    max: 8
+  - name: min_r
+    label: Min R
+    default: 0.6
+    min: -8
+    max: 8
+  - name: z_add
+    label: Z add
+    default: 0.5
+    min: -8
+    max: 8
+  - name: y_add
+    label: Y add
+    default: 0.5
+    min: -8
+    max: 8
+  - name: x_add
+    label: X add
+    default: 0.5
+    min: -8
+    max: 8
+  - name: constant_w
+    label: Julia constant w
+    default: 0
+    min: -4
+    max: 4
+  - name: bailout_squared
+    label: Escape limit (radius²)
+    default: 1024
+    min: 1
+    max: 65536
+iteration:
+  kernel: mb3d-aboxmodkali
+  iterations: 16
+view:
+  camera_distance: 5

@@ -1,0 +1,8 @@
+format: 1
+id: graphite
+name: Graphite
+author: "Fraktalmotorn project (original colours, written for this project)"
+description: Plain black to white, for judging shapes without colour.
+stops:
+  - { position: 0.0, color: "#000000" }
+  - { position: 1.0, color: "#ffffff" }

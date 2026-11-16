@@ -1,0 +1,108 @@
+format: 3
+id: riemann-2
+name: Riemann2
+description: Stereographic sine folding and variable radial power in 3D. See the batch specification
+  for domains and states.
+credits:
+  - name: okänd
+    role: Credited author according to the specification
+    status: unverified
+  - name: msltoe
+    role: source formula / inspiration; distributed implementation author not established
+    status: unverified
+sources:
+  - reference: "NewFormulas/batch-03/06-Riemann2.md; authorised normalised mathematical specification
+      from M3Formulas/Riemann2.m3f. Provenance and recovery evidence:
+      NewFormulas/batch-03/manifest.json (m3formulas--riemann2--6ced372c)."
+    status: unverified
+  - url: http://www.fractalforums.com/3d-fractal-generation/riemann-fractals/msg33500/#msg33500
+    status: unverified
+added_by: Codex
+math_status: Independent implementation from the authorised mathematical migration package of the
+  project owner; the licence of the project.
+reviewed: false
+provenance:
+  origin: mandelbulb3d
+  file: Riemann2.m3f
+  credited_author: okänd
+  collection: M3Formulas
+  note: Independent reimplementation from the normalized mathematical migration specification
+    authorized by the project owner. The [CODE] section was not read, copied or translated by this
+    implementation. Mathematical recovery validation is not native MB3D or image verification.
+  verified_against_mb3d: false
+parameters:
+  - name: rotation_x
+    label: rotation X (degrees)
+    default: 0
+    min: -180
+    max: 180
+  - name: rotation_y
+    label: rotation Y (degrees)
+    default: 0
+    min: -180
+    max: 180
+  - name: rotation_z
+    label: rotation Z (degrees)
+    default: 0
+    min: -180
+    max: 180
+  - name: scale
+    label: Scale
+    default: 1
+    min: -8
+    max: 8
+  - name: rpow
+    label: RPow
+    default: 2
+    min: -8
+    max: 8
+  - name: r_shift
+    label: r-Shift
+    default: -0.25
+    min: -8
+    max: 8
+  - name: s_shift
+    label: s-Shift
+    default: 0
+    min: -8
+    max: 8
+  - name: t_shift
+    label: t-Shift
+    default: 0
+    min: -8
+    max: 8
+  - name: x_shift
+    label: x-Shift
+    default: 1
+    min: -8
+    max: 8
+  - name: sin_add_fold
+    label: Sin-AddFold
+    default: 0
+    min: -8
+    max: 8
+  - name: smallest_value
+    label: Smallest value
+    default: 0.00001
+    min: 0
+    max: 1
+  - name: slice_w
+    label: 4D slice / extra w
+    default: 0
+    min: -4
+    max: 4
+  - name: constant_w
+    label: Julia constant w
+    default: 0
+    min: -4
+    max: 4
+  - name: bailout_squared
+    label: Escape limit (radius²)
+    default: 16
+    min: 1
+    max: 65536
+iteration:
+  kernel: riemann-2
+  iterations: 16
+view:
+  camera_distance: 5

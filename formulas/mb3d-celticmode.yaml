@@ -1,0 +1,32 @@
+format: 3
+id: mb3d-celticmode
+name: _CelticMode
+description: Recovered uncounted Celtic transform; preserves the native analytic w.
+credits:
+  - { name: okänd, role: Author of the distributed variant, status: unverified }
+  - {
+      name: Paul Carlson,
+      role: Inventor of the Celtic mathematics according to the description,
+      status: unverified
+    }
+sources:
+  - { reference: NewFormulas/preset-compatibility/_CelticMode.md, status: unverified }
+added_by: Codex
+math_status: Independent implementation of recovered equations; typed instruction reference validated.
+reviewed: false
+provenance:
+  origin: mandelbulb3d
+  file: _CelticMode.m3f
+  credited_author: okänd
+  credited_authors: [ okänd ]
+  collection: M3Formulas
+  note: Independent reimplementation from recovered equations. Explicitly authorized mathematical
+    recovery. No executable legacy code included. Native image equivalence unverified.
+  verified_against_mb3d: false
+parameters:
+  - { name: good, label: Good rune, default: -1, min: -8, max: 8 }
+  - { name: evil, label: Evil rune, default: 0, min: -8, max: 8 }
+  - { name: mystic, label: Mystic rune, default: 0, min: -8, max: 8 }
+  - { name: heretic, label: Heretic rune, default: 0, min: -8, max: 8 }
+iteration: { kernel: mb3d-celticmode, iterations: 1 }
+view: { camera_distance: 5 }

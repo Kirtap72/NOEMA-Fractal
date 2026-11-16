@@ -1,0 +1,11 @@
+format: 1
+id: ember
+name: Ember
+author: "Fraktalmotorn project (original colours, written for this project)"
+description: Black-purple through crimson and orange to pale yellow.
+stops:
+  - { position: 0.0, color: "#0b0221" }
+  - { position: 0.3, color: "#6a0f3c" }
+  - { position: 0.55, color: "#d6381e" }
+  - { position: 0.8, color: "#ff9a1f" }
+  - { position: 1.0, color: "#fff2b0" }

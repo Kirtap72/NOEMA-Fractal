@@ -1,0 +1,13 @@
+.mb3d-actions { display: flex; flex-wrap: wrap; gap: 6px; }
+.mb3d-preview { color: #eee; background: #202126; border: 1px solid #727680; border-radius: 8px; padding: 20px; width: min(760px, calc(100vw - 48px)); max-height: calc(100dvh - 60px); overflow: auto; font: 14px/1.45 system-ui, sans-serif; }
+.mb3d-preview::backdrop { background: #0009; }
+.mb3d-preview h2, .mb3d-preview h3 { margin: 12px 0 6px; }
+.mb3d-field { margin: 6px 0; padding-left: 10px; border-left: 3px solid #dfb968; overflow-wrap: anywhere; }
+.mb3d-field strong, .mb3d-field span { display: block; }
+.mb3d-field span { color: #ced0d7; }
+.mb3d-field[data-state="EXACT"] { border-color: #69cb98; }
+.mb3d-field[data-state="COMPATIBLE_ADAPTER"] { border-color: #85b8ed; }
+.mb3d-preview details { margin: 10px 0; }
+.mb3d-preview summary { cursor: pointer; }
+.mb3d-preview button { font: inherit; padding: 6px 10px; cursor: pointer; }
+.mb3d-preview button:disabled { opacity: .5; cursor: default; }

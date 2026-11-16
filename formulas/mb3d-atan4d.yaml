@@ -1,0 +1,44 @@
+format: 3
+id: mb3d-atan4d
+name: _Atan4D
+catalog:
+  category: fractals
+  tags: [ quaternion, arctan, 4D ]
+description: >-
+  The quaternion arctan(Q + P)·a according to the theory of Hamilton: T1 = the length of the
+  imaginary part, Re = ½(atan(x, 1-T1) - atan(-x, 1+T1)), the imaginary part is scaled with
+  ¼·ln(((1+T1)²+x²)/((1-T1)²+x²))/T1. Requires a low escape limit or a high multiplier, as the file
+  states.
+credits:
+  - { name: okänd, role: "Author not stated in the formula description", status: unverified }
+sources:
+  - {
+      reference: "Mandelbulb 3D 1.9.9 (sr37), M3Formulas, file _Atan4D.m3f: [OPTIONS] and the description
+        after [END]; the code block and code listings was never read.",
+      status: unverified
+    }
+  - { reference: NewFormulas/formula-07/BATCH-07.md, status: unverified }
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: The equations are the formula file's own description; implementation in
+  src/engine/formula/batch07Kernels.ts. No comparison with a running Mandelbulb 3D.
+reviewed: false
+provenance:
+  origin: mandelbulb3d
+  file: _Atan4D.m3f
+  credited_author: okänd
+  credited_authors: [ okänd ]
+  collection: M3Formulas
+  note: Independent reimplementation from the equations in the formula file's own description. The
+    [CODE] section was not read. Native image equivalence unverified.
+  verified_against_mb3d: false
+parameters:
+  - { name: px, label: "Px", default: 0, min: -100, max: 100 }
+  - { name: py, label: "Py", default: 0, min: -100, max: 100 }
+  - { name: pz, label: "Pz", default: 0, min: -100, max: 100 }
+  - { name: pw, label: "Pw", default: 0, min: -100, max: 100 }
+  - { name: a, label: "a", default: 1.4, min: -100, max: 100 }
+  - { name: slice_w, label: "4D slice / extra w", default: 0, min: -4, max: 4 }
+  - { name: constant_w, label: "Julia constant w", default: 0, min: -4, max: 4 }
+  - { name: bailout_squared, label: "Escape limit (radius²)", default: 16, min: 1, max: 65536 }
+iteration: { kernel: mb3d-atan4d, iterations: 16 }
+view: { camera_distance: 5 }

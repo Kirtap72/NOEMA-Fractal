@@ -1,0 +1,49 @@
+format: 3
+id: mb3d-lorenz4d
+name: _lorenz
+catalog:
+  category: transforms
+  tags: [ attractor, chaos, 4D, Lorenz ]
+description: >-
+  The hyperchaotic Lorenz system in 4D as a deformation of space: x′ = (a(y-x)+w)·S, y′ =
+  (c·x-y-x·z)·S, z′ = (x·y-b·z)·S, w′ = (r·w-y·z)·S.
+credits:
+  - {
+      name: Luca GN,
+      role: "Formula and implementation 2011 (according to the formula description)",
+      status: unverified
+    }
+  - {
+      name: Jiang Xu; Guoliang Cai; Song Zheng,
+      role: "The article the system is taken from (International Journal of Nonlinear Science, vol. 8, no.
+        1, 2009, pp. 117-123, according to the description)",
+      status: unverified
+    }
+sources:
+  - {
+      reference: "Mandelbulb 3D 1.9.9 (sr37), M3Formulas, file _lorenz.m3f: [OPTIONS] and the description
+        after [END]; the code block and code listings was never read.",
+      status: unverified
+    }
+  - { reference: NewFormulas/formula-07/BATCH-07.md, status: unverified }
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: The equations are the formula file's own description; implementation in
+  src/engine/formula/batch07Kernels.ts. No comparison with a running Mandelbulb 3D.
+reviewed: false
+provenance:
+  origin: mandelbulb3d
+  file: _lorenz.m3f
+  credited_author: Luca GN; Jiang Xu; Guoliang Cai; Song Zheng
+  credited_authors: [ Luca GN, Jiang Xu; Guoliang Cai; Song Zheng ]
+  collection: M3Formulas
+  note: Independent reimplementation from the equations in the formula file's own description. The
+    [CODE] section was not read. Native image equivalence unverified.
+  verified_against_mb3d: false
+parameters:
+  - { name: strength, label: "Strength", default: 1, min: -1000, max: 1000 }
+  - { name: alpha, label: "Alpha (a)", default: 0.5, min: -1000, max: 1000 }
+  - { name: beta, label: "Beta (b)", default: -2, min: -1000, max: 1000 }
+  - { name: gamma, label: "Gamma (c)", default: 1, min: -1000, max: 1000 }
+  - { name: r, label: "r", default: -1.5, min: -1000, max: 1000 }
+iteration: { kernel: mb3d-lorenz4d, iterations: 1 }
+view: { camera_distance: 5 }

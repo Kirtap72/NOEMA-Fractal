@@ -1,0 +1,41 @@
+format: 3
+id: mb3d-reciprocalx3b
+name: _reciprocalX3b
+description: >-
+  Continuous x transform, x' = sign(x)(1/L1 + 1/L2 - 1/(|mul1 x| + L1) - 1/(|mul2 x²| + L2)); y, z
+  and the carried w are preserved. Counts as an uncounted helper step (DEoption -1) and is a sibling
+  of _reciprocalY3b and _reciprocalZ3b on another axis.
+credits:
+  - { name: okänd, role: "Author not stated in the formula file", status: unverified }
+sources:
+  - {
+      url: "https://github.com/thargor6/mb3d/blob/master/M3Formulas/_reciprocalX3b.m3f",
+      status: unverified
+    }
+  - { reference: NewFormulas/preset-compatibility/_reciprocalX3b.md, status: unverified }
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: >-
+  The equation is the formula file's own description (public copy, the text after [END]);
+  independent implementation, no original code read. The same function on y and z is already
+  verified (Y3b, Z3b) and a test shows that X3b equals the Z3b kernel on a swapped axis. No
+  comparison with a running Mandelbulb 3D has been made.
+reviewed: false
+provenance:
+  origin: mandelbulb3d
+  file: _reciprocalX3b.m3f
+  credited_author: okänd
+  credited_authors: [ okänd ]
+  collection: M3Formulas
+  note: >
+    An independent reimplementation of the mathematical formula from the author's own description.
+    The [CODE] section was not read, copied or translated. One open point: the description writes
+    the second term without an absolute value, while the verified Y3b/Z3b code has |mul2 x^2|; they
+    differ only for a negative mul2 (no real preset has one) and the verified sibling form is used.
+  verified_against_mb3d: false
+parameters:
+  - { name: limiter1, label: Limiter1, default: 0.67, min: 0.000001, max: 8 }
+  - { name: limiter2, label: Limiter2, default: 0.67, min: 0.000001, max: 8 }
+  - { name: mul1, label: mul1, default: 1, min: -8, max: 8 }
+  - { name: mul2, label: mul2, default: 1, min: -8, max: 8 }
+iteration: { kernel: mb3d-reciprocalx3b, iterations: 1 }
+view: { camera_distance: 5 }

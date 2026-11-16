@@ -1,0 +1,62 @@
+format: 3
+id: mb3d-ngon
+name: _ngon
+description: icke-konform sektor/angle-warp
+credits:
+  - name: Luca GN
+    role: Authorship according to the authorised specification
+    status: unverified
+sources:
+  - reference: NewFormulas/essentials-40/38-1-_ngon.md
+    status: unverified
+added_by: Codex
+math_status: Independent implementation from authorised normalised mathematical material; the
+  licence of the project.
+reviewed: false
+provenance:
+  origin: mandelbulb3d
+  file: _ngon.m3f
+  credited_author: Luca GN
+  credited_authors:
+    - Luca GN
+  collection: M3Formulas
+  note: Independent reimplementation from the authorized normalized Essentials specifications. The
+    [CODE] section was not read, copied or translated. Mathematical validation is separate from MB3D
+    image verification.
+  verified_against_mb3d: false
+parameters:
+  - name: order
+    label: Order
+    default: 4
+    min: -8
+    max: 8
+  - name: shift_deg
+    label: Shift (deg)
+    default: 0
+    min: -8
+    max: 8
+  - name: shift_x
+    label: Shift x
+    default: 0
+    min: -8
+    max: 8
+  - name: shift_y
+    label: Shift y
+    default: 0
+    min: -8
+    max: 8
+  - name: skew_deg
+    label: Skew (deg)
+    default: 0
+    min: -8
+    max: 8
+  - name: no_yfold
+    label: No yfold
+    default: 0
+    min: -8
+    max: 8
+iteration:
+  kernel: mb3d-ngon
+  iterations: 1
+view:
+  camera_distance: 5

@@ -1,0 +1,31 @@
+{
+  "format": 3,
+  "id": "mb3d-reciprocaly3b",
+  "name": "_reciprocalY3b",
+  "description": "Independently recovered MB3D formula; see the separate normalised specification.",
+  "credits": [ { "name": "okänd", "role": "Author of the distributed variant", "status": "unverified" } ],
+  "sources": [ { "reference": "NewFormulas/preset-compatibility/_reciprocalY3b.md", "status": "unverified" } ],
+  "added_by": "Codex",
+  "math_status": "Recovered equations validated against a typed reference, no native picture certification.",
+  "reviewed": false,
+  "provenance":
+    {
+      "origin": "mandelbulb3d",
+      "file": "_reciprocalY3b.m3f",
+      "credited_author": "okänd",
+      "credited_authors": [ "okänd" ],
+      "collection": "M3Formulas",
+      "note": "Independent reimplementation of the mathematical formula from recovered equations.
+        Explicitly authorized mathematical recovery; no native executable code distributed.",
+      "verified_against_mb3d": false
+    },
+  "parameters":
+    [
+      { "name": "limiter1", "label": "Limiter1", "default": 0.67, "min": 1e-6, "max": 8 },
+      { "name": "limiter2", "label": "Limiter2", "default": 0.67, "min": 1e-6, "max": 8 },
+      { "name": "mul1", "label": "mul1", "default": 1, "min": -10000, "max": 10000 },
+      { "name": "mul2", "label": "mul2", "default": 1, "min": -10000, "max": 10000 }
+    ],
+  "iteration": { "kernel": "mb3d-reciprocaly3b", "iterations": 1 },
+  "view": { "camera_distance": 5 }
+}

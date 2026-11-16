@@ -1,0 +1,37 @@
+format: 3
+id: mb3d-folding2
+name: _Folding2
+description: asymmetric double box fold
+credits:
+  - name: okänd
+    role: Authorship according to the authorised specification
+    status: unverified
+sources:
+  - reference: NewFormulas/essentials-40/22-_Folding2.md
+    status: unverified
+added_by: Codex
+math_status: Independent implementation from authorised normalised mathematical material; the
+  licence of the project.
+reviewed: false
+provenance:
+  origin: mandelbulb3d
+  file: _Folding2.m3f
+  credited_author: okänd
+  credited_authors:
+    - okänd
+  collection: M3Formulas
+  note: Independent reimplementation from the authorized normalized Essentials specifications. The
+    [CODE] section was not read, copied or translated. Mathematical validation is separate from MB3D
+    image verification.
+  verified_against_mb3d: false
+parameters:
+  - name: r_fold
+    label: R fold
+    default: 2
+    min: -8
+    max: 8
+iteration:
+  kernel: mb3d-folding2
+  iterations: 1
+view:
+  camera_distance: 5

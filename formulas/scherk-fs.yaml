@@ -1,0 +1,103 @@
+format: 3
+id: scherk-fs
+name: ScherkFS
+description: Logarithmic trigonometric dIFS surface field in 3D. See the batch specification for
+  domains and states.
+credits:
+  - name: Luca GN
+    role: Credited author according to the specification
+    status: unverified
+sources:
+  - reference: "NewFormulas/batch-02/10-ScherkFS.md; authorised normalised mathematical specification
+      from M3Formulas/ScherkFS.m3f. Provenance and recovery evidence:
+      NewFormulas/batch-02/manifest.json (m3formulas--scherkfs--a20d9129)."
+    status: unverified
+added_by: Codex
+math_status: Independent implementation from the authorised mathematical migration package of the
+  project owner; the licence of the project.
+reviewed: false
+provenance:
+  origin: mandelbulb3d
+  file: ScherkFS.m3f
+  credited_author: Luca GN
+  collection: M3Formulas
+  note: Independent reimplementation from the normalized mathematical migration specification
+    authorized by the project owner. The [CODE] section was not read, copied or translated by this
+    implementation. Mathematical recovery validation is not native MB3D or image verification.
+  verified_against_mb3d: false
+parameters:
+  - name: log_base
+    label: LogBase
+    default: 0.6
+    min: -8
+    max: 8
+  - name: scale
+    label: Scale
+    default: 2
+    min: -8
+    max: 8
+  - name: z_add
+    label: Z add
+    default: 0
+    min: -8
+    max: 8
+  - name: y_add
+    label: Y add
+    default: 0
+    min: -8
+    max: 8
+  - name: x_add
+    label: X add
+    default: 0
+    min: -8
+    max: 8
+  - name: saddle_strength
+    label: Saddle strength
+    default: 0.6
+    min: -8
+    max: 8
+  - name: apply_scale_add
+    label: Apply scale+add
+    default: 0
+    min: 0
+    max: 1
+  - name: scherkrot_x
+    label: ScherkRot X
+    default: 0
+    min: -180
+    max: 180
+  - name: scherkrot_y
+    label: ScherkRot Y
+    default: 0
+    min: -180
+    max: 180
+  - name: scherkrot_z
+    label: ScherkRot Z
+    default: 0
+    min: -180
+    max: 180
+  - name: slice_w
+    label: 4D slice / extra w
+    default: 0
+    min: -4
+    max: 4
+  - name: constant_w
+    label: Julia constant w
+    default: 0
+    min: -4
+    max: 4
+  - name: de_stop
+    label: dIFS distance threshold
+    default: 0.0001
+    min: 0
+    max: 0.1
+  - name: inside_render
+    label: dIFS inside rendering (0/1)
+    default: 0
+    min: 0
+    max: 1
+iteration:
+  kernel: scherk-fs
+  iterations: 16
+view:
+  camera_distance: 5

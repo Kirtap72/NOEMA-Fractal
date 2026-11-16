@@ -1,0 +1,72 @@
+# Inversion in a sphere, as a step to chain. Format: see formulas/README.md
+format: 1
+id: sphere-inversion
+name: Sphere inversion (transform)
+description: >
+  Maps every point P to the point on the same ray from the centre O, at the
+  distance radius squared divided by the original distance: P' = O + r squared
+  times (P - O) divided by the squared length of (P - O). What is inside the
+  sphere ends up outside and the other way round, and spheres stay spheres. It
+  changes the point only and has no distance estimate of its own, so it is
+  used in front of a formula that has one. The running derivative is updated
+  by the same factor, so that the distance estimate of the following formula
+  stays consistent.
+
+# NOTE: the AI assistant read the page below on 2026-10-06 and wrote this step
+# from the definition of inversion it gives (P' on the ray OP with
+# OP * OP' = r squared, and the formula for higher dimensions). Nothing was
+# copied from program code. The names credited are those the page lists for
+# inversion being found around the same time by several people. A person must
+# still open the source and check each name and link before this is set to
+# "verified" (and reviewed: true).
+credits:
+  - name: Jakob Steiner
+    role: "introduced inversion in 1824 (the page lists several who found it independently)"
+    status: unverified
+  - name: Adolphe Quetelet
+    role: "inversion, 1825"
+    status: unverified
+  - name: Giusto Bellavitis
+    role: "inversion, 1836"
+    status: unverified
+  - name: Stubbs and Ingram
+    role: "inversion, 1842-1843"
+    status: unverified
+  - name: William Thomson (Lord Kelvin)
+    role: "inversion, 1845"
+    status: unverified
+sources:
+  - url: https://en.wikipedia.org/wiki/Inversive_geometry
+    status: unverified
+
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: >
+  Mathematical idea, not claimed as owned. Written fresh for this project from
+  the public definition; no code from any program was read or copied. Source
+  details are unverified (see credits).
+reviewed: false
+
+parameters:
+  - { name: radius, label: Radius, default: 1, min: 0.1, max: 4 }
+  - { name: cx, label: Centre x, default: 0, min: -2, max: 2 }
+  - { name: cy, label: Centre y, default: 0, min: -2, max: 2 }
+  - { name: cz, label: Centre z, default: 0, min: -2, max: 2 }
+
+iteration:
+  iterations: 1
+  # This is a transform: it has no distance. It passes the point on to the next step.
+  carry: [z, dr]
+  variables:
+    - { name: z, type: vec3, init: pos }
+    - { name: dr, type: float, init: 1 }
+    - { name: o, type: vec3, init: "vec3(0.0, 0.0, 0.0)" }
+    - { name: r2, type: float, init: 0 }
+  steps:
+    - "o = vec3(cx, cy, cz)"
+    - "r2 = max(dot(z - o, z - o), 0.000001)"
+    # The inversion is a conformal map: it scales lengths locally by radius^2 / distance^2.
+    - "dr = dr * radius * radius / r2"
+    - "z = o + (z - o) * radius * radius / r2"
+
+view:
+  camera_distance: 4

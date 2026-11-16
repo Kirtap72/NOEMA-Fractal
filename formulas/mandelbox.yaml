@@ -1,0 +1,50 @@
+# Mandelbox. Format: see formulas/README.md
+format: 1
+id: mandelbox
+name: Mandelbox
+description: >
+  Each round the point is folded back into a box, then pulled in or pushed out
+  by a sphere fold, then scaled and shifted by the starting point.
+
+# WARNING: written from memory by the AI assistant, NOT checked against sources.
+credits:
+  - name: Tom Lowe
+    role: "recalled from memory: introduced the Mandelbox (Tglad), around 2010"
+    status: unverified
+sources:
+  - reference: "Fractal Forums, the Mandelbox thread (exact link not checked)"
+    status: unverified
+
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: >
+  Mathematical idea, not claimed as owned. Written fresh from the public
+  description of the folds. Source details are unverified (see credits).
+reviewed: false
+
+parameters:
+  - { name: scale, label: Scale, default: 2, min: -3, max: 3 }
+  - { name: min_radius, label: Inner sphere radius, default: 0.5, min: 0.1, max: 1 }
+  - { name: fixed_radius, label: Outer sphere radius, default: 1, min: 0.5, max: 2 }
+
+iteration:
+  iterations: 14
+  # Passed on to the next step when formulas are chained.
+  carry: [z, dr]
+  variables:
+    - { name: z, type: vec3, init: pos }
+    - { name: dr, type: float, init: 1 }
+    - { name: r2, type: float, init: 0 }
+  steps:
+    - break_if: "dot(z, z) > 10000.0"
+    # Box fold: reflect anything outside the cube [-1, 1] back inside.
+    - "z = clamp(z, vec3(-1.0, -1.0, -1.0), vec3(1.0, 1.0, 1.0)) * 2.0 - z"
+    # Sphere fold: small radius -> scale up, medium radius -> mirror in the sphere.
+    - "r2 = dot(z, z)"
+    - "z = z * select(select(1.0, fixed_radius * fixed_radius / r2, r2 < fixed_radius * fixed_radius), fixed_radius * fixed_radius / (min_radius * min_radius), r2 < min_radius * min_radius)"
+    - "dr = select(select(dr, dr * fixed_radius * fixed_radius / r2, r2 < fixed_radius * fixed_radius), dr * fixed_radius * fixed_radius / (min_radius * min_radius), r2 < min_radius * min_radius)"
+    - "z = scale * z + pos"
+    - "dr = dr * abs(scale) + 1.0"
+  distance: "length(z) / abs(dr)"
+
+view:
+  camera_distance: 18

@@ -1,0 +1,66 @@
+# _FoldingVar (transform). Format: see formulas/README.md
+# An independent reimplementation of the mathematics of a Mandelbulb 3D formula (CLAUDE.md section 10): written from the author's own description
+# in the formula file (the text after [END]) and the [OPTIONS] list only; the compiled code section was not used.
+format: 2
+id: mb3d-foldingvar
+name: "_FoldingVar: transform"
+description: >
+  A box fold whose fold position depends on the input vector: Xfold = FoldX + x Fold_xx + y Fold_xy + z Fold_xz (likewise Y, Z); x = |x + Xfold| - |x - Xfold| - x for each axis.
+credits:
+  - name: okänd
+    role: "author not named in the formula file"
+    status: unverified
+sources:
+  - reference: "Mandelbulb 3D 1.9.9 (sr37), collection M3Formulas, file _FoldingVar.m3f: the [OPTIONS] list and the description after [END]; the compiled code section was not read."
+    status: unverified
+  - reference: NewFormulas/coverage-02/BATCH-01.md
+    status: unverified
+
+provenance:
+  origin: mandelbulb3d
+  file: _FoldingVar.m3f
+  credited_author: okänd
+  collection: M3Formulas
+  note: >
+    An independent reimplementation of the mathematical formula from the equations written in the formula file's own description. The [CODE]
+    section was not read, copied or translated. No comparison with a running Mandelbulb 3D has been made.
+  verified_against_mb3d: false
+
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: >
+  Equations taken from the formula file's own description; reimplemented independently, not claimed as owned. No code from any program was
+  read or copied. No native MB3D comparison has been made. Source details are unverified (see credits).
+reviewed: false
+
+parameters:
+  - { name: fold_x, label: "Fold X", default: 1, min: -1000, max: 1000 }
+  - { name: fold_xx, label: "Fold xx", default: 0, min: -1000, max: 1000 }
+  - { name: fold_xy, label: "Fold xy", default: 0, min: -1000, max: 1000 }
+  - { name: fold_xz, label: "Fold xz", default: 0, min: -1000, max: 1000 }
+  - { name: fold_y, label: "Fold Y", default: 1, min: -1000, max: 1000 }
+  - { name: fold_yx, label: "Fold yx", default: 0, min: -1000, max: 1000 }
+  - { name: fold_yy, label: "Fold yy", default: 0, min: -1000, max: 1000 }
+  - { name: fold_yz, label: "Fold yz", default: 0, min: -1000, max: 1000 }
+  - { name: fold_z, label: "Fold Z", default: 1, min: -1000, max: 1000 }
+  - { name: fold_zx, label: "Fold zx", default: 0, min: -1000, max: 1000 }
+  - { name: fold_zy, label: "Fold zy", default: 0, min: -1000, max: 1000 }
+  - { name: fold_zz, label: "Fold zz", default: 0, min: -1000, max: 1000 }
+
+iteration:
+  iterations: 1
+  # A transform: it has no distance. It passes the point on. dr is not written (DEoption -1: the analytic derivative is left alone).
+  carry: [z, dr]
+  variables:
+    - { name: z, type: vec3, init: pos }
+    - { name: dr, type: float, init: 1 }
+    - { name: xf, type: float, init: 0 }
+    - { name: yf, type: float, init: 0 }
+    - { name: zf, type: float, init: 0 }
+  steps:
+    - "xf = fold_x + z.x * fold_xx + z.y * fold_xy + z.z * fold_xz"
+    - "yf = fold_y + z.x * fold_yx + z.y * fold_yy + z.z * fold_yz"
+    - "zf = fold_z + z.x * fold_zx + z.y * fold_zy + z.z * fold_zz"
+    - "z = vec3(abs(z.x + xf) - abs(z.x - xf) - z.x, abs(z.y + yf) - abs(z.y - yf) - z.y, abs(z.z + zf) - abs(z.z - zf) - z.z)"
+
+view:
+  camera_distance: 4

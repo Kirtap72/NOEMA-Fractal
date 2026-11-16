@@ -1,0 +1,56 @@
+# Gyroid. Format: see formulas/README.md
+format: 1
+id: gyroid
+name: "Gyroid"
+catalog:
+  category: difs
+description: >
+  The gyroid, a triply periodic minimal surface, as a thick sheet: the
+  trigonometric approximation sin x cos y + sin y cos z + sin z cos x = 0,
+  scaled by the cell size, cut to a ball so that it can be seen from outside.
+  The distance is the value of the function divided by a bound on how fast it
+  changes, which keeps it on the safe side.
+
+# NOTE: the AI assistant read Wikipedia (Gyroid) on 2026-10-07: discovered in 1970 by
+# Alan Schoen; approximated by sin x cos y + sin y cos z + sin z cos x = 0. Each
+# partial derivative of the function is at most 2 (times the scale), so its
+# gradient is at most 2 sqrt(3) times the scale: dividing by that gives a safe
+# distance. The thickness and the cut to a ball are the assistant's own.
+# A person must still check each name and link before this is set to
+# "verified" (and reviewed: true).
+credits:
+  - name: Alan Schoen
+    role: "discovered the gyroid (1970)"
+    status: unverified
+sources:
+  - url: https://en.wikipedia.org/wiki/Gyroid
+    status: unverified
+
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: >
+  Mathematical idea, not claimed as owned. Written fresh for this project from
+  the published description; no code from any program was read or copied.
+  The thickness, the bound on the gradient and the cut to a ball are the assistant's own. Source details are unverified (see credits).
+reviewed: false
+
+parameters:
+  - { name: scale, label: Cells per unit, default: 3, min: 0.5, max: 12 }
+  - { name: thickness, label: Thickness, default: 0.3, min: 0.02, max: 1.4 }
+  - { name: bound, label: Radius of the ball, default: 1.5, min: 0.2, max: 10 }
+
+iteration:
+  iterations: 1
+  # A shape: it does not move the point, it measures the distance to the shape at the end of a chain.
+  carry: [z, dr]
+  variables:
+    - { name: z, type: vec3, init: pos }
+    - { name: dr, type: float, init: 1 }
+    - { name: g, type: float, init: 0 }
+    - { name: p, type: vec3, init: "vec3(0.0, 0.0, 0.0)" }
+  steps:
+    - "p = z * scale"
+    - "g = sin(p.x) * cos(p.y) + sin(p.y) * cos(p.z) + sin(p.z) * cos(p.x)"
+  distance: "max((abs(g) - thickness) / (3.464101615137754 * scale), length(z) - bound) / abs(dr)"
+
+view:
+  camera_distance: 4

@@ -1,0 +1,73 @@
+format: 3
+id: faehrten
+name: Faehrten
+description: Coupled hyperbolic quadratic 3D polynomial. See the batch specification for domains and states.
+credits:
+  - name: Trafassel
+    role: Credited author according to the specification
+    status: unverified
+  - name: Luca GN
+    role: Credited author according to the specification
+    status: unverified
+sources:
+  - reference: "NewFormulas/batch-03/01-Faehrten.md; authorised normalised mathematical specification
+      from M3Formulas/Faehrten.m3f. Provenance and recovery evidence:
+      NewFormulas/batch-03/manifest.json (m3formulas--faehrten--33dec907)."
+    status: unverified
+added_by: Codex
+math_status: Independent implementation from the authorised mathematical migration package of the
+  project owner; the licence of the project.
+reviewed: false
+provenance:
+  origin: mandelbulb3d
+  file: Faehrten.m3f
+  credited_author: Trafassel; Luca GN
+  credited_authors:
+    - Trafassel
+    - Luca GN
+  collection: M3Formulas
+  note: Independent reimplementation from the normalized mathematical migration specification
+    authorized by the project owner. The [CODE] section was not read, copied or translated by this
+    implementation. Mathematical recovery validation is not native MB3D or image verification.
+  verified_against_mb3d: false
+parameters:
+  - name: y_multiplier
+    label: Y multiplier
+    default: 1
+    min: -8
+    max: 8
+  - name: z_multiplier
+    label: Z multiplier
+    default: 0.5
+    min: -8
+    max: 8
+  - name: squares_multiplier
+    label: Squares multiplier
+    default: -0.3333333333333333
+    min: -8
+    max: 8
+  - name: twist
+    label: Twist
+    default: 0
+    min: -8
+    max: 8
+  - name: slice_w
+    label: 4D slice / extra w
+    default: 0
+    min: -4
+    max: 4
+  - name: constant_w
+    label: Julia constant w
+    default: 0
+    min: -4
+    max: 4
+  - name: bailout_squared
+    label: Escape limit (radius²)
+    default: 16
+    min: 1
+    max: 65536
+iteration:
+  kernel: faehrten
+  iterations: 16
+view:
+  camera_distance: 5

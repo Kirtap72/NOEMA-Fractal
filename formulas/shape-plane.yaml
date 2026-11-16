@@ -1,0 +1,51 @@
+# Form: plane. Format: see formulas/README.md
+format: 1
+id: shape-plane
+name: "Form: plane"
+catalog:
+  category: difs
+  tags:
+    - shape
+    - SDF
+description: >
+  A half-space (everything on one side of a plane) as the end of a chain: the signed distance to the
+  plane with the given normal and offset, divided by the running derivative. With folds and
+  repetition in front, planes give sharp, crystal-like fractals.
+
+# NOTE: the signed distance to a plane n . p = d is (n . p) / |n| - d (textbook).
+# A person must still check each name and link before this is set to
+# "verified" (and reviewed: true).
+credits:
+  - name: General mathematics (textbook)
+    role: "standard definitions found in any textbook; no single person is credited (the project owner
+      agreed that general mathematics is credited this way)"
+    status: unverified
+sources:
+  - reference: "Distance to a plane (textbook geometry)"
+    status: unverified
+
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: >
+  General mathematics: standard definitions, not claimed as owned. Written fresh for this project;
+  no code from any program was read or copied. Source details are unverified (see credits).
+reviewed: false
+
+parameters:
+  - { name: nx, label: Normal x, default: 0, min: -1, max: 1 }
+  - { name: ny, label: Normal y, default: 1, min: -1, max: 1 }
+  - { name: nz, label: Normal z, default: 0, min: -1, max: 1 }
+  - { name: offset, label: Offset, default: 0, min: -3, max: 3 }
+
+iteration:
+  iterations: 1
+  # A shape: it does not move the point, it measures the distance to the shape at the end of a chain.
+  carry: [ z, dr ]
+  variables:
+    - { name: z, type: vec3, init: pos }
+    - { name: dr, type: float, init: 1 }
+  steps:
+    - "dr = dr"
+  distance: "(dot(z, vec3(nx, ny, nz)) / max(length(vec3(nx, ny, nz)), 0.000001) - offset) / abs(dr)"
+
+view:
+  camera_distance: 4

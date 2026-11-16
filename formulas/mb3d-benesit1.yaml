@@ -1,0 +1,65 @@
+# _BenesiT1 (transform). Format: see formulas/README.md
+# An independent reimplementation of the mathematics of a Mandelbulb 3D formula (CLAUDE.md section 10): written from the author's own description
+# in the formula file (the text after [END]) and the [OPTIONS] list only; the compiled code section was not used.
+format: 2
+id: mb3d-benesit1
+name: "_BenesiT1: transform"
+description: >
+  Benesi transform 1: a fixed rotation and absolute-value fold of the point followed by x = Scale x - Offset, y = Scale y, z = Scale z. Described as an absolute value xyz transform. The option xOff is the description's offset.
+credits:
+  - name: M.Benesi
+    role: "Coded & invented by M.Benesi 2015 (as stated in the formula description)"
+    status: unverified
+sources:
+  - reference: "Mandelbulb 3D 1.9.9 (sr37), collection M3Formulas, file _BenesiT1.m3f: the [OPTIONS] list and the description after [END]; the compiled code section was not read."
+    status: unverified
+  - reference: NewFormulas/coverage-02/BATCH-01.md
+    status: unverified
+
+provenance:
+  origin: mandelbulb3d
+  file: _BenesiT1.m3f
+  credited_author: M.Benesi
+  collection: M3Formulas
+  note: >
+    An independent reimplementation of the mathematical formula from the equations written in the formula file's own description. The [CODE]
+    section was not read, copied or translated. No comparison with a running Mandelbulb 3D has been made.
+  verified_against_mb3d: false
+
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: >
+  Equations taken from the formula file's own description; reimplemented independently, not claimed as owned. No code from any program was
+  read or copied. No native MB3D comparison has been made. Source details are unverified (see credits).
+reviewed: false
+
+parameters:
+  - { name: scale, label: "Scale", default: 2, min: -1000, max: 1000 }
+  - { name: xoff, label: "xOff", default: 2, min: -1000, max: 1000 }
+
+iteration:
+  iterations: 1
+  # A transform: it has no distance. It passes the point on. dr is not written (DEoption -1: the analytic derivative is left alone).
+  carry: [z, dr]
+  variables:
+    - { name: z, type: vec3, init: pos }
+    - { name: dr, type: float, init: 1 }
+    - { name: tx, type: float, init: 0 }
+    - { name: nx, type: float, init: 0 }
+    - { name: ny, type: float, init: 0 }
+    - { name: nz, type: float, init: 0 }
+    - { name: nx2, type: float, init: 0 }
+    - { name: ny2, type: float, init: 0 }
+    - { name: nz2, type: float, init: 0 }
+  steps:
+    - "tx = (z.x * sqrt(2.0 / 3.0) - z.z * sqrt(1.0 / 3.0)) * sqrt(1.0 / 2.0)"
+    - "nz = abs(z.x * sqrt(1.0 / 3.0) + z.z * sqrt(2.0 / 3.0))"
+    - "nx = abs(tx - z.y * sqrt(1.0 / 2.0))"
+    - "ny = abs(tx + z.y * sqrt(1.0 / 2.0))"
+    - "tx = nx * sqrt(1.0 / 2.0) + ny * sqrt(1.0 / 2.0)"
+    - "ny2 = -nx * sqrt(1.0 / 2.0) + ny * sqrt(1.0 / 2.0)"
+    - "nx2 = tx * sqrt(2.0 / 3.0) + nz * sqrt(1.0 / 3.0)"
+    - "nz2 = -tx * sqrt(1.0 / 3.0) + nz * sqrt(2.0 / 3.0)"
+    - "z = vec3(scale * nx2 - xoff, scale * ny2, scale * nz2)"
+
+view:
+  camera_distance: 4

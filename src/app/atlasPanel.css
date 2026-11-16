@@ -1,0 +1,25 @@
+/* Personal Discovery Atlas (ARTIST-WORKFLOW 07) */
+/* The shell gives every settings panel class "panel", which is position: fixed in index.html; the other panels set position: static by their id. Without it the atlas floated over the picture instead of taking its place in the sidebar. */
+#atlas-panel { position: static; width: auto; box-sizing: border-box; }
+.atlas { display: block; width: 100%; box-sizing: border-box; margin: 6px 0; padding: 6px 8px; border: 1px solid #ffffff1a; border-radius: 6px; font-size: 12px; }
+.atlas-title { margin: 0 0 4px; font-size: 13px; font-weight: 600; }
+.atlas-note { overflow-wrap: anywhere; white-space: normal; margin: 4px 0 6px; color: var(--muted, #b7c7da); line-height: 1.4; }
+.atlas-form { display: grid; gap: 4px; margin: 4px 0; }
+.atlas-form input[type=text] { width: 100%; box-sizing: border-box; font: inherit; font-size: 12px; padding: 2px 4px; }
+.atlas-buttons { display: flex; flex-wrap: wrap; gap: 4px; margin: 4px 0; }
+.atlas-buttons button { font-size: 12px; padding: 3px 8px; }
+.atlas-status { display: block; min-height: 15px; margin: 3px 0; color: var(--text, #d6e2f0); }
+.atlas-origin { color: var(--accent, #e0b84a); }
+.atlas-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; margin: 6px 0; }
+.atlas-card { display: flex; flex-direction: column; gap: 3px; padding: 4px; border: 1px solid #ffffff1a; border-radius: 6px; }
+.atlas-card[data-current] { border-color: var(--accent, #9bd0ff); }
+.atlas-card img { display: block; width: 100%; height: auto; border-radius: 3px; background: #0006; min-height: 40px; }
+.atlas-card strong { font-size: 12px; overflow-wrap: anywhere; }
+.atlas-card small { color: var(--muted, #b7c7da); overflow-wrap: anywhere; }
+.atlas-card .atlas-buttons button { font-size: 11px; padding: 2px 6px; }
+.atlas-branch { border-left: 3px solid #4a7ba7; }
+.atlas-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 6px 0; padding: 6px; border: 1px dashed #ffffff33; border-radius: 6px; }
+.atlas-compare img { width: 100%; height: auto; border-radius: 3px; }
+.atlas-compare figcaption { text-align: center; color: var(--muted, #b7c7da); }
+.atlas-compare ul { grid-column: 1 / -1; margin: 0; padding-left: 16px; }
+.atlas-buttons input[hidden] { display: none; }

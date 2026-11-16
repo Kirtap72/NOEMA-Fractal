@@ -1,0 +1,266 @@
+{
+  "format": "noema-formula-atlas",
+  "version": 1,
+  "about": "Lokal, versionerad kunskapsatlas för formelutforskning. Varje post är märkt som verifierat faktum (fact), konstnärlig iakttagelse (observation) eller otestad hypotes (hypothesis), med hur säker den är och vad den bygger på. Atlasen är vägledning, aldrig en regel: AI:n får pröva alla kombinationer som renderaren kan köra.",
+  "entries": [
+    {
+      "id": "fact-chain-limits",
+      "kind": "fact",
+      "topic": "kedja",
+      "confidence": "verifierad",
+      "basis": "motorn",
+      "text": "En formelkedja har 1 till 8 steg. Varje steg har en formel, 1–64 iterationer och egna parametrar (högst 16 per formel, högst 128 i hela kedjan). Hela kedjan körs 1–64 varv per punkt.",
+      "tags": [
+        "kedja",
+        "steg",
+        "varv",
+        "rounds",
+        "gräns",
+        "parametrar"
+      ],
+      "sources": [
+        {
+          "title": "src/engine/scene.ts (MAX_CHAIN_STEPS), src/engine/formula/chain.ts (MAX_ROUNDS, MAX_TOTAL_PARAMETERS)",
+          "url": "",
+          "license": "Apache-2.0"
+        }
+      ]
+    },
+    {
+      "id": "fact-chain-modes",
+      "kind": "fact",
+      "topic": "kedja",
+      "confidence": "verifierad",
+      "basis": "motorn",
+      "text": "Kedjans läge: sequence = varje varv körs alla steg i ordning; alternate = ett steg körs bara vissa varv enligt sitt schema (var n:te varv från ett startvarv); interpolate = alla steg utgår från samma punkt och resultaten vägs ihop med stegens vikter (mjuk blandning av två eller fler former).",
+      "tags": [
+        "läge",
+        "mode",
+        "sequence",
+        "alternate",
+        "interpolate",
+        "blandning",
+        "kedja"
+      ],
+      "sources": [
+        {
+          "title": "src/engine/formula/chain.ts",
+          "url": "",
+          "license": "Apache-2.0"
+        }
+      ]
+    },
+    {
+      "id": "fact-order-matters",
+      "kind": "fact",
+      "topic": "kedja",
+      "confidence": "verifierad",
+      "basis": "motorn",
+      "text": "I läget sequence körs stegen uppifrån och ned varje varv, så ordningen är en del av formen: samma steg i annan ordning är en annan fraktal. noema_set_draft_parameters kan sätta in (chain.step.insert), flytta (chain.step.move), byta (chain.step.formula) och ta bort (chain.step.remove) steg.",
+      "tags": [
+        "ordning",
+        "flytta",
+        "sätt in",
+        "byta",
+        "ta bort",
+        "steg",
+        "kedja",
+        "move",
+        "insert"
+      ],
+      "sources": [
+        {
+          "title": "src/engine/sceneEdit.ts",
+          "url": "",
+          "license": "Apache-2.0"
+        }
+      ]
+    },
+    {
+      "id": "fact-preview",
+      "kind": "fact",
+      "topic": "förhandsbild",
+      "confidence": "verifierad",
+      "basis": "motorn",
+      "text": "Förhandsbilder görs genom LookDev-vägen med Geometry Detail av. 256 px är snabbast. Första bilden efter en ändring tar längre tid (shader kompileras om kedjan ändrats). Högst ett antal bilder per utkast och per minut. noema_compare_renders ger en bild A|B plus ett färgoberoende mått på hur olika formerna är.",
+      "tags": [
+        "förhandsbild",
+        "256",
+        "snabb",
+        "jämför",
+        "compare",
+        "kostnad",
+        "kompilering"
+      ],
+      "sources": [
+        {
+          "title": "docs/manual/generated/ai-bridge.sv.md",
+          "url": "",
+          "license": "Apache-2.0"
+        }
+      ]
+    },
+    {
+      "id": "fact-geometry-detail",
+      "kind": "fact",
+      "topic": "geometry detail",
+      "confidence": "verifierad",
+      "basis": "motorn",
+      "text": "Geometry Detail kräver en kedja som motorn kan köra med dubbel precision (mappad fältkedja, två grupper, formler med dubbelprecisionsversion), och går inte ihop med scenobjekt, transport/GI, skärpedjup, normal-/bumpkarta, procedurell detalj eller texturerad materialgradient. Förhandsbilder kör alltid utan det. Hög detalj (Float32) fungerar för alla formler.",
+      "tags": [
+        "geometry detail",
+        "gd",
+        "precision",
+        "float32",
+        "gräns"
+      ],
+      "sources": [
+        {
+          "title": "src/engine/geometryEligibility.ts",
+          "url": "",
+          "license": "Apache-2.0"
+        }
+      ]
+    },
+    {
+      "id": "fact-ifs-vs-power",
+      "kind": "fact",
+      "topic": "formelfamiljer",
+      "confidence": "medel",
+      "basis": "bibliotekets kategorier och namn",
+      "text": "Biblioteket har formler av olika slag: potens-/hyperkomplexa formler (till exempel mandelbulb), vikningar (box-fold, abs-fold, ball-fold, icosa-fold), box-familjen (mandelbox, amazing box), IFS (menger-sponge, sierpinski-*), DIFS-former (shape-*, gyroid, schwarz) och rumsliga transformer (rotate, scale-offset, tiling). Inte alla har en kategori i katalogen; rollen ges där av namn och parametrar.",
+      "tags": [
+        "familj",
+        "kategori",
+        "ifs",
+        "difs",
+        "vikning",
+        "fold",
+        "bulb",
+        "box",
+        "transform"
+      ],
+      "sources": [
+        {
+          "title": "formelbiblioteket (formulas/*.yaml)",
+          "url": "",
+          "license": "Apache-2.0"
+        }
+      ]
+    },
+    {
+      "id": "hyp-fold-then-power",
+      "kind": "hypothesis",
+      "topic": "kombinationer",
+      "confidence": "låg",
+      "basis": "allmän princip, otestad i NOEMA",
+      "text": "En vikning (box-fold, abs-fold, ball-fold) före en potensformel (mandelbulb) kan ge fasetterade, plana ytor i annars organiska former.",
+      "test": "Utkast A: mandelbulb. Utkast B: box-fold + mandelbulb. Jämför silhuett och finstruktur med noema_compare_renders.",
+      "tags": [
+        "vikning",
+        "fold",
+        "mandelbulb",
+        "facetter",
+        "hybrid"
+      ]
+    },
+    {
+      "id": "hyp-ifs-plus-curved",
+      "kind": "hypothesis",
+      "topic": "kombinationer",
+      "confidence": "låg",
+      "basis": "allmän princip, otestad i NOEMA",
+      "text": "En IFS-formel (menger-sponge, sierpinski-*) ger självlik gitter-struktur; i samma kedja som en böjd formel kan karaktären bli en blandning av hårt och mjukt.",
+      "test": "Utkast: IFS först, böjd formel sist, och tvärtom (noema_set_draft_parameters chain.step.move).",
+      "tags": [
+        "ifs",
+        "menger",
+        "sierpinski",
+        "hybrid",
+        "gitter",
+        "ordning"
+      ]
+    },
+    {
+      "id": "hyp-transform-breaks-symmetry",
+      "kind": "hypothesis",
+      "topic": "kombinationer",
+      "confidence": "låg",
+      "basis": "allmän princip, otestad i NOEMA",
+      "text": "En rotation eller förskjutning (rotate, scale-offset) mellan två formler bryter symmetrin mellan dem och ger mindre regelbundna former.",
+      "test": "Sätt in rotate mellan två steg (chain.step.insert) och ändra dess vinklar i små steg.",
+      "tags": [
+        "rotate",
+        "rotation",
+        "symmetri",
+        "transform",
+        "scale-offset"
+      ]
+    },
+    {
+      "id": "hyp-interpolate-morph",
+      "kind": "hypothesis",
+      "topic": "kedjeläge",
+      "confidence": "låg",
+      "basis": "motorns beskrivning, effekten otestad",
+      "text": "Läget interpolate blandar två formers geometri mjukt och kan användas för att hitta former mellan två kända riktningar.",
+      "test": "Två steg, läge interpolate, ändra stegens vikter (inte ännu ett AI-verktyg: använd chain.mode och be konstnären justera vikterna).",
+      "tags": [
+        "interpolate",
+        "blanda",
+        "morfa",
+        "vikt"
+      ]
+    },
+    {
+      "id": "hyp-rounds-vs-iterations",
+      "kind": "hypothesis",
+      "topic": "detaljskala",
+      "confidence": "låg",
+      "basis": "allmän princip, otestad i NOEMA",
+      "text": "Fler varv (chain.rounds) upprepar hela kedjans mönster i mindre skala; fler iterationer i ett steg fördjupar just den formeln. De kan ge olika detaljkaraktär men kostar båda renderingstid.",
+      "test": "Två utkast med samma kedja: rounds 1 mot 3. Jämför edgeDensity och renderingstid.",
+      "tags": [
+        "rounds",
+        "varv",
+        "iterationer",
+        "detalj",
+        "kostnad"
+      ]
+    }
+  ],
+  "roles": {
+    "about": "Grov roll per välkänd formel, härledd ur namn och parametrar (heuristik, inte bevisad matematik).",
+    "map": {
+      "mandelbulb": "potensformel (3D-bulb)",
+      "iq-bulb": "potensformel (bulb-variant)",
+      "manowar-bulb": "potensformel med extra faser",
+      "mandelbox": "box-familjen: vikning + skala",
+      "box-fold": "vikning (plan symmetri)",
+      "abs-fold": "vikning (spegling)",
+      "ball-fold": "vikning (sfärisk)",
+      "icosa-fold": "vikning (ikosaedersymmetri)",
+      "koch-fold": "vikning (Koch-lik)",
+      "menger-sponge": "IFS (gitter)",
+      "sierpinski-tetrahedron": "IFS (tetraeder)",
+      "sierpinski-pyramid": "IFS (pyramid)",
+      "jerusalem-cube": "IFS (kub)",
+      "cantor-dust": "IFS (damm)",
+      "rotate": "rumslig transform (rotation)",
+      "scale-offset": "rumslig transform (skala och förskjutning)",
+      "tiling": "rumslig transform (upprepning)",
+      "axis-swap": "rumslig transform (axelbyte)",
+      "mb3d-amazingbox": "box-familjen (amazing box)",
+      "mb3d-sphereinv": "transform (sfärinversion)",
+      "gyroid": "DIFS (periodisk minimalyta)",
+      "schwarz": "DIFS (periodisk minimalyta)",
+      "lidinoid": "DIFS (periodisk minimalyta)",
+      "shape-box": "DIFS (låda)",
+      "shape-sphere": "DIFS (sfär)",
+      "shape-torus": "DIFS (torus)",
+      "shape-cylinder": "DIFS (cylinder)",
+      "shape-capsule": "DIFS (kapsel)"
+    }
+  },
+  "references": []
+}

@@ -1,0 +1,154 @@
+{
+  "format": 3,
+  "id": "mb3d-heightmapifs",
+  "name": "HeightMapIFS",
+  "description": "Use a map to generate a terrain out of the amplitude from the map color,\nuse 'Map channel' to choose from r,g,b represented by the values 0,1 and 2.\n\nUse the orbit trap coloring mode to colorize the surface. \n\nRemember that a value of 1 for \"Max. iterations\" is enough to generate one dIFS object.",
+  "credits": [
+    {
+      "name": "okänd",
+      "role": "creator not identified in recovered source",
+      "status": "unverified"
+    }
+  ],
+  "sources": [
+    {
+      "reference": "NewFormulas/preset-compatibility/HeightMapIFS.md",
+      "status": "unverified"
+    }
+  ],
+  "added_by": "Codex",
+  "math_status": "Independent equations from authorized recovered mathematics; project license.",
+  "reviewed": false,
+  "provenance": {
+    "origin": "mandelbulb3d",
+    "file": "HeightMapIFS.m3f",
+    "credited_author": "okänd",
+    "credited_authors": [
+      "okänd"
+    ],
+    "collection": "M3Formulas",
+    "note": "Independent reimplementation. Explicitly authorized mathematical recovery; normalized equations validated against the typed reference pipeline. No legacy executable code copied.",
+    "verified_against_mb3d": false
+  },
+  "parameters": [
+    {
+      "name": "map_nr",
+      "label": "Map nr",
+      "default": 10,
+      "min": 0,
+      "max": 16777216
+    },
+    {
+      "name": "x_offset",
+      "label": "X offset",
+      "default": 0,
+      "min": -10000,
+      "max": 10000
+    },
+    {
+      "name": "y_offset",
+      "label": "Y offset",
+      "default": 0,
+      "min": -10000,
+      "max": 10000
+    },
+    {
+      "name": "h_offset",
+      "label": "H offset",
+      "default": 0,
+      "min": -10000,
+      "max": 10000
+    },
+    {
+      "name": "x_scale",
+      "label": "X scale",
+      "default": 0.2,
+      "min": -10000,
+      "max": 10000
+    },
+    {
+      "name": "y_scale",
+      "label": "Y scale",
+      "default": 0.2,
+      "min": -10000,
+      "max": 10000
+    },
+    {
+      "name": "h_scale",
+      "label": "H scale",
+      "default": -0.1,
+      "min": -10000,
+      "max": 10000
+    },
+    {
+      "name": "rotation_x",
+      "label": "Rotation X",
+      "default": 0,
+      "min": -10000,
+      "max": 10000
+    },
+    {
+      "name": "rotation_y",
+      "label": "Rotation Y",
+      "default": 0,
+      "min": -10000,
+      "max": 10000
+    },
+    {
+      "name": "rotation_z",
+      "label": "Rotation Z",
+      "default": 0,
+      "min": -10000,
+      "max": 10000
+    },
+    {
+      "name": "map_channel_0_2",
+      "label": "Map channel (0..2)",
+      "default": 0,
+      "min": -16777216,
+      "max": 16777216
+    },
+    {
+      "name": "otrap_channel_0_2",
+      "label": "OTrap channel (0..2)",
+      "default": 1,
+      "min": -16777216,
+      "max": 16777216
+    },
+    {
+      "name": "otrap_offset",
+      "label": "OTrap offset",
+      "default": 0,
+      "min": -10000,
+      "max": 10000
+    },
+    {
+      "name": "otrap_multiplier",
+      "label": "OTrap multiplier",
+      "default": 1,
+      "min": -10000,
+      "max": 10000
+    },
+    {
+      "name": "inside_render",
+      "label": "Inside rendering",
+      "default": 0,
+      "min": 0,
+      "max": 1
+    },
+    {
+      "name": "de_stop",
+      "label": "Query fallback threshold",
+      "default": 0,
+      "min": -10000,
+      "max": 10000
+    }
+  ],
+  "iteration": {
+    "kernel": "mb3d-heightmapifs",
+    "iterations": 1
+  },
+  "view": {
+    "camera_distance": 5
+  }
+}

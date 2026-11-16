@@ -1,0 +1,60 @@
+# Swap and flip axes (transform). Format: see formulas/README.md
+format: 1
+id: axis-swap
+name: Swap and flip axes (transform)
+catalog:
+  category: spatial
+  tags: [ axis, permutation, position ]
+description: >
+  Puts the coordinates in another order (six choices) and can flip the sign of each. A small step,
+  but in a chain it changes which direction every later step works in, so it gives much variety.
+  Distances are kept.
+
+# NOTE: the AI assistant wrote this step from the definition of permutations and
+# reflections of coordinates (Wikipedia: Permutation matrix).
+# A person must still check each name and link before this is set to
+# "verified" (and reviewed: true).
+credits:
+  - name: General mathematics (textbook)
+    role: "standard definitions found in any textbook; no single person is credited (the project owner
+      agreed that general mathematics is credited this way)"
+    status: unverified
+sources:
+  - url: https://en.wikipedia.org/wiki/Permutation_matrix
+    status: unverified
+
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: >
+  General mathematics: standard definitions, not claimed as owned. Written fresh for this project;
+  no code from any program was read or copied. Source details are unverified (see credits).
+reviewed: false
+
+parameters:
+  - {
+      name: order,
+      label: "Order (0 xyz, 1 xzy, 2 yxz, 3 yzx, 4 zxy, 5 zyx)",
+      default: 1,
+      min: 0,
+      max: 5
+    }
+  - { name: flip_x, label: Flip x (0 or 1), default: 0, min: 0, max: 1 }
+  - { name: flip_y, label: Flip y (0 or 1), default: 0, min: 0, max: 1 }
+  - { name: flip_z, label: Flip z (0 or 1), default: 0, min: 0, max: 1 }
+
+iteration:
+  iterations: 1
+  # This is a transform: it has no distance. It passes the point on to the next step.
+  carry: [ z, dr ]
+  variables:
+    - { name: z, type: vec3, init: pos }
+    - { name: dr, type: float, init: 1 }
+    - { name: o, type: float, init: 0 }
+  steps:
+    - "o = floor(order + 0.5)"
+    - "z = select(select(select(select(select(z, z.xzy, o > 0.5), z.yxz, o > 1.5), z.yzx, o > 2.5),
+      z.zxy, o > 3.5), z.zyx, o > 4.5)"
+    - "z = z * vec3(1.0 - 2.0 * step(0.5, flip_x), 1.0 - 2.0 * step(0.5, flip_y), 1.0 - 2.0 *
+      step(0.5, flip_z))"
+
+view:
+  camera_distance: 4

@@ -1,0 +1,69 @@
+format: 3
+id: lambda-4dc
+name: Lambda4Dc
+description: Commutative hypercomplex lambda map in 4D. See the batch specification for domains and states.
+credits:
+  - name: Luca G.N.
+    role: Credited author according to the specification
+    status: unverified
+sources:
+  - reference: "NewFormulas/batch-02/04-Lambda4Dc.md; authorised normalised mathematical specification
+      from M3Formulas/Lambda4Dc.m3f. Provenance and recovery evidence:
+      NewFormulas/batch-02/manifest.json (m3formulas--lambda4dc--8c6fdd0a)."
+    status: unverified
+  - url: http://home.comcast.net/~cmdaven/hyprcplx.htm
+    status: unverified
+added_by: Codex
+math_status: Independent implementation from the authorised mathematical migration package of the
+  project owner; the licence of the project.
+reviewed: false
+provenance:
+  origin: mandelbulb3d
+  file: Lambda4Dc.m3f
+  credited_author: Luca G.N.
+  collection: M3Formulas
+  note: Independent reimplementation from the normalized mathematical migration specification
+    authorized by the project owner. The [CODE] section was not read, copied or translated by this
+    implementation. Mathematical recovery validation is not native MB3D or image verification.
+  verified_against_mb3d: false
+parameters:
+  - name: dx
+    label: dx
+    default: 1
+    min: -8
+    max: 8
+  - name: dy
+    label: dy
+    default: 0
+    min: -8
+    max: 8
+  - name: dz
+    label: dz
+    default: 0
+    min: -8
+    max: 8
+  - name: dw
+    label: dw
+    default: 0
+    min: -8
+    max: 8
+  - name: slice_w
+    label: 4D slice / extra w
+    default: 0
+    min: -4
+    max: 4
+  - name: constant_w
+    label: Julia constant w
+    default: 0
+    min: -4
+    max: 4
+  - name: bailout_squared
+    label: Escape limit (radius²)
+    default: 16
+    min: 1
+    max: 65536
+iteration:
+  kernel: lambda-4dc
+  iterations: 16
+view:
+  camera_distance: 5

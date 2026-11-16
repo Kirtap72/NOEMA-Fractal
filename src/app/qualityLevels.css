@@ -1,0 +1,24 @@
+/* INTELLIGENT-RENDERING-01: the quality level block at the top of "Stillbild & kvalitet". Uses the shell's colour tokens when present. */
+#quality-levels { display: flex; flex-direction: column; gap: 8px; margin: 0 0 12px; padding: 10px; border: 1px solid var(--line, #3a444d); border-radius: 8px; background: color-mix(in srgb, var(--raised, #1c2027) 60%, transparent); color: var(--text, #eee); font-size: 13px; }
+#quality-levels .ql-title { font-size: 14px; }
+#quality-levels .ql-note, #quality-levels .ql-hint { margin: 0; color: var(--muted, #a0a8b5); font-size: 12px; line-height: 1.45; }
+#quality-levels .ql-presets { display: flex; flex-wrap: wrap; gap: 6px; }
+#quality-levels .ql-presets button { flex: 1 1 auto; padding: 6px 10px; border-radius: 7px; border: 1px solid var(--line, #3a444d); background: var(--raised, #1c2027); color: inherit; cursor: pointer; font: 600 13px inherit; }
+#quality-levels .ql-presets button[aria-pressed="true"] { border-color: var(--accent, #ffb454); color: var(--accent, #ffb454); }
+#quality-levels .ql-row { display: grid; grid-template-columns: 11em 1fr; align-items: center; gap: 8px; }
+#quality-levels select { width: 100%; box-sizing: border-box; }
+
+/* INTELLIGENT-RENDERING-02: the block at the top of the Render tab. It stays in view while the settings below scroll. */
+#render-bar { position: sticky !important; top: 44px; z-index: 3; display: flex; flex-direction: column; gap: 8px; padding: 10px !important; box-sizing: border-box; background: var(--surface, #15181d) !important; }
+#render-bar .rb-title { font: 600 14px var(--font-display, inherit); }
+#render-bar .rb-actions { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+#render-bar .rb-actions button { padding: 7px 12px; border-radius: 8px; border: 1px solid var(--line, #3a444d); background: var(--raised, #1c2027); color: inherit; cursor: pointer; font: 600 13px inherit; }
+#render-bar .rb-actions button:hover:not(:disabled) { border-color: var(--line-strong, #55606b); }
+#render-bar .rb-actions button:disabled { opacity: .5; cursor: default; }
+#render-bar .rb-render { background: var(--accent, #ffb454) !important; color: var(--accent-ink, #1a1203) !important; border-color: transparent !important; }
+#render-bar .rb-progressive { border-color: var(--accent, #ffb454) !important; }
+#render-bar .rb-line { margin: 0; min-height: 1.3em; font-size: 12.5px; line-height: 1.45; color: var(--text, #eee); }
+#render-bar .rb-progress, #render-bar progress { width: 100%; height: 6px; accent-color: var(--accent, #ffb454); }
+#render-bar .rstatus { font-size: 12px; color: var(--muted, #a0a8b5); }
+#render-bar .ql-presets button[aria-pressed="true"] { border-color: var(--accent, #ffb454); color: var(--accent, #ffb454); }
+#progressive-image { image-rendering: auto; }

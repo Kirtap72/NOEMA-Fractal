@@ -1,0 +1,80 @@
+# Quaternion Julia set, a 3D slice of the 4D shape. Format: see formulas/README.md
+format: 1
+id: quaternion-julia
+name: Quaternion Julia (3D slice)
+description: >
+  The Julia iteration q -> q squared + c with quaternions. A point in space is
+  the starting quaternion q = (x, y, z, w) where w is held fixed (the slice),
+  and the constant c = (cx, cy, cz, cw) is the same for all points. A point
+  belongs to the set if q never grows beyond the escape radius. The set is
+  four-dimensional; this draws the part of it that lies at the chosen w.
+
+# NOTE: the AI assistant read the pages below on 2026-10-06 and wrote this
+# formula from the mathematics they give: the square of a quaternion in
+# components, the Julia iteration z -> z^2 + c, the idea of a 3D slice, and the
+# escape radius 4. Nothing was copied from program code. The distance estimate
+# (log of the length times the length, divided by the running derivative) is
+# the assistant's own transfer of the method used for the Mandelbulb. The
+# starting values of c are example values chosen by the assistant, not taken
+# from a source. A person must still open the sources and check each name and
+# link before this is set to "verified" (and reviewed: true).
+credits:
+  - name: William Rowan Hamilton
+    role: "discovered quaternions in 1843"
+    status: unverified
+  - name: Alan Norton
+    role: "SIGGRAPH 1982: first to display 3D slices of quaternion Julia sets (found through a search result; the paper itself was not opened)"
+    status: unverified
+  - name: John C. Hart
+    role: "with Daniel J. Sandin and Louis H. Kauffman, 1989 paper on ray tracing deterministic 3D fractals with distance estimates (only the title was seen; what it contains is recalled from memory)"
+    status: unverified
+  - name: Daniel J. Sandin
+    role: "co-author of the 1989 ray tracing paper (see John C. Hart)"
+    status: unverified
+  - name: Louis H. Kauffman
+    role: "co-author of the 1989 ray tracing paper (see John C. Hart)"
+    status: unverified
+sources:
+  - url: https://en.wikipedia.org/wiki/Quaternion
+    status: unverified
+  - url: https://paulbourke.net/fractals/quatjulia/
+    status: unverified
+  - url: https://history.siggraph.org/?p=106343
+    status: unverified
+  - url: https://history.siggraph.org/?p=119380
+    status: unverified
+
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: >
+  Mathematical idea, not claimed as owned. Written fresh for this project from
+  the public description of quaternions and of the iteration; no code from any
+  program was read or copied. The distance estimate and the example constants
+  are the assistant's own. Source details are unverified (see credits).
+reviewed: false
+
+parameters:
+  - { name: w, label: Slice w, default: 0, min: -1.5, max: 1.5 }
+  - { name: cx, label: c real, default: -0.2, min: -1.5, max: 1.5 }
+  - { name: cy, label: c i, default: 0.8, min: -1.5, max: 1.5 }
+  - { name: cz, label: c j, default: 0, min: -1.5, max: 1.5 }
+  - { name: cw, label: c k, default: 0, min: -1.5, max: 1.5 }
+
+iteration:
+  iterations: 12
+  # Passed on to the next step when formulas are chained.
+  carry: [q, dr]
+  variables:
+    - { name: q, type: vec4, init: "vec4(pos.x, pos.y, pos.z, w)" }
+    - { name: dr, type: float, init: 1 }
+    - { name: r, type: float, init: 0 }
+    - { name: k, type: vec4, init: "vec4(cx, cy, cz, cw)" }
+  steps:
+    - "r = length(q)"
+    - break_if: "r > 4.0"
+    # Running derivative: the length of 2 q times the old derivative (c is fixed, so nothing is added).
+    - "dr = 2.0 * r * dr"
+    - "q = vec4(q.x * q.x - q.y * q.y - q.z * q.z - q.w * q.w, 2.0 * q.x * q.y, 2.0 * q.x * q.z, 2.0 * q.x * q.w) + k"
+  distance: "0.5 * log(r) * r / dr"
+
+view:
+  camera_distance: 3.5

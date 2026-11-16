@@ -1,0 +1,99 @@
+format: 3
+id: icosahedron-ifs
+name: IcosahedronIFS
+catalog:
+  category: ifs
+description: Polyhedron IFS with three ordered reflections and two rotations.
+credits:
+  - name: okänd
+    role: Authorship not established in the handoff
+    status: unverified
+sources:
+  - reference: NewFormulas/claude-handoff-batch-01/06-IcosahedronIFS.md; normalised validated
+      mathematical specification, from M3Formulas/IcosahedronIFS.m3f
+    status: unverified
+added_by: Codex
+math_status: Independent implementation from the authorised mathematical migration package of the
+  project owner; the licence of the project.
+reviewed: false
+provenance:
+  origin: mandelbulb3d
+  file: IcosahedronIFS.m3f
+  credited_author: okänd
+  collection: M3Formulas
+  note: Independent reimplementation from the normalized mathematical migration specification
+    authorized by the project owner. The [CODE] section was not read, copied or translated by this
+    implementation. The handoff documents recovered mathematics; it is not an MB3D image
+    verification.
+  verified_against_mb3d: false
+parameters:
+  - name: scale
+    label: Scale
+    default: 2
+    min: -8
+    max: 8
+  - name: cscale_x
+    label: CScale X
+    default: 0.809016994374947
+    min: -8
+    max: 8
+  - name: cscale_y
+    label: CScale Y
+    default: 0.5
+    min: -8
+    max: 8
+  - name: cscale_z
+    label: CScale Z
+    default: 0
+    min: -8
+    max: 8
+  - name: rotation1_x
+    label: rotation1 X (degrees)
+    default: 0
+    min: -180
+    max: 180
+  - name: rotation1_y
+    label: rotation1 Y (degrees)
+    default: 0
+    min: -180
+    max: 180
+  - name: rotation1_z
+    label: rotation1 Z (degrees)
+    default: 0
+    min: -180
+    max: 180
+  - name: rotation2_x
+    label: rotation2 X (degrees)
+    default: 0
+    min: -180
+    max: 180
+  - name: rotation2_y
+    label: rotation2 Y (degrees)
+    default: 0
+    min: -180
+    max: 180
+  - name: rotation2_z
+    label: rotation2 Z (degrees)
+    default: 0
+    min: -180
+    max: 180
+  - name: slice_w
+    label: 4D slice / extra w
+    default: 0
+    min: -4
+    max: 4
+  - name: constant_w
+    label: Julia constant w
+    default: 0
+    min: -4
+    max: 4
+  - name: bailout_squared
+    label: Escape limit (radius²)
+    default: 1024
+    min: 1
+    max: 65536
+iteration:
+  kernel: icosahedron-ifs
+  iterations: 16
+view:
+  camera_distance: 5

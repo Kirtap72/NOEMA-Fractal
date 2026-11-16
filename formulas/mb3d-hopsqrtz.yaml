@@ -1,0 +1,39 @@
+format: 3
+id: mb3d-hopsqrtz
+name: _HopSqrtZ
+description: >-
+  Root transform of the z coordinate as in the Hopalong attractor: t = Mul·z + fix; z' = fixSq ±
+  √|t|/Div (plus when t>0). Other coordinates unchanged; uncounted helper step (DEoption -1).
+credits:
+  - {
+      name: Luca GN,
+      role: "Formula author 2011 (according to the formula description)",
+      status: unverified
+    }
+sources:
+  - {
+      reference: "Mandelbulb 3D 1.9.9 (sr37), M3Formulas, file _HopSqrtZ.m3f: [OPTIONS] and the
+        description after [END]; the code block was never read.",
+      status: unverified
+    }
+  - { reference: NewFormulas/family-05/FAMILIES.md, status: unverified }
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: The equation is the formula file's own description; the common equation of the family
+  in src/engine/formula/axisMaps.ts. No comparison with a running Mandelbulb 3D.
+reviewed: false
+provenance:
+  origin: mandelbulb3d
+  file: _HopSqrtZ.m3f
+  credited_author: Luca GN
+  credited_authors: [ Luca GN ]
+  collection: M3Formulas
+  note: Independent reimplementation from the equation in the formula file's own description. The
+    [CODE] section was not read. Native image equivalence unverified.
+  verified_against_mb3d: false
+parameters:
+  - { name: fix_z, label: fixZ, default: 0, min: -1000, max: 1000 }
+  - { name: fix_sq, label: fixSq, default: 0, min: -1000, max: 1000 }
+  - { name: mul, label: Mul, default: 1, min: -1000, max: 1000 }
+  - { name: div, label: Div, default: 1, min: -1000, max: 1000 }
+iteration: { kernel: mb3d-hopsqrtz, iterations: 1 }
+view: { camera_distance: 5 }

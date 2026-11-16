@@ -1,0 +1,35 @@
+format: 3
+id: mb3d-quadraytransform
+name: _QuadrayTransform
+catalog:
+  category: transforms
+  tags: [ transform, quadray, 4D, Aexion ]
+description: >-
+  Quadray transform after the ideas of Aexion (according to the file): the point and C are lifted
+  from 3D to 4D with x′ = x+y+z, y′ = −x−y+z, z′ = −x+y−z, w′ = x−y−z. Used as the first formula and
+  then "repeat from here".
+credits:
+  - { name: okänd, role: "Author not stated in the formula description", status: unverified }
+sources:
+  - {
+      reference: "Mandelbulb 3D 1.9.9 (sr37), M3Formulas, file _QuadrayTransform.m3f: [OPTIONS] and the
+        description after [END]; the code block and code listings was never read.",
+      status: unverified
+    }
+  - { reference: NewFormulas/formula-08/BATCH-08.md, status: unverified }
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: The equations are the formula file's own description; implementation in
+  src/engine/formula/batch08Kernels.ts. No comparison with a running Mandelbulb 3D.
+reviewed: false
+provenance:
+  origin: mandelbulb3d
+  file: _QuadrayTransform.m3f
+  credited_author: okänd
+  credited_authors: [ okänd ]
+  collection: M3Formulas
+  note: Independent reimplementation from the equations in the formula file's own description. The
+    [CODE] section was not read. Native image equivalence unverified.
+  verified_against_mb3d: false
+parameters: []
+iteration: { kernel: mb3d-quadraytransform, iterations: 1 }
+view: { camera_distance: 5 }

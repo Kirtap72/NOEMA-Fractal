@@ -1,0 +1,118 @@
+{
+  "format": 3,
+  "id": "mb3d-amazingifs",
+  "name": "amazingIFS",
+  "description": "Based on Amazing Box formula (and Kali's tweaks), adapted for dIFS.\nSeven iters are enough to get very detailed images.\nEDIT; DE fix + added a replacement for MinR (don't ask me why or how but it seems to work)\n\nLuca GN 2012",
+  "credits": [
+    {
+      "name": "Luca GN",
+      "role": "implementation, 2012",
+      "status": "unverified"
+    },
+    {
+      "name": "Kali",
+      "role": "inspiration",
+      "status": "unverified"
+    }
+  ],
+  "sources": [
+    {
+      "reference": "NewFormulas/preset-compatibility/amazingIFS.md",
+      "status": "unverified"
+    }
+  ],
+  "added_by": "Codex",
+  "math_status": "Independent equations from authorized recovered mathematics; project license.",
+  "reviewed": false,
+  "provenance": {
+    "origin": "mandelbulb3d",
+    "file": "amazingIFS.m3f",
+    "credited_author": "Luca GN; Kali",
+    "credited_authors": [
+      "Luca GN",
+      "Kali"
+    ],
+    "collection": "M3Formulas",
+    "note": "Independent reimplementation. Explicitly authorized mathematical recovery; normalized equations validated against the typed reference pipeline. No legacy executable code copied.",
+    "verified_against_mb3d": false
+  },
+  "parameters": [
+    {
+      "name": "add_x",
+      "label": "Add X",
+      "default": 0,
+      "min": -10000,
+      "max": 10000
+    },
+    {
+      "name": "add_y",
+      "label": "Add Y",
+      "default": 0,
+      "min": -10000,
+      "max": 10000
+    },
+    {
+      "name": "add_z",
+      "label": "Add Z",
+      "default": 0,
+      "min": -10000,
+      "max": 10000
+    },
+    {
+      "name": "rotation_x",
+      "label": "Rotation X",
+      "default": 5,
+      "min": -10000,
+      "max": 10000
+    },
+    {
+      "name": "rotation_y",
+      "label": "Rotation Y",
+      "default": 5,
+      "min": -10000,
+      "max": 10000
+    },
+    {
+      "name": "rotation_z",
+      "label": "Rotation Z",
+      "default": 5,
+      "min": -10000,
+      "max": 10000
+    },
+    {
+      "name": "fold_x",
+      "label": "Fold X",
+      "default": 0.5,
+      "min": -10000,
+      "max": 10000
+    },
+    {
+      "name": "fold_y",
+      "label": "Fold Y",
+      "default": 0.5,
+      "min": -10000,
+      "max": 10000
+    },
+    {
+      "name": "fold_z",
+      "label": "Fold Z",
+      "default": 0,
+      "min": -10000,
+      "max": 10000
+    },
+    {
+      "name": "p_1_min_r_gt_or_eq_1",
+      "label": "1/Min R (gt or eq 1)",
+      "default": 31,
+      "min": -10000,
+      "max": 10000
+    }
+  ],
+  "iteration": {
+    "kernel": "mb3d-amazingifs",
+    "iterations": 1
+  },
+  "view": {
+    "camera_distance": 5
+  }
+}

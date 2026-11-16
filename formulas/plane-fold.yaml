@@ -1,0 +1,53 @@
+# Plane fold (transform). Format: see formulas/README.md
+format: 1
+id: plane-fold
+name: Plane fold (transform)
+description: >
+  Mirrors every point that lies on the negative side of a plane into the positive side. The plane
+  has a normal (nx, ny, nz) and sits at distance d from the origin along it. It keeps distances, so
+  the running derivative is unchanged. It has no distance estimate of its own, so it is used in
+  front of a formula that has one.
+
+# NOTE: the AI assistant read the page below on 2026-10-06 and wrote this step
+# from the reflection formula it gives for a plane at distance d from the
+# origin, applying it only to points on the far side of the plane. A person must
+# still check each name and link before this is set to "verified".
+credits:
+  - name: General mathematics (textbook)
+    role: "standard definitions found in any textbook; no single person is credited (the project owner
+      agreed that general mathematics is credited this way)"
+    status: unverified
+sources:
+  - url: https://en.wikipedia.org/wiki/Reflection_(mathematics)
+    status: unverified
+
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: >
+  General mathematics: standard definitions, not claimed as owned. Written fresh for this project;
+  no code from any program was read or copied. Source details are unverified (see credits).
+reviewed: false
+
+parameters:
+  - { name: nx, label: Normal x, default: 1, min: -1, max: 1 }
+  - { name: ny, label: Normal y, default: 1, min: -1, max: 1 }
+  - { name: nz, label: Normal z, default: 0, min: -1, max: 1 }
+  - { name: d, label: Offset d, default: 0, min: -2, max: 2 }
+
+iteration:
+  iterations: 1
+  # This is a transform: it has no distance. It passes the point on to the next step.
+  carry: [ z, dr ]
+  variables:
+    - { name: z, type: vec3, init: pos }
+    - { name: dr, type: float, init: 1 }
+    - { name: n, type: vec3, init: "vec3(1.0, 0.0, 0.0)" }
+    - { name: t, type: float, init: 0 }
+  steps:
+    - "n = vec3(nx, ny, nz)"
+    # Signed distance to the plane in units of the normal; negative means the wrong side.
+    - "t = (dot(z, n) - d) / max(dot(n, n), 0.000001)"
+    # Reflect: v - 2 t n, only where t < 0.
+    - "z = z - 2.0 * min(t, 0.0) * n"
+
+view:
+  camera_distance: 4

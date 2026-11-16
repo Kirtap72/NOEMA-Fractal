@@ -1,0 +1,50 @@
+format: 3
+id: mb3d-aboxvsicen1
+name: ABoxVS_icen1
+catalog:
+  category: fractals
+  tags: [ Amazing Box, inversion ]
+description: >-
+  Amazing Box with variable scale, selectable inversion radius and inversion centre and a C swap
+  mode (Luca GN 2011, according to the Mandelbulber variant of Buddhi). The scale is updated Scale =
+  Scale + vary·(|Scale|−1) every round.
+credits:
+  - {
+      name: Luca GN,
+      role: "Formula author 2011 (according to the formula description)",
+      status: unverified
+    }
+sources:
+  - {
+      reference: "Mandelbulb 3D 1.9.9 (sr37), M3Formulas, file ABoxVS_icen1.m3f: [OPTIONS] and the
+        description after [END]; the code block was never read.",
+      status: unverified
+    }
+  - { reference: NewFormulas/final-fixes-08/BATCH-04.md, status: unverified }
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: The equations are the formula file's own description; implementation in
+  src/engine/formula/followupKernels.ts. No comparison with a running Mandelbulb 3D.
+reviewed: false
+provenance:
+  origin: mandelbulb3d
+  file: ABoxVS_icen1.m3f
+  credited_author: Luca GN
+  credited_authors: [ Luca GN ]
+  collection: M3Formulas
+  note: Independent reimplementation from the equations in the formula file's own description. The
+    [CODE] section was not read. Native image equivalence unverified.
+  verified_against_mb3d: false
+parameters:
+  - { name: scale, label: "Scale", default: 2, min: -8, max: 8 }
+  - { name: min_r, label: "Min R", default: 0.5, min: -8, max: 8 }
+  - { name: fold, label: "Fold", default: 1, min: -8, max: 8 }
+  - { name: scale_vary, label: "Scale vary", default: 0, min: -8, max: 8 }
+  - { name: inversion_radius, label: "Inversion radius", default: 1, min: -1000, max: 1000 }
+  - { name: inv_xc, label: "Inversion xC", default: 0.5, min: -1000, max: 1000 }
+  - { name: inv_yc, label: "Inversion yC", default: 0, min: -1000, max: 1000 }
+  - { name: inv_zc, label: "Inversion zC", default: 0, min: -1000, max: 1000 }
+  - { name: c_swap_mode, label: "C-Swap mode", default: 0, min: -1000, max: 1000 }
+  - { name: constant_w, label: "Julia constant w", default: 0, min: -4, max: 4 }
+  - { name: bailout_squared, label: "Escape limit (radius²)", default: 1024, min: 1, max: 65536 }
+iteration: { kernel: mb3d-aboxvsicen1, iterations: 16 }
+view: { camera_distance: 5 }

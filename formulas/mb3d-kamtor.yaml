@@ -1,0 +1,53 @@
+format: 3
+id: mb3d-kamtor
+name: _kamtor
+catalog:
+  category: transforms
+  tags: [ transform, attractor, KAM-torus ]
+description: >-
+  Adaptable KAM torus map with twelve polynomial coefficients and two smoothness values (a
+  Henon-like attractor, from the UF database according to the description). z becomes an angle
+  parameter that controls how two polynomials are blended into x and y.
+credits:
+  - {
+      name: Luca GN,
+      role: "Formula author 2011 (according to the formula description)",
+      status: unverified
+    }
+sources:
+  - {
+      reference: "Mandelbulb 3D 1.9.9 (sr37), M3Formulas, file _kamtor.m3f: [OPTIONS] and the description
+        after [END]; the code block was never read.",
+      status: unverified
+    }
+  - { reference: NewFormulas/formula-05/BATCH-05.md, status: unverified }
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: The equations are the formula file's own description; implementation in
+  src/engine/formula/batch05Kernels.ts. No comparison with a running Mandelbulb 3D.
+reviewed: false
+provenance:
+  origin: mandelbulb3d
+  file: _kamtor.m3f
+  credited_author: Luca GN
+  credited_authors: [ Luca GN ]
+  collection: M3Formulas
+  note: Independent reimplementation from the equations in the formula file's own description. The
+    [CODE] section was not read. Native image equivalence unverified.
+  verified_against_mb3d: false
+parameters:
+  - { name: soft1, label: "Soft1", default: 1.05, min: -100, max: 100 }
+  - { name: soft2, label: "Soft2", default: -0.05, min: -100, max: 100 }
+  - { name: a1, label: "A1", default: 1, min: -100, max: 100 }
+  - { name: b1, label: "B1", default: 0, min: -100, max: 100 }
+  - { name: c1, label: "C1", default: 0, min: -100, max: 100 }
+  - { name: d1, label: "D1", default: 0, min: -100, max: 100 }
+  - { name: e1, label: "E1", default: 0, min: -100, max: 100 }
+  - { name: f1, label: "F1", default: 0, min: -100, max: 100 }
+  - { name: a2, label: "A2", default: 0, min: -100, max: 100 }
+  - { name: b2, label: "B2", default: -1, min: -100, max: 100 }
+  - { name: c2, label: "C2", default: 1, min: -100, max: 100 }
+  - { name: d2, label: "D2", default: 0, min: -100, max: 100 }
+  - { name: e2, label: "E2", default: 0, min: -100, max: 100 }
+  - { name: f2, label: "F2", default: 0, min: -100, max: 100 }
+iteration: { kernel: mb3d-kamtor, iterations: 1 }
+view: { camera_distance: 5 }

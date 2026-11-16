@@ -1,0 +1,47 @@
+{
+  "format": 3,
+  "id": "mb3d-roomclrifs",
+  "name": "roomclrIFS",
+  "description": "Independent room shell field with radial pinch/punch and original wall-color selection.",
+  "credits": [ { "name": "okänd", "role": "Author of the distributed variant", "status": "unverified" } ],
+  "sources": [ { "reference": "NewFormulas/preset-compatibility/roomclrIFS.md", "status": "unverified" } ],
+  "added_by": "Codex",
+  "math_status": "Typed numerical reference verified; native image equivalence unverified.",
+  "reviewed": false,
+  "provenance":
+    {
+      "origin": "mandelbulb3d",
+      "file": "roomclrIFS.m3f",
+      "credited_author": "okänd",
+      "credited_authors": [ "okänd" ],
+      "collection": "M3Formulas",
+      "note": "Independent reimplementation of the mathematical formula. Explicitly authorized
+        mathematical recovery for roomclrIFS, 2026-10-27; original executable code is not
+        distributed.",
+      "verified_against_mb3d": false
+    },
+  "parameters":
+    [
+      { "name": "room_thickness", "label": "RoomThick", "default": 0.1, "min": -10000, "max": 10000 },
+      { "name": "scale", "label": "Scale", "default": 2, "min": 0.000001, "max": 10000 },
+      { "name": "z_add", "label": "Z add", "default": 0, "min": -10000, "max": 10000 },
+      { "name": "y_add", "label": "Y add", "default": 0, "min": -10000, "max": 10000 },
+      { "name": "x_add", "label": "X add", "default": 0, "min": -10000, "max": 10000 },
+      { "name": "pinch", "label": "Pinch / Punch", "default": 0.1, "min": -10000, "max": 10000 },
+      {
+          "name": "apply_scale_add",
+          "label": "Apply scale+add",
+          "default": 0,
+          "min": -10000,
+          "max": 10000
+        },
+      { "name": "x_halfwidth", "label": "X halfwidth", "default": 1, "min": -10000, "max": 10000 },
+      { "name": "y_halfwidth", "label": "Y halfwidth", "default": 1, "min": -10000, "max": 10000 },
+      { "name": "z_halfwidth", "label": "Z halfwidth", "default": 1, "min": -10000, "max": 10000 },
+      { "name": "orbit_left", "label": "OTClr L", "default": 2, "min": -10000, "max": 10000 },
+      { "name": "orbit_right", "label": "OTClr R", "default": 0, "min": -10000, "max": 10000 },
+      { "name": "orbit_other", "label": "OTClr", "default": 1, "min": -10000, "max": 10000 }
+    ],
+  "iteration": { "kernel": "mb3d-roomclrifs", "iterations": 1 },
+  "view": { "camera_distance": 5 }
+}

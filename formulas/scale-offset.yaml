@@ -1,0 +1,54 @@
+# Scale and offset (transform). Format: see formulas/README.md
+format: 1
+id: scale-offset
+name: Scale and offset (transform)
+catalog:
+  category: spatial
+description: >
+  Scales the point by a factor around a centre point, and can add the point itself (as in the
+  Mandelbox). Folds only mirror space; this step makes it smaller or larger, so that folds followed
+  by this step build a fractal (a Sierpinski or Menger shape, for example). The running derivative
+  is multiplied by the size of the factor. Negative factors also mirror.
+
+# NOTE: the AI assistant wrote this step from the definition of a homothety
+# (a scaling around a centre point): z -> s*z - c*(s-1) keeps the point c in place.
+# Adding the point (the "+ pos" of escape-time fractals) is optional. The
+# derivative bound |s|*dr + add is the assistant's own.
+# A person must still check each name and link before this is set to
+# "verified" (and reviewed: true).
+credits:
+  - name: General mathematics (textbook)
+    role: "standard definitions found in any textbook; no single person is credited (the project owner
+      agreed that general mathematics is credited this way)"
+    status: unverified
+sources:
+  - url: https://en.wikipedia.org/wiki/Homothety
+    status: unverified
+
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: >
+  General mathematics: standard definitions, not claimed as owned. Written fresh for this project;
+  no code from any program was read or copied. Source details are unverified (see credits).
+reviewed: false
+
+parameters:
+  - { name: scale, label: Scale, default: 2, min: -4, max: 4 }
+  - { name: ox, label: Centre x, default: 1, min: -3, max: 3 }
+  - { name: oy, label: Centre y, default: 1, min: -3, max: 3 }
+  - { name: oz, label: Centre z, default: 1, min: -3, max: 3 }
+  - { name: add_point, label: Add the point (0 to 1), default: 0, min: 0, max: 1 }
+
+iteration:
+  iterations: 1
+  # This is a transform: it has no distance. It passes the point on to the next step.
+  carry: [ z, dr ]
+  variables:
+    - { name: z, type: vec3, init: pos }
+    - { name: dr, type: float, init: 1 }
+  steps:
+    - "z = z * scale - vec3(ox, oy, oz) * (scale - 1.0) + pos * add_point"
+    # Scaling multiplies distances by |scale|; adding the point adds at most 1 to the derivative.
+    - "dr = dr * abs(scale) + add_point"
+
+view:
+  camera_distance: 4

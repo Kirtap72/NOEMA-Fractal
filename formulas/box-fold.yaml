@@ -1,0 +1,47 @@
+# Box fold, one half of the Mandelbox iteration, as a step to chain. Format: see formulas/README.md
+format: 1
+id: box-fold
+name: Box fold (transform)
+description: >
+  Reflects every coordinate that is outside the range from -limit to +limit back
+  inside it, as if the space were folded at the faces of a cube. It changes the
+  point only and has no distance estimate of its own, so it is used in front of
+  a formula that has one (for example the Mandelbulb or the Mandelbox).
+
+# NOTE: the AI assistant read the page below on 2026-10-06 and wrote this step
+# from the mathematics it describes (for each coordinate: if above 1 take 2
+# minus it, if below -1 take -2 minus it). Nothing was copied from program
+# code. A person must still open the source and check each name and link
+# before this is set to "verified" (and reviewed: true).
+credits:
+  - name: Tom Lowe
+    role: "found the Mandelbox in 2010, which is built from this fold and the sphere fold"
+    status: unverified
+sources:
+  - url: https://en.wikipedia.org/wiki/Mandelbox
+    status: unverified
+
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: >
+  Mathematical idea, not claimed as owned. Written fresh for this project from
+  the public description of the fold; no code from any program was read or
+  copied. Source details are unverified (see credits).
+reviewed: false
+
+parameters:
+  - { name: limit, label: Fold limit, default: 1, min: 0.1, max: 4 }
+
+iteration:
+  iterations: 1
+  # This is a transform: it has no distance. It passes the point on to the next step.
+  carry: [z, dr]
+  variables:
+    - { name: z, type: vec3, init: pos }
+    - { name: dr, type: float, init: 1 }
+  steps:
+    # Clamp to the range, double it, and subtract the point: values inside are unchanged,
+    # values outside are mirrored at the border.
+    - "z = clamp(z, vec3(-limit, -limit, -limit), vec3(limit, limit, limit)) * 2.0 - z"
+
+view:
+  camera_distance: 4

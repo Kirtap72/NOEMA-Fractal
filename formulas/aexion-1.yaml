@@ -1,0 +1,52 @@
+format: 3
+id: aexion-1
+name: Aexion1
+description: Quadray map that changes the orbit point and the constant once per orbit.
+credits:
+  - name: Aexion
+    role: Credited in the handoff
+    status: unverified
+sources:
+  - reference: NewFormulas/claude-handoff-batch-01/04-Aexion1.md; normalised validated mathematical
+      specification, from M3Formulas/Aexion1.m3f
+    status: unverified
+added_by: Codex
+math_status: Independent implementation from the authorised mathematical migration package of the
+  project owner; the licence of the project.
+reviewed: false
+provenance:
+  origin: mandelbulb3d
+  file: Aexion1.m3f
+  credited_author: Aexion
+  collection: M3Formulas
+  note: Independent reimplementation from the normalized mathematical migration specification
+    authorized by the project owner. The [CODE] section was not read, copied or translated by this
+    implementation. The handoff documents recovered mathematics; it is not an MB3D image
+    verification.
+  verified_against_mb3d: false
+parameters:
+  - name: c_add
+    label: C add
+    default: -1.35
+    min: -8
+    max: 8
+  - name: slice_w
+    label: 4D slice / extra w
+    default: 0
+    min: -4
+    max: 4
+  - name: constant_w
+    label: Julia constant w
+    default: 0
+    min: -4
+    max: 4
+  - name: bailout_squared
+    label: Escape limit (radius²)
+    default: 16
+    min: 1
+    max: 65536
+iteration:
+  kernel: aexion-1
+  iterations: 16
+view:
+  camera_distance: 5

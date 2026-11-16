@@ -1,0 +1,2573 @@
+{
+  "TLightingParas": {
+    "size": 92,
+    "fields": [
+      {
+        "name": "TBpos",
+        "offset": 0,
+        "kind": "array",
+        "count": 11,
+        "lowerBound": 1,
+        "element": {
+          "kind": "i32",
+          "size": 4
+        },
+        "size": 44
+      },
+      {
+        "name": "TBoptions",
+        "offset": 44,
+        "kind": "u32",
+        "size": 4
+      },
+      {
+        "name": "TBfineColAdjust",
+        "offset": 48,
+        "kind": "u32",
+        "size": 4
+      },
+      {
+        "name": "DepthCol",
+        "offset": 52,
+        "kind": "u32",
+        "size": 4
+      },
+      {
+        "name": "Cols",
+        "offset": 56,
+        "kind": "array",
+        "count": 9,
+        "lowerBound": 1,
+        "element": {
+          "kind": "u32",
+          "size": 4
+        },
+        "size": 36
+      }
+    ]
+  },
+  "TMandHeaderOld": {
+    "size": 200,
+    "fields": [
+      {
+        "name": "MandId",
+        "offset": 0,
+        "kind": "i32",
+        "size": 4
+      },
+      {
+        "name": "Width",
+        "offset": 4,
+        "kind": "i32",
+        "size": 4
+      },
+      {
+        "name": "Height",
+        "offset": 8,
+        "kind": "i32",
+        "size": 4
+      },
+      {
+        "name": "Iterations",
+        "offset": 12,
+        "kind": "i32",
+        "size": 4
+      },
+      {
+        "name": "iOptions",
+        "offset": 16,
+        "kind": "i32",
+        "size": 4
+      },
+      {
+        "name": "dZstart",
+        "offset": 20,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dZend",
+        "offset": 28,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dXmid",
+        "offset": 36,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dYmid",
+        "offset": 44,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dZmid",
+        "offset": 52,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dXrot",
+        "offset": 60,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dYrot",
+        "offset": 68,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dZrot",
+        "offset": 76,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dZoom",
+        "offset": 84,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "RStop",
+        "offset": 92,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dPow",
+        "offset": 100,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "Light",
+        "offset": 108,
+        "kind": "record",
+        "size": 92,
+        "recordType": "TLightingParas"
+      }
+    ]
+  },
+  "TMandHeader4": {
+    "size": 272,
+    "fields": [
+      {
+        "name": "MandId",
+        "offset": 0,
+        "kind": "i32",
+        "size": 4
+      },
+      {
+        "name": "Width",
+        "offset": 4,
+        "kind": "i32",
+        "size": 4
+      },
+      {
+        "name": "Height",
+        "offset": 8,
+        "kind": "i32",
+        "size": 4
+      },
+      {
+        "name": "Iterations",
+        "offset": 12,
+        "kind": "i32",
+        "size": 4
+      },
+      {
+        "name": "iOptions",
+        "offset": 16,
+        "kind": "i32",
+        "size": 4
+      },
+      {
+        "name": "dZstart",
+        "offset": 20,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dZend",
+        "offset": 28,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dXmid",
+        "offset": 36,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dYmid",
+        "offset": 44,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dZmid",
+        "offset": 52,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dXrot",
+        "offset": 60,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dYrot",
+        "offset": 68,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dZrot",
+        "offset": 76,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dZoom",
+        "offset": 84,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "RStop",
+        "offset": 92,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dPow",
+        "offset": 100,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "Light",
+        "offset": 108,
+        "kind": "record",
+        "size": 92,
+        "recordType": "TLightingParas"
+      },
+      {
+        "name": "dFOVy",
+        "offset": 200,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dHardLightZaxis",
+        "offset": 208,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dHardLightXaxis",
+        "offset": 216,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "bColorOnGrad",
+        "offset": 224,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "bCalculateHardShadow",
+        "offset": 225,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "bStepsafterDEStop",
+        "offset": 226,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "MinimumIterations",
+        "offset": 227,
+        "kind": "i32",
+        "size": 4
+      },
+      {
+        "name": "iThreadPriority",
+        "offset": 231,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "iAvrgDEsteps",
+        "offset": 232,
+        "kind": "i32",
+        "size": 4
+      },
+      {
+        "name": "iAvrgIts",
+        "offset": 236,
+        "kind": "i32",
+        "size": 4
+      },
+      {
+        "name": "CalcBackgroundShadow",
+        "offset": 240,
+        "kind": "i8",
+        "size": 1
+      },
+      {
+        "name": "bCalcAmbShadowAutomatic",
+        "offset": 241,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "sAniStart",
+        "offset": 242,
+        "kind": "f32",
+        "size": 4
+      },
+      {
+        "name": "sAniStop",
+        "offset": 246,
+        "kind": "f32",
+        "size": 4
+      },
+      {
+        "name": "sAniStep",
+        "offset": 250,
+        "kind": "f32",
+        "size": 4
+      },
+      {
+        "name": "bAniOption",
+        "offset": 254,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "bHScalculated",
+        "offset": 255,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "sCutX",
+        "offset": 256,
+        "kind": "f32",
+        "size": 4
+      },
+      {
+        "name": "sCutY",
+        "offset": 260,
+        "kind": "f32",
+        "size": 4
+      },
+      {
+        "name": "sCutZ",
+        "offset": 264,
+        "kind": "f32",
+        "size": 4
+      },
+      {
+        "name": "bCutOption",
+        "offset": 268,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "newBuffer",
+        "offset": 269,
+        "kind": "array",
+        "count": 3,
+        "lowerBound": 0,
+        "element": {
+          "kind": "u8",
+          "size": 1
+        },
+        "size": 3
+      }
+    ]
+  },
+  "TLight7": {
+    "size": 14,
+    "fields": [
+      {
+        "name": "Loption",
+        "offset": 0,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "LFunction",
+        "offset": 1,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "Lcolor",
+        "offset": 2,
+        "kind": "u32",
+        "size": 4
+      },
+      {
+        "name": "LXangle",
+        "offset": 6,
+        "kind": "i32",
+        "size": 4
+      },
+      {
+        "name": "LYangle",
+        "offset": 10,
+        "kind": "i32",
+        "size": 4
+      }
+    ]
+  },
+  "TLCol8": {
+    "size": 10,
+    "fields": [
+      {
+        "name": "Position",
+        "offset": 0,
+        "kind": "u16",
+        "size": 2
+      },
+      {
+        "name": "ColorDif",
+        "offset": 2,
+        "kind": "u32",
+        "size": 4
+      },
+      {
+        "name": "ColorSpe",
+        "offset": 6,
+        "kind": "u32",
+        "size": 4
+      }
+    ]
+  },
+  "TICol8": {
+    "size": 6,
+    "fields": [
+      {
+        "name": "Position",
+        "offset": 0,
+        "kind": "u16",
+        "size": 2
+      },
+      {
+        "name": "Color",
+        "offset": 2,
+        "kind": "u32",
+        "size": 4
+      }
+    ]
+  },
+  "TLightingParas8": {
+    "size": 272,
+    "fields": [
+      {
+        "name": "TBpos",
+        "offset": 0,
+        "kind": "array",
+        "count": 11,
+        "lowerBound": 1,
+        "element": {
+          "kind": "i32",
+          "size": 4
+        },
+        "size": 44
+      },
+      {
+        "name": "TBoptions",
+        "offset": 44,
+        "kind": "i32",
+        "size": 4
+      },
+      {
+        "name": "TBfineColAdjust",
+        "offset": 48,
+        "kind": "u32",
+        "size": 4
+      },
+      {
+        "name": "DepthCol",
+        "offset": 52,
+        "kind": "u32",
+        "size": 4
+      },
+      {
+        "name": "Cols",
+        "offset": 56,
+        "kind": "array",
+        "count": 9,
+        "lowerBound": 1,
+        "element": {
+          "kind": "u32",
+          "size": 4
+        },
+        "size": 36
+      },
+      {
+        "name": "Lights",
+        "offset": 92,
+        "kind": "array",
+        "count": 4,
+        "lowerBound": 0,
+        "element": {
+          "kind": "record",
+          "size": 14,
+          "recordType": "TLight7"
+        },
+        "size": 56
+      },
+      {
+        "name": "LCols",
+        "offset": 148,
+        "kind": "array",
+        "count": 10,
+        "lowerBound": 0,
+        "element": {
+          "kind": "record",
+          "size": 10,
+          "recordType": "TLCol8"
+        },
+        "size": 100
+      },
+      {
+        "name": "ICols",
+        "offset": 248,
+        "kind": "array",
+        "count": 4,
+        "lowerBound": 0,
+        "element": {
+          "kind": "record",
+          "size": 6,
+          "recordType": "TICol8"
+        },
+        "size": 24
+      }
+    ]
+  },
+  "TMandHeader8": {
+    "size": 704,
+    "fields": [
+      {
+        "name": "MandId",
+        "offset": 0,
+        "kind": "i32",
+        "size": 4
+      },
+      {
+        "name": "Width",
+        "offset": 4,
+        "kind": "i32",
+        "size": 4
+      },
+      {
+        "name": "Height",
+        "offset": 8,
+        "kind": "i32",
+        "size": 4
+      },
+      {
+        "name": "Iterations",
+        "offset": 12,
+        "kind": "i32",
+        "size": 4
+      },
+      {
+        "name": "iOptions",
+        "offset": 16,
+        "kind": "i32",
+        "size": 4
+      },
+      {
+        "name": "dZstart",
+        "offset": 20,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dZend",
+        "offset": 28,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dXmid",
+        "offset": 36,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dYmid",
+        "offset": 44,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dZmid",
+        "offset": 52,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dXrot",
+        "offset": 60,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dYrot",
+        "offset": 68,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dZrot",
+        "offset": 76,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dZoom",
+        "offset": 84,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "RStop",
+        "offset": 92,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dPow",
+        "offset": 100,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dFOVy",
+        "offset": 108,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dHardLightZaxis",
+        "offset": 116,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dHardLightXaxis",
+        "offset": 124,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "bColorOnGrad",
+        "offset": 132,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "bCalculateHardShadow",
+        "offset": 133,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "bStepsafterDEStop",
+        "offset": 134,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "MinimumIterations",
+        "offset": 135,
+        "kind": "i32",
+        "size": 4
+      },
+      {
+        "name": "iThreadPriority",
+        "offset": 139,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "iAvrgDEsteps",
+        "offset": 140,
+        "kind": "i32",
+        "size": 4
+      },
+      {
+        "name": "iAvrgIts",
+        "offset": 144,
+        "kind": "i32",
+        "size": 4
+      },
+      {
+        "name": "CalcBackgroundShadow",
+        "offset": 148,
+        "kind": "i8",
+        "size": 1
+      },
+      {
+        "name": "bCalcAmbShadowAutomatic",
+        "offset": 149,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "sDEcolVar",
+        "offset": 150,
+        "kind": "f32",
+        "size": 4
+      },
+      {
+        "name": "sAniStop",
+        "offset": 154,
+        "kind": "f32",
+        "size": 4
+      },
+      {
+        "name": "sAniStep",
+        "offset": 158,
+        "kind": "f32",
+        "size": 4
+      },
+      {
+        "name": "bVaryDEstopOnFOV",
+        "offset": 162,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "bHScalculated",
+        "offset": 163,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "sCutX",
+        "offset": 164,
+        "kind": "f32",
+        "size": 4
+      },
+      {
+        "name": "sCutY",
+        "offset": 168,
+        "kind": "f32",
+        "size": 4
+      },
+      {
+        "name": "sCutZ",
+        "offset": 172,
+        "kind": "f32",
+        "size": 4
+      },
+      {
+        "name": "bCutOption",
+        "offset": 176,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "sDEstop",
+        "offset": 177,
+        "kind": "f32",
+        "size": 4
+      },
+      {
+        "name": "sBBmulBulb",
+        "offset": 181,
+        "kind": "f32",
+        "size": 4
+      },
+      {
+        "name": "sBBRbulb",
+        "offset": 185,
+        "kind": "f32",
+        "size": 4
+      },
+      {
+        "name": "bImageScale",
+        "offset": 189,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "bIsJulia",
+        "offset": 190,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "dJx",
+        "offset": 191,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dJy",
+        "offset": 199,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dJz",
+        "offset": 207,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dZmul",
+        "offset": 215,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dMinR",
+        "offset": 223,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "iHformula",
+        "offset": 231,
+        "kind": "array",
+        "count": 3,
+        "lowerBound": 0,
+        "element": {
+          "kind": "u8",
+          "size": 1
+        },
+        "size": 3
+      },
+      {
+        "name": "iHcount",
+        "offset": 234,
+        "kind": "array",
+        "count": 3,
+        "lowerBound": 0,
+        "element": {
+          "kind": "i32",
+          "size": 4
+        },
+        "size": 12
+      },
+      {
+        "name": "dHPow",
+        "offset": 246,
+        "kind": "array",
+        "count": 3,
+        "lowerBound": 0,
+        "element": {
+          "kind": "f64",
+          "size": 8
+        },
+        "size": 24
+      },
+      {
+        "name": "dHZmul",
+        "offset": 270,
+        "kind": "array",
+        "count": 3,
+        "lowerBound": 0,
+        "element": {
+          "kind": "f64",
+          "size": 8
+        },
+        "size": 24
+      },
+      {
+        "name": "dHMinR",
+        "offset": 294,
+        "kind": "array",
+        "count": 3,
+        "lowerBound": 0,
+        "element": {
+          "kind": "f64",
+          "size": 8
+        },
+        "size": 24
+      },
+      {
+        "name": "BGSoffset",
+        "offset": 318,
+        "kind": "i8",
+        "size": 1
+      },
+      {
+        "name": "sAmbShadowThreshold",
+        "offset": 319,
+        "kind": "f32",
+        "size": 4
+      },
+      {
+        "name": "iCalcTime",
+        "offset": 323,
+        "kind": "i32",
+        "size": 4
+      },
+      {
+        "name": "obsoletebAniFileIndex",
+        "offset": 327,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "CustomFname",
+        "offset": 328,
+        "kind": "array",
+        "count": 16,
+        "lowerBound": 0,
+        "element": {
+          "kind": "u8",
+          "size": 1
+        },
+        "size": 16
+      },
+      {
+        "name": "bCalc3D",
+        "offset": 344,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "bSliceCalc",
+        "offset": 345,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "dCutX",
+        "offset": 346,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dCutY",
+        "offset": 354,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dCutZ",
+        "offset": 362,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dCustomOption1",
+        "offset": 370,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "PCustomF",
+        "offset": 378,
+        "kind": "u32",
+        "size": 4
+      },
+      {
+        "name": "PHCustomF",
+        "offset": 382,
+        "kind": "array",
+        "count": 6,
+        "lowerBound": 0,
+        "element": {
+          "kind": "u32",
+          "size": 4
+        },
+        "size": 24
+      },
+      {
+        "name": "PCFAddon",
+        "offset": 406,
+        "kind": "u32",
+        "size": 4
+      },
+      {
+        "name": "newBuffer",
+        "offset": 410,
+        "kind": "array",
+        "count": 22,
+        "lowerBound": 0,
+        "element": {
+          "kind": "u8",
+          "size": 1
+        },
+        "size": 22
+      },
+      {
+        "name": "Light",
+        "offset": 432,
+        "kind": "record",
+        "size": 272,
+        "recordType": "TLightingParas8"
+      }
+    ]
+  },
+  "TMandHeader9": {
+    "size": 704,
+    "fields": [
+      {
+        "name": "MandId",
+        "offset": 0,
+        "kind": "i32",
+        "size": 4
+      },
+      {
+        "name": "Width",
+        "offset": 4,
+        "kind": "i32",
+        "size": 4
+      },
+      {
+        "name": "Height",
+        "offset": 8,
+        "kind": "i32",
+        "size": 4
+      },
+      {
+        "name": "Iterations",
+        "offset": 12,
+        "kind": "i32",
+        "size": 4
+      },
+      {
+        "name": "iOptions",
+        "offset": 16,
+        "kind": "i32",
+        "size": 4
+      },
+      {
+        "name": "dZstart",
+        "offset": 20,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dZend",
+        "offset": 28,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dXmid",
+        "offset": 36,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dYmid",
+        "offset": 44,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dZmid",
+        "offset": 52,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dXrot",
+        "offset": 60,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dYrot",
+        "offset": 68,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dZrot",
+        "offset": 76,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dZoom",
+        "offset": 84,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "RStop",
+        "offset": 92,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dPow",
+        "offset": 100,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dFOVy",
+        "offset": 108,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dHardLightZaxis",
+        "offset": 116,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dHardLightXaxis",
+        "offset": 124,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "bColorOnGrad",
+        "offset": 132,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "bCalculateHardShadow",
+        "offset": 133,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "bStepsafterDEStop",
+        "offset": 134,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "MinimumIterations",
+        "offset": 135,
+        "kind": "i32",
+        "size": 4
+      },
+      {
+        "name": "iThreadPriority",
+        "offset": 139,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "iAvrgDEsteps",
+        "offset": 140,
+        "kind": "i32",
+        "size": 4
+      },
+      {
+        "name": "iAvrgIts",
+        "offset": 144,
+        "kind": "i32",
+        "size": 4
+      },
+      {
+        "name": "CalcBackgroundShadow",
+        "offset": 148,
+        "kind": "i8",
+        "size": 1
+      },
+      {
+        "name": "bCalcAmbShadowAutomatic",
+        "offset": 149,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "sDEcolVar",
+        "offset": 150,
+        "kind": "f32",
+        "size": 4
+      },
+      {
+        "name": "dStepWidth",
+        "offset": 154,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "bVaryDEstopOnFOV",
+        "offset": 162,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "bHScalculated",
+        "offset": 163,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "sDOFZsharp",
+        "offset": 164,
+        "kind": "f32",
+        "size": 4
+      },
+      {
+        "name": "sDOFradius",
+        "offset": 168,
+        "kind": "f32",
+        "size": 4
+      },
+      {
+        "name": "sDOFosize",
+        "offset": 172,
+        "kind": "f32",
+        "size": 4
+      },
+      {
+        "name": "bCutOption",
+        "offset": 176,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "sDEstop",
+        "offset": 177,
+        "kind": "f32",
+        "size": 4
+      },
+      {
+        "name": "bCalcDOFtype",
+        "offset": 181,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "newBuffer2",
+        "offset": 182,
+        "kind": "array",
+        "count": 7,
+        "lowerBound": 0,
+        "element": {
+          "kind": "u8",
+          "size": 1
+        },
+        "size": 7
+      },
+      {
+        "name": "bImageScale",
+        "offset": 189,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "bIsJulia",
+        "offset": 190,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "dJx",
+        "offset": 191,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dJy",
+        "offset": 199,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dJz",
+        "offset": 207,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "newBuffer3",
+        "offset": 215,
+        "kind": "array",
+        "count": 31,
+        "lowerBound": 0,
+        "element": {
+          "kind": "u8",
+          "size": 1
+        },
+        "size": 31
+      },
+      {
+        "name": "hVGrads",
+        "offset": 246,
+        "kind": "array",
+        "count": 3,
+        "lowerBound": 0,
+        "element": {
+          "kind": "array",
+          "count": 3,
+          "lowerBound": 0,
+          "element": {
+            "kind": "f64",
+            "size": 8
+          },
+          "size": 24
+        },
+        "size": 72
+      },
+      {
+        "name": "BGSoffset",
+        "offset": 318,
+        "kind": "i8",
+        "size": 1
+      },
+      {
+        "name": "sAmbShadowThreshold",
+        "offset": 319,
+        "kind": "f32",
+        "size": 4
+      },
+      {
+        "name": "iCalcTime",
+        "offset": 323,
+        "kind": "i32",
+        "size": 4
+      },
+      {
+        "name": "newBuffer4",
+        "offset": 327,
+        "kind": "array",
+        "count": 16,
+        "lowerBound": 0,
+        "element": {
+          "kind": "u8",
+          "size": 1
+        },
+        "size": 16
+      },
+      {
+        "name": "byRepeatFrom",
+        "offset": 343,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "bCalc3D",
+        "offset": 344,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "bSliceCalc",
+        "offset": 345,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "dCutX",
+        "offset": 346,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dCutY",
+        "offset": 354,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dCutZ",
+        "offset": 362,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "newBuffer5",
+        "offset": 370,
+        "kind": "array",
+        "count": 8,
+        "lowerBound": 0,
+        "element": {
+          "kind": "u8",
+          "size": 1
+        },
+        "size": 8
+      },
+      {
+        "name": "PCustomF",
+        "offset": 378,
+        "kind": "u32",
+        "size": 4
+      },
+      {
+        "name": "PHCustomF",
+        "offset": 382,
+        "kind": "array",
+        "count": 6,
+        "lowerBound": 0,
+        "element": {
+          "kind": "u32",
+          "size": 4
+        },
+        "size": 24
+      },
+      {
+        "name": "PCFAddon",
+        "offset": 406,
+        "kind": "u32",
+        "size": 4
+      },
+      {
+        "name": "newBuffer6",
+        "offset": 410,
+        "kind": "array",
+        "count": 22,
+        "lowerBound": 0,
+        "element": {
+          "kind": "u8",
+          "size": 1
+        },
+        "size": 22
+      },
+      {
+        "name": "Light",
+        "offset": 432,
+        "kind": "record",
+        "size": 272,
+        "recordType": "TLightingParas8"
+      }
+    ]
+  },
+  "TLight8": {
+    "size": 32,
+    "fields": [
+      {
+        "name": "Loption",
+        "offset": 0,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "LFunction",
+        "offset": 1,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "Lamp",
+        "offset": 2,
+        "kind": "u16",
+        "size": 2
+      },
+      {
+        "name": "Lcolor",
+        "offset": 4,
+        "kind": "array",
+        "count": 3,
+        "lowerBound": 0,
+        "element": {
+          "kind": "u8",
+          "size": 1
+        },
+        "size": 3
+      },
+      {
+        "name": "LightMapNr",
+        "offset": 7,
+        "kind": "u16",
+        "size": 2
+      },
+      {
+        "name": "LXpos",
+        "offset": 9,
+        "kind": "d7",
+        "size": 7
+      },
+      {
+        "name": "AdditionalByteEx",
+        "offset": 16,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "LYpos",
+        "offset": 17,
+        "kind": "d7",
+        "size": 7
+      },
+      {
+        "name": "FreeByte",
+        "offset": 24,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "LZpos",
+        "offset": 25,
+        "kind": "d7",
+        "size": 7
+      }
+    ]
+  },
+  "TLightingParas9": {
+    "size": 408,
+    "fields": [
+      {
+        "name": "VarColZpos",
+        "offset": 0,
+        "kind": "i16",
+        "size": 2
+      },
+      {
+        "name": "RoughnessFactor",
+        "offset": 2,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "bColorMap",
+        "offset": 3,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "DynFogCol2",
+        "offset": 4,
+        "kind": "array",
+        "count": 3,
+        "lowerBound": 0,
+        "element": {
+          "kind": "u8",
+          "size": 1
+        },
+        "size": 3
+      },
+      {
+        "name": "AdditionalOptions",
+        "offset": 7,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "TBpos",
+        "offset": 8,
+        "kind": "array",
+        "count": 9,
+        "lowerBound": 3,
+        "element": {
+          "kind": "i32",
+          "size": 4
+        },
+        "size": 36
+      },
+      {
+        "name": "TBoptions",
+        "offset": 44,
+        "kind": "u32",
+        "size": 4
+      },
+      {
+        "name": "FineColAdj1",
+        "offset": 48,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "FineColAdj2",
+        "offset": 49,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "PicOffsetX",
+        "offset": 50,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "PicOffsetY",
+        "offset": 51,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "AmbCol",
+        "offset": 52,
+        "kind": "array",
+        "count": 3,
+        "lowerBound": 0,
+        "element": {
+          "kind": "u8",
+          "size": 1
+        },
+        "size": 3
+      },
+      {
+        "name": "DynFogR",
+        "offset": 55,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "AmbCol2",
+        "offset": 56,
+        "kind": "array",
+        "count": 3,
+        "lowerBound": 0,
+        "element": {
+          "kind": "u8",
+          "size": 1
+        },
+        "size": 3
+      },
+      {
+        "name": "DynFogG",
+        "offset": 59,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "DepthCol",
+        "offset": 60,
+        "kind": "array",
+        "count": 3,
+        "lowerBound": 0,
+        "element": {
+          "kind": "u8",
+          "size": 1
+        },
+        "size": 3
+      },
+      {
+        "name": "DynFogB",
+        "offset": 63,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "DepthCol2",
+        "offset": 64,
+        "kind": "array",
+        "count": 3,
+        "lowerBound": 0,
+        "element": {
+          "kind": "u8",
+          "size": 1
+        },
+        "size": 3
+      },
+      {
+        "name": "PicOffsetZ",
+        "offset": 67,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "Lights",
+        "offset": 68,
+        "kind": "array",
+        "count": 6,
+        "lowerBound": 0,
+        "element": {
+          "kind": "record",
+          "size": 32,
+          "recordType": "TLight8"
+        },
+        "size": 192
+      },
+      {
+        "name": "LCols",
+        "offset": 260,
+        "kind": "array",
+        "count": 10,
+        "lowerBound": 0,
+        "element": {
+          "kind": "record",
+          "size": 10,
+          "recordType": "TLCol8"
+        },
+        "size": 100
+      },
+      {
+        "name": "ICols",
+        "offset": 360,
+        "kind": "array",
+        "count": 4,
+        "lowerBound": 0,
+        "element": {
+          "kind": "record",
+          "size": 6,
+          "recordType": "TICol8"
+        },
+        "size": 24
+      },
+      {
+        "name": "BGbmp",
+        "offset": 384,
+        "kind": "array",
+        "count": 24,
+        "lowerBound": 0,
+        "element": {
+          "kind": "u8",
+          "size": 1
+        },
+        "size": 24
+      }
+    ]
+  },
+  "TMandHeader10": {
+    "size": 840,
+    "fields": [
+      {
+        "name": "MandId",
+        "offset": 0,
+        "kind": "i32",
+        "size": 4
+      },
+      {
+        "name": "Width",
+        "offset": 4,
+        "kind": "i32",
+        "size": 4
+      },
+      {
+        "name": "Height",
+        "offset": 8,
+        "kind": "i32",
+        "size": 4
+      },
+      {
+        "name": "Iterations",
+        "offset": 12,
+        "kind": "i32",
+        "size": 4
+      },
+      {
+        "name": "iOptions",
+        "offset": 16,
+        "kind": "u16",
+        "size": 2
+      },
+      {
+        "name": "bNewOptions",
+        "offset": 18,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "bColorOnIt",
+        "offset": 19,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "dZstart",
+        "offset": 20,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dZend",
+        "offset": 28,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dXmid",
+        "offset": 36,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dYmid",
+        "offset": 44,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dZmid",
+        "offset": 52,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dXWrot",
+        "offset": 60,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dYWrot",
+        "offset": 68,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dZWrot",
+        "offset": 76,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dZoom",
+        "offset": 84,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "RStop",
+        "offset": 92,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "iReflectsCalcTime",
+        "offset": 100,
+        "kind": "i32",
+        "size": 4
+      },
+      {
+        "name": "sFmixPow",
+        "offset": 104,
+        "kind": "f32",
+        "size": 4
+      },
+      {
+        "name": "dFOVy",
+        "offset": 108,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "sTRIndex",
+        "offset": 116,
+        "kind": "f32",
+        "size": 4
+      },
+      {
+        "name": "sTRscattering",
+        "offset": 120,
+        "kind": "f32",
+        "size": 4
+      },
+      {
+        "name": "MCoptions",
+        "offset": 124,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "MCdiffReflects",
+        "offset": 125,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "bStereoMode",
+        "offset": 126,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "bSSAO24BorderMirrorSize",
+        "offset": 127,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "iAmbCalcTime",
+        "offset": 128,
+        "kind": "i32",
+        "size": 4
+      },
+      {
+        "name": "bNormalsOnDE",
+        "offset": 132,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "bCalculateHardShadow",
+        "offset": 133,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "bStepsafterDEStop",
+        "offset": 134,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "MinimumIterations",
+        "offset": 135,
+        "kind": "u16",
+        "size": 2
+      },
+      {
+        "name": "MClastY",
+        "offset": 137,
+        "kind": "u16",
+        "size": 2
+      },
+      {
+        "name": "bCalc1HSsoft",
+        "offset": 139,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "iAvrgDEsteps",
+        "offset": 140,
+        "kind": "i32",
+        "size": 4
+      },
+      {
+        "name": "iAvrgIts",
+        "offset": 144,
+        "kind": "i32",
+        "size": 4
+      },
+      {
+        "name": "bPlanarOptic",
+        "offset": 148,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "bCalcAmbShadowAutomatic",
+        "offset": 149,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "sNaviMinDist",
+        "offset": 150,
+        "kind": "f32",
+        "size": 4
+      },
+      {
+        "name": "dStepWidth",
+        "offset": 154,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "bVaryDEstopOnFOV",
+        "offset": 162,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "bHScalculated",
+        "offset": 163,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "sDOFZsharp",
+        "offset": 164,
+        "kind": "f32",
+        "size": 4
+      },
+      {
+        "name": "sDOFclipR",
+        "offset": 168,
+        "kind": "f32",
+        "size": 4
+      },
+      {
+        "name": "sDOFaperture",
+        "offset": 172,
+        "kind": "f32",
+        "size": 4
+      },
+      {
+        "name": "bCutOption",
+        "offset": 176,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "sDEstop",
+        "offset": 177,
+        "kind": "f32",
+        "size": 4
+      },
+      {
+        "name": "bCalcDOFtype",
+        "offset": 181,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "mZstepDiv",
+        "offset": 182,
+        "kind": "f32",
+        "size": 4
+      },
+      {
+        "name": "MCDepth",
+        "offset": 186,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "SSAORcount",
+        "offset": 187,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "AODEdithering",
+        "offset": 188,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "bImageScale",
+        "offset": 189,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "bIsJulia",
+        "offset": 190,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "dJx",
+        "offset": 191,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dJy",
+        "offset": 199,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dJz",
+        "offset": 207,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dJw",
+        "offset": 215,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "bDFogIt",
+        "offset": 223,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "MCSoftShadowRadius",
+        "offset": 224,
+        "kind": "shortfloat",
+        "size": 2
+      },
+      {
+        "name": "HSmaxLengthMultiplier",
+        "offset": 226,
+        "kind": "f32",
+        "size": 4
+      },
+      {
+        "name": "StereoScreenWidth",
+        "offset": 230,
+        "kind": "f32",
+        "size": 4
+      },
+      {
+        "name": "StereoScreenDistance",
+        "offset": 234,
+        "kind": "f32",
+        "size": 4
+      },
+      {
+        "name": "StereoMinDistance",
+        "offset": 238,
+        "kind": "f32",
+        "size": 4
+      },
+      {
+        "name": "sRaystepLimiter",
+        "offset": 242,
+        "kind": "f32",
+        "size": 4
+      },
+      {
+        "name": "hVGrads",
+        "offset": 246,
+        "kind": "array",
+        "count": 3,
+        "lowerBound": 0,
+        "element": {
+          "kind": "array",
+          "count": 3,
+          "lowerBound": 0,
+          "element": {
+            "kind": "f64",
+            "size": 8
+          },
+          "size": 24
+        },
+        "size": 72
+      },
+      {
+        "name": "bMCSaturation",
+        "offset": 318,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "sAmbShadowThreshold",
+        "offset": 319,
+        "kind": "f32",
+        "size": 4
+      },
+      {
+        "name": "iCalcTime",
+        "offset": 323,
+        "kind": "i32",
+        "size": 4
+      },
+      {
+        "name": "iCalcHStime",
+        "offset": 327,
+        "kind": "i32",
+        "size": 4
+      },
+      {
+        "name": "byCalcNsOnZBufAuto",
+        "offset": 331,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "SRamount",
+        "offset": 332,
+        "kind": "f32",
+        "size": 4
+      },
+      {
+        "name": "bCalcSRautomatic",
+        "offset": 336,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "SRreflectioncount",
+        "offset": 337,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "sColorMul",
+        "offset": 338,
+        "kind": "f32",
+        "size": 4
+      },
+      {
+        "name": "byColor2Option",
+        "offset": 342,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "bVolLightNr",
+        "offset": 343,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "bCalc3D",
+        "offset": 344,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "bSliceCalc",
+        "offset": 345,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "dCutX",
+        "offset": 346,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dCutY",
+        "offset": 354,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "dCutZ",
+        "offset": 362,
+        "kind": "f64",
+        "size": 8
+      },
+      {
+        "name": "sTransmissionAbsorption",
+        "offset": 370,
+        "kind": "f32",
+        "size": 4
+      },
+      {
+        "name": "sDEAOmaxL",
+        "offset": 374,
+        "kind": "f32",
+        "size": 4
+      },
+      {
+        "name": "sDEcombS",
+        "offset": 378,
+        "kind": "f32",
+        "size": 4
+      },
+      {
+        "name": "PHCustomF",
+        "offset": 382,
+        "kind": "array",
+        "count": 6,
+        "lowerBound": 0,
+        "element": {
+          "kind": "u32",
+          "size": 4
+        },
+        "size": 24
+      },
+      {
+        "name": "PCFAddon",
+        "offset": 406,
+        "kind": "u32",
+        "size": 4
+      },
+      {
+        "name": "sDOFZsharp2",
+        "offset": 410,
+        "kind": "f32",
+        "size": 4
+      },
+      {
+        "name": "iMaxIts",
+        "offset": 414,
+        "kind": "i32",
+        "size": 4
+      },
+      {
+        "name": "iMaxItsF2",
+        "offset": 418,
+        "kind": "i32",
+        "size": 4
+      },
+      {
+        "name": "DEmixColorOption",
+        "offset": 422,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "MCcontrast",
+        "offset": 423,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "sM3dVersion",
+        "offset": 424,
+        "kind": "f32",
+        "size": 4
+      },
+      {
+        "name": "TilingOptions",
+        "offset": 428,
+        "kind": "i32",
+        "size": 4
+      },
+      {
+        "name": "Light",
+        "offset": 432,
+        "kind": "record",
+        "size": 408,
+        "recordType": "TLightingParas9"
+      }
+    ]
+  },
+  "TLightingParas7": {
+    "size": 148,
+    "fields": [
+      {
+        "name": "TBpos",
+        "offset": 0,
+        "kind": "array",
+        "count": 11,
+        "lowerBound": 1,
+        "element": {
+          "kind": "i32",
+          "size": 4
+        },
+        "size": 44
+      },
+      {
+        "name": "TBoptions",
+        "offset": 44,
+        "kind": "u32",
+        "size": 4
+      },
+      {
+        "name": "TBfineColAdjust",
+        "offset": 48,
+        "kind": "u32",
+        "size": 4
+      },
+      {
+        "name": "DepthCol",
+        "offset": 52,
+        "kind": "u32",
+        "size": 4
+      },
+      {
+        "name": "Cols",
+        "offset": 56,
+        "kind": "array",
+        "count": 9,
+        "lowerBound": 1,
+        "element": {
+          "kind": "u32",
+          "size": 4
+        },
+        "size": 36
+      },
+      {
+        "name": "Lights",
+        "offset": 92,
+        "kind": "array",
+        "count": 4,
+        "lowerBound": 0,
+        "element": {
+          "kind": "record",
+          "size": 14,
+          "recordType": "TLight7"
+        },
+        "size": 56
+      }
+    ]
+  },
+  "THAformula": {
+    "size": 188,
+    "fields": [
+      {
+        "name": "iItCount",
+        "offset": 0,
+        "kind": "i32",
+        "size": 4
+      },
+      {
+        "name": "iFnr",
+        "offset": 4,
+        "kind": "i32",
+        "size": 4
+      },
+      {
+        "name": "iOptionCount",
+        "offset": 8,
+        "kind": "i32",
+        "size": 4
+      },
+      {
+        "name": "CustomFname",
+        "offset": 12,
+        "kind": "array",
+        "count": 32,
+        "lowerBound": 0,
+        "element": {
+          "kind": "u8",
+          "size": 1
+        },
+        "size": 32
+      },
+      {
+        "name": "byOptionType",
+        "offset": 44,
+        "kind": "array",
+        "count": 16,
+        "lowerBound": 0,
+        "element": {
+          "kind": "u8",
+          "size": 1
+        },
+        "size": 16
+      },
+      {
+        "name": "dOptionValue",
+        "offset": 60,
+        "kind": "array",
+        "count": 16,
+        "lowerBound": 0,
+        "element": {
+          "kind": "f64",
+          "size": 8
+        },
+        "size": 128
+      }
+    ]
+  },
+  "THeaderCustomAddonOld": {
+    "size": 1016,
+    "fields": [
+      {
+        "name": "iHCAversion",
+        "offset": 0,
+        "kind": "i32",
+        "size": 4
+      },
+      {
+        "name": "iCustomCount",
+        "offset": 4,
+        "kind": "i32",
+        "size": 4
+      },
+      {
+        "name": "iItCounts",
+        "offset": 8,
+        "kind": "array",
+        "count": 6,
+        "lowerBound": 0,
+        "element": {
+          "kind": "i32",
+          "size": 4
+        },
+        "size": 24
+      },
+      {
+        "name": "iFormula",
+        "offset": 32,
+        "kind": "array",
+        "count": 6,
+        "lowerBound": 0,
+        "element": {
+          "kind": "i32",
+          "size": 4
+        },
+        "size": 24
+      },
+      {
+        "name": "CustomFname",
+        "offset": 56,
+        "kind": "array",
+        "count": 6,
+        "lowerBound": 0,
+        "element": {
+          "kind": "array",
+          "count": 32,
+          "lowerBound": 0,
+          "element": {
+            "kind": "u8",
+            "size": 1
+          },
+          "size": 32
+        },
+        "size": 192
+      },
+      {
+        "name": "dOptionValues",
+        "offset": 248,
+        "kind": "array",
+        "count": 6,
+        "lowerBound": 0,
+        "element": {
+          "kind": "array",
+          "count": 16,
+          "lowerBound": 0,
+          "element": {
+            "kind": "f64",
+            "size": 8
+          },
+          "size": 128
+        },
+        "size": 768
+      }
+    ]
+  },
+  "THeaderCustomAddon": {
+    "size": 1136,
+    "fields": [
+      {
+        "name": "bHCAversion",
+        "offset": 0,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "bOptions1",
+        "offset": 1,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "bOptions2",
+        "offset": 2,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "bOptions3",
+        "offset": 3,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "iFCount",
+        "offset": 4,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "bHybOpt1",
+        "offset": 5,
+        "kind": "u8",
+        "size": 1
+      },
+      {
+        "name": "bHybOpt2",
+        "offset": 6,
+        "kind": "u16",
+        "size": 2
+      },
+      {
+        "name": "Formulas",
+        "offset": 8,
+        "kind": "array",
+        "count": 6,
+        "lowerBound": 0,
+        "element": {
+          "kind": "record",
+          "size": 188,
+          "recordType": "THAformula"
+        },
+        "size": 1128
+      }
+    ]
+  }
+}

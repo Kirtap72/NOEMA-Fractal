@@ -1,0 +1,54 @@
+# Form: box. Format: see formulas/README.md
+format: 1
+id: shape-box
+name: "Form: box"
+catalog:
+  category: difs
+  tags:
+    - shape
+    - SDF
+description: >
+  A box (with optionally rounded corners) as the end of a chain: the distance from the point to a
+  box with the given half sizes, divided by the running derivative. With the Menger fold in front it
+  draws the Menger sponge; with the octahedral fold and scaling, many cube-like fractals.
+
+# NOTE: the distance to a box is the textbook formula: q = |p| - half sizes; outside,
+# the length of the positive part of q; inside, the largest part of q (negative).
+# Rounding shrinks the box and subtracts the radius.
+# A person must still check each name and link before this is set to
+# "verified" (and reviewed: true).
+credits:
+  - name: General mathematics (textbook)
+    role: "standard definitions found in any textbook; no single person is credited (the project owner
+      agreed that general mathematics is credited this way)"
+    status: unverified
+sources:
+  - reference: "Distance to a box (textbook geometry)"
+    status: unverified
+
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: >
+  General mathematics: standard definitions, not claimed as owned. Written fresh for this project;
+  no code from any program was read or copied. Source details are unverified (see credits).
+reviewed: false
+
+parameters:
+  - { name: sx, label: Half size x, default: 1, min: 0.05, max: 3 }
+  - { name: sy, label: Half size y, default: 1, min: 0.05, max: 3 }
+  - { name: sz, label: Half size z, default: 1, min: 0.05, max: 3 }
+  - { name: rounding, label: Rounded corners, default: 0, min: 0, max: 1 }
+
+iteration:
+  iterations: 1
+  # A shape: it does not move the point, it measures the distance to the shape at the end of a chain.
+  carry: [ z, dr ]
+  variables:
+    - { name: z, type: vec3, init: pos }
+    - { name: dr, type: float, init: 1 }
+    - { name: q, type: vec3, init: "vec3(0.0, 0.0, 0.0)" }
+  steps:
+    - "q = abs(z) - vec3(sx, sy, sz) + vec3(rounding, rounding, rounding)"
+  distance: "(length(max(q, vec3(0.0, 0.0, 0.0))) + min(max(q.x, max(q.y, q.z)), 0.0) - rounding) / abs(dr)"
+
+view:
+  camera_distance: 4

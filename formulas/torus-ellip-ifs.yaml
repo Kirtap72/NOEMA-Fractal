@@ -1,0 +1,105 @@
+format: 3
+id: torus-ellip-ifs
+name: TorusEllipIFS
+description: Elliptic and boxy torus field in 3D/dIFS. See the batch specification for domains and states.
+credits:
+  - name: Luca GN
+    role: Credited author according to the specification
+    status: unverified
+  - name: italian Wikipedia
+    role: source acknowledgement exactly as in description
+    status: unverified
+sources:
+  - reference: "NewFormulas/batch-03/07-TorusEllipIFS.md; authorised normalised mathematical
+      specification from M3Formulas/TorusEllipIFS.m3f. Provenance and recovery evidence:
+      NewFormulas/batch-03/manifest.json (m3formulas--torusellipifs--8c985d75)."
+    status: unverified
+added_by: Codex
+math_status: Independent implementation from the authorised mathematical migration package of the
+  project owner; the licence of the project.
+reviewed: false
+provenance:
+  origin: mandelbulb3d
+  file: TorusEllipIFS.m3f
+  credited_author: Luca GN
+  collection: M3Formulas
+  note: Independent reimplementation from the normalized mathematical migration specification
+    authorized by the project owner. The [CODE] section was not read, copied or translated by this
+    implementation. Mathematical recovery validation is not native MB3D or image verification.
+  verified_against_mb3d: false
+parameters:
+  - name: radius_1
+    label: Radius 1
+    default: 0.5
+    min: -8
+    max: 8
+  - name: scale
+    label: Scale
+    default: 1
+    min: -8
+    max: 8
+  - name: z_add
+    label: Z add
+    default: 0
+    min: -8
+    max: 8
+  - name: y_add
+    label: Y add
+    default: 0
+    min: -8
+    max: 8
+  - name: x_add
+    label: X add
+    default: 0
+    min: -8
+    max: 8
+  - name: radius_2
+    label: Radius 2
+    default: 0.1
+    min: -8
+    max: 8
+  - name: apply_scale_add
+    label: Apply scale+add
+    default: 1
+    min: 0
+    max: 1
+  - name: boxy_xy
+    label: Boxy XY
+    default: 0
+    min: 0
+    max: 1
+  - name: boxy_z
+    label: Boxy Z
+    default: 0
+    min: 0
+    max: 1
+  - name: elliptic
+    label: Elliptic
+    default: 0.2
+    min: -8
+    max: 8
+  - name: slice_w
+    label: 4D slice / extra w
+    default: 0
+    min: -4
+    max: 4
+  - name: constant_w
+    label: Julia constant w
+    default: 0
+    min: -4
+    max: 4
+  - name: de_stop
+    label: dIFS distance threshold
+    default: 0.0001
+    min: 0
+    max: 0.1
+  - name: inside_render
+    label: dIFS inside rendering (0/1)
+    default: 0
+    min: 0
+    max: 1
+iteration:
+  kernel: torus-ellip-ifs
+  iterations: 16
+view:
+  camera_distance: 5

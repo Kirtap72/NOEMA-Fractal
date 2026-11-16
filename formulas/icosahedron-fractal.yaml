@@ -1,0 +1,66 @@
+# Icosahedron fractal. Format: see formulas/README.md
+format: 1
+id: icosahedron-fractal
+name: "Icosahedron fractal"
+catalog:
+  category: ifs
+  tags:
+  - polyhedral
+  - IFS
+description: >
+  Twelve copies of an icosahedron, each 1/(1 + phi) of the size (phi is the
+  golden ratio), towards its twelve corners, and the same again inside every
+  copy. Each iteration finds the nearest corner and stretches space by 1 + phi
+  away from it; the distance is then measured to one icosahedron and scaled
+  back.
+
+# NOTE: the AI assistant read Paul Bourke's page Polyhedral fractals on 2026-10-07:
+# icosahedron, 12 copies, scale factor 1/(1 + phi), placed along the lines from the centre to each vertex. The inverse of "copy scaled by 1/s towards the vertex v" is
+# z -> s * z - (s - 1) * v for the nearest vertex. The corners are (0, +-1, +-phi) and its cyclic permutations; the face planes have the normals (+-1, +-1, +-1) and (0, +-phi, +-1/phi) with its cyclic permutations, at the distance phi^2 / sqrt(3) from the centre. The distance at the end is the
+# distance to the solid (largest of its face planes, a lower bound), divided by
+# the running derivative. The nearest-vertex rule and the distance are the
+# assistant's own derivation.
+# A person must still check each name and link before this is set to
+# "verified" (and reviewed: true).
+credits:
+  - name: Paul Bourke
+    role: "description of the polyhedral fractals (1993)"
+    status: unverified
+sources:
+  - url: https://paulbourke.net/fractals/polyhedral/
+    status: unverified
+  - url: https://en.wikipedia.org/wiki/Regular_icosahedron
+    status: unverified
+
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: >
+  Mathematical idea, not claimed as owned. Written fresh for this project from
+  the published description; no code from any program was read or copied.
+  The nearest-corner rule, the face planes and the distance are derived by the assistant. Source details are unverified (see credits).
+reviewed: false
+
+iteration:
+  iterations: 6
+  carry: [z, dr]
+  variables:
+    - { name: z, type: vec3, init: pos }
+    - { name: dr, type: float, init: 1 }
+    - { name: a, type: vec3, init: "vec3(0.0, 0.0, 0.0)" }
+    - { name: v, type: vec3, init: "vec3(0.0, 0.0, 0.0)" }
+    - { name: d1, type: float, init: 0 }
+    - { name: d2, type: float, init: 0 }
+    - { name: d3, type: float, init: 0 }
+  steps:
+    - "a = abs(z)"
+    # The nearest corner: the largest dot product with the three corner patterns (0,1,phi), (1,phi,0), (phi,0,1), signs from the point.
+    - "d1 = a.y + 1.618033988749895 * a.z"
+    - "d2 = a.x + 1.618033988749895 * a.y"
+    - "d3 = 1.618033988749895 * a.x + a.z"
+    - "v = select(select(vec3(1.618033988749895, 0.0, 1.0), vec3(1.0, 1.618033988749895, 0.0), d2 >= d3), vec3(0.0, 1.0, 1.618033988749895), d1 >= max(d2, d3))"
+    - "v = v * vec3(select(-1.0, 1.0, z.x >= 0.0), select(-1.0, 1.0, z.y >= 0.0), select(-1.0, 1.0, z.z >= 0.0))"
+    - "z = 2.618033988749895 * z - 1.618033988749895 * v"
+    - "dr = dr * 2.618033988749895"
+  distance: "(max(max(dot(abs(z), vec3(1.0, 1.0, 1.0)), dot(abs(z), vec3(0.0, 1.618033988749895, 0.618033988749895))), max(dot(abs(z), vec3(0.618033988749895, 0.0, 1.618033988749895)), dot(abs(z), vec3(1.618033988749895, 0.618033988749895, 0.0)))) / sqrt(3.0) - 1.511522628152341) / dr"
+
+view:
+  camera_distance: 5

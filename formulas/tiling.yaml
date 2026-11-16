@@ -1,0 +1,48 @@
+# Repeat in space (transform). Format: see formulas/README.md
+format: 1
+id: tiling
+name: "Repeat in space (transform)"
+catalog:
+  category: spatial
+  tags: [ repeat, tiling, position ]
+description: >
+  Repeats space in cells of the given size along each axis: every coordinate is moved into the cell
+  around the origin. Whatever comes after this step is drawn infinitely many times, side by side.
+  Distances are kept as long as the shape fits in its cell.
+
+# NOTE: the assistant wrote this step from the definition of the modulo (fractional
+# part) applied per axis, centred on the origin: z - c * floor(z / c + 1/2).
+# A person must still check each name and link before this is set to
+# "verified" (and reviewed: true).
+credits:
+  - name: General mathematics (textbook)
+    role: "standard definitions found in any textbook; no single person is credited (the project owner
+      agreed that general mathematics is credited this way)"
+    status: unverified
+sources:
+  - reference: "Periodic repetition by the modulo of each coordinate (textbook)"
+    status: unverified
+
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: >
+  General mathematics: standard definitions, not claimed as owned. Written fresh for this project;
+  no code from any program was read or copied. Source details are unverified (see credits).
+reviewed: false
+
+parameters:
+  - { name: cx, label: Cell size x, default: 3, min: 0.5, max: 20 }
+  - { name: cy, label: Cell size y, default: 3, min: 0.5, max: 20 }
+  - { name: cz, label: Cell size z, default: 3, min: 0.5, max: 20 }
+
+iteration:
+  iterations: 1
+  # This is a transform: it has no distance. It passes the point on to the next step.
+  carry: [ z, dr ]
+  variables:
+    - { name: z, type: vec3, init: pos }
+    - { name: dr, type: float, init: 1 }
+  steps:
+    - "z = z - vec3(cx, cy, cz) * floor(z / vec3(cx, cy, cz) + vec3(0.5, 0.5, 0.5))"
+
+view:
+  camera_distance: 4

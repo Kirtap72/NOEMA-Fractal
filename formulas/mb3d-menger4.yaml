@@ -1,0 +1,58 @@
+format: 3
+id: mb3d-menger4
+name: Menger4
+catalog:
+  category: fractals
+  tags: [ Menger, KIFS, 4D, rotation ]
+description: >-
+  A four-dimensional extension of Menger KIFS with built-in 4D rotation: absolute values, a partial
+  sorting of the four coordinates, rotation, scaling with CScale offset and a special folding of z.
+  With CScale W = 0 the ordinary 3D Menger sponge is recovered (according to the file).
+credits:
+  - {
+      name: Luca GN,
+      role: "Formula and implementation 2011 (according to the formula description)",
+      status: unverified
+    }
+  - {
+      name: Syntopia,
+      role: "Ideas that made the formula possible (thanks in the formula description)",
+      status: unverified
+    }
+sources:
+  - {
+      reference: "Mandelbulb 3D 1.9.9 (sr37), M3Formulas, file Menger4.m3f: [OPTIONS] and the description
+        after [END]; the code block and code listings was never read.",
+      status: unverified
+    }
+  - { reference: NewFormulas/formula-07/BATCH-07.md, status: unverified }
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: The equations are the formula file's own description; implementation in
+  src/engine/formula/batch07Kernels.ts. No comparison with a running Mandelbulb 3D.
+reviewed: false
+provenance:
+  origin: mandelbulb3d
+  file: Menger4.m3f
+  credited_author: Luca GN; Syntopia
+  credited_authors: [ Luca GN, Syntopia ]
+  collection: M3Formulas
+  note: Independent reimplementation from the equations in the formula file's own description. The
+    [CODE] section was not read. Native image equivalence unverified.
+  verified_against_mb3d: false
+parameters:
+  - { name: scale, label: "Scale", default: 3, min: -8, max: 8 }
+  - { name: cscale_x, label: "CScale X", default: 1, min: -8, max: 8 }
+  - { name: cscale_y, label: "CScale Y", default: 1, min: -8, max: 8 }
+  - { name: cscale_z, label: "CScale Z", default: 0.5, min: -8, max: 8 }
+  - { name: cscale_w, label: "CScale W", default: 0.5, min: -8, max: 8 }
+  - { name: rotation_yz, label: "rotation YZ (degrees)", default: 0, min: -180, max: 180 }
+  - { name: rotation_xz, label: "rotation XZ (degrees)", default: 0, min: -180, max: 180 }
+  - { name: rotation_xy, label: "rotation XY (degrees)", default: 0, min: -180, max: 180 }
+  - { name: rotation_xw, label: "rotation XW (degrees)", default: 0, min: -180, max: 180 }
+  - { name: rotation_yw, label: "rotation YW (degrees)", default: 0, min: -180, max: 180 }
+  - { name: rotation_zw, label: "rotation ZW (degrees)", default: 0, min: -180, max: 180 }
+  - { name: slice_w, label: "4D slice / extra w", default: 0, min: -4, max: 4 }
+  - { name: constant_w, label: "Julia constant w", default: 0, min: -4, max: 4 }
+  - { name: bailout_squared, label: "Escape limit (radius²)", default: 1024, min: 1, max: 65536 }
+iteration: { kernel: mb3d-menger4, iterations: 16 }
+view: { camera_distance: 5 }

@@ -1,0 +1,64 @@
+# Schwarz P and D surfaces. Format: see formulas/README.md
+format: 1
+id: schwarz
+name: "Schwarz P and D surfaces"
+catalog:
+  category: difs
+  tags:
+  - shape
+  - surface
+description: >
+  Two triply periodic minimal surfaces found by Hermann Schwarz, as a thick
+  sheet cut to a ball: the P surface (cos x + cos y + cos z = 0) and the D
+  surface (cos x cos y cos z - sin x sin y sin z = 0), in their trigonometric
+  approximations. The distance is the value of the function divided by a bound
+  on how fast it changes, which keeps it on the safe side.
+
+# NOTE: the AI assistant read Wikipedia (Schwarz minimal surface) on 2026-10-07:
+# described by Hermann Schwarz and his student E. R. Neovius in the 1880s, named by
+# Alan Schoen; P approximated by cos x + cos y + cos z = 0, D by cos x cos y cos z -
+# sin x sin y sin z = 0. For both functions each partial derivative is at most 1, so
+# the gradient is at most sqrt(3) times the scale (the assistant's own bound). The
+# thickness and the cut to a ball are the assistant's own.
+# A person must still check each name and link before this is set to
+# "verified" (and reviewed: true).
+credits:
+  - name: Hermann Schwarz
+    role: "described the P and D surfaces (1880s)"
+    status: unverified
+  - name: E. R. Neovius
+    role: "student of Schwarz, described the surfaces with him (1880s)"
+    status: unverified
+sources:
+  - url: https://en.wikipedia.org/wiki/Schwarz_minimal_surface
+    status: unverified
+
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: >
+  Mathematical idea, not claimed as owned. Written fresh for this project from
+  the published description; no code from any program was read or copied.
+  The thickness, the bound on the gradient and the cut to a ball are the assistant's own. Source details are unverified (see credits).
+reviewed: false
+
+parameters:
+  - { name: surface, label: Surface (0 P, 1 D), default: 0, min: 0, max: 1 }
+  - { name: scale, label: Cells per unit, default: 3, min: 0.5, max: 12 }
+  - { name: thickness, label: Thickness, default: 0.3, min: 0.02, max: 1.4 }
+  - { name: bound, label: Radius of the ball, default: 1.5, min: 0.2, max: 10 }
+
+iteration:
+  iterations: 1
+  # A shape: it does not move the point, it measures the distance to the shape at the end of a chain.
+  carry: [z, dr]
+  variables:
+    - { name: z, type: vec3, init: pos }
+    - { name: dr, type: float, init: 1 }
+    - { name: g, type: float, init: 0 }
+    - { name: p, type: vec3, init: "vec3(0.0, 0.0, 0.0)" }
+  steps:
+    - "p = z * scale"
+    - "g = select(cos(p.x) + cos(p.y) + cos(p.z), cos(p.x) * cos(p.y) * cos(p.z) - sin(p.x) * sin(p.y) * sin(p.z), surface > 0.5)"
+  distance: "max((abs(g) - thickness) / (1.732050807568877 * scale), length(z) - bound) / abs(dr)"
+
+view:
+  camera_distance: 4

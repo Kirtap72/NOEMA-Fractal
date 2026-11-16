@@ -1,0 +1,140 @@
+{
+  "format": 3,
+  "id": "mb3d-roundedbox",
+  "name": "RoundedBox",
+  "description": "Rounded box shape dIFS with OTrap coloring options:\n\n0: Change with DEstop\n1: Change with X\n2: Change with Y\n3: Change with Z\n\nDEstop might vary on distance, choose scale = 0 to switch off.\n\nYou have to choose the 2nd coloring choice with orbit trap to see these changes.",
+  "credits": [
+    {
+      "name": "okänd",
+      "role": "creator not identified in recovered source",
+      "status": "unverified"
+    }
+  ],
+  "sources": [
+    {
+      "reference": "NewFormulas/preset-compatibility/RoundedBox.md",
+      "status": "unverified"
+    }
+  ],
+  "added_by": "Codex",
+  "math_status": "Independent equations from authorized recovered mathematics; project license.",
+  "reviewed": false,
+  "provenance": {
+    "origin": "mandelbulb3d",
+    "file": "RoundedBox.m3f",
+    "credited_author": "okänd",
+    "credited_authors": [
+      "okänd"
+    ],
+    "collection": "M3Formulas",
+    "note": "Independent reimplementation. Explicitly authorized mathematical recovery; normalized equations validated against the typed reference pipeline. No legacy executable code copied.",
+    "verified_against_mb3d": false
+  },
+  "parameters": [
+    {
+      "name": "z_halfwidth",
+      "label": "Z halfwidth",
+      "default": 1,
+      "min": -10000,
+      "max": 10000
+    },
+    {
+      "name": "y_halfwidth",
+      "label": "Y halfwidth",
+      "default": 1,
+      "min": -10000,
+      "max": 10000
+    },
+    {
+      "name": "x_halfwidth",
+      "label": "X halfwidth",
+      "default": 1,
+      "min": -10000,
+      "max": 10000
+    },
+    {
+      "name": "scale",
+      "label": "Scale",
+      "default": 2,
+      "min": -10000,
+      "max": 10000
+    },
+    {
+      "name": "z_add",
+      "label": "Z add",
+      "default": 0,
+      "min": -10000,
+      "max": 10000
+    },
+    {
+      "name": "y_add",
+      "label": "Y add",
+      "default": 0,
+      "min": -10000,
+      "max": 10000
+    },
+    {
+      "name": "x_add",
+      "label": "X add",
+      "default": 2,
+      "min": -10000,
+      "max": 10000
+    },
+    {
+      "name": "border",
+      "label": "Border",
+      "default": 0.1,
+      "min": -10000,
+      "max": 10000
+    },
+    {
+      "name": "apply_scale_add",
+      "label": "apply scale+add",
+      "default": 1,
+      "min": -16777216,
+      "max": 16777216
+    },
+    {
+      "name": "otrap_option_0_3",
+      "label": "OTrap option (0..3)",
+      "default": 0,
+      "min": -16777216,
+      "max": 16777216
+    },
+    {
+      "name": "otrap_offset",
+      "label": "OTrap offset",
+      "default": 1,
+      "min": -10000,
+      "max": 10000
+    },
+    {
+      "name": "otrap_scale",
+      "label": "OTrap scale",
+      "default": 1,
+      "min": -10000,
+      "max": 10000
+    },
+    {
+      "name": "inside_render",
+      "label": "Inside rendering",
+      "default": 0,
+      "min": 0,
+      "max": 1
+    },
+    {
+      "name": "de_stop",
+      "label": "Query fallback threshold",
+      "default": 0,
+      "min": -10000,
+      "max": 10000
+    }
+  ],
+  "iteration": {
+    "kernel": "mb3d-roundedbox",
+    "iterations": 1
+  },
+  "view": {
+    "camera_distance": 5
+  }
+}

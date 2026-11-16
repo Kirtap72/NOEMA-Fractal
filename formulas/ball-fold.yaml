@@ -1,0 +1,56 @@
+# Sphere (ball) fold, the other half of the Mandelbox iteration, as a step to chain. Format: see formulas/README.md
+format: 1
+id: ball-fold
+name: Ball fold (transform)
+description: >
+  Pushes the point away from the centre if it is very close to it, and mirrors
+  it in a sphere if it is inside the fixed radius. Points inside the inner
+  radius are stretched by (fixed radius / inner radius) squared; points between
+  the radii are inverted in the sphere of the fixed radius. It changes the
+  point only and has no distance estimate of its own, so it is used in front of
+  a formula that has one. The running derivative is updated so that the
+  distance estimate of the following formula stays consistent.
+
+# NOTE: the AI assistant read the page below on 2026-10-06 and wrote this step
+# from the mathematics it describes (if the length is below 0.5 multiply by 4,
+# else if below 1 divide by the squared length), generalised with the two radii
+# as parameters (0.5 and 1 give the page's values). Nothing was copied from
+# program code. A person must still open the source and check each name and
+# link before this is set to "verified" (and reviewed: true).
+credits:
+  - name: Tom Lowe
+    role: "found the Mandelbox in 2010, which is built from this fold and the box fold"
+    status: unverified
+sources:
+  - url: https://en.wikipedia.org/wiki/Mandelbox
+    status: unverified
+
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: >
+  Mathematical idea, not claimed as owned. Written fresh for this project from
+  the public description of the fold; no code from any program was read or
+  copied. Source details are unverified (see credits).
+reviewed: false
+
+parameters:
+  - { name: min_radius, label: Inner radius, default: 0.5, min: 0.05, max: 1 }
+  - { name: fixed_radius, label: Fixed radius, default: 1, min: 0.2, max: 3 }
+
+iteration:
+  iterations: 1
+  # This is a transform: it has no distance. It passes the point on to the next step.
+  carry: [z, dr]
+  variables:
+    - { name: z, type: vec3, init: pos }
+    - { name: dr, type: float, init: 1 }
+    - { name: r2, type: float, init: 0 }
+    - { name: k, type: float, init: 1 }
+  steps:
+    - "r2 = max(dot(z, z), 0.000001)"
+    # The factor the point is multiplied by: very close to the centre, a constant; otherwise an inversion.
+    - "k = select(select(1.0, fixed_radius * fixed_radius / r2, r2 < fixed_radius * fixed_radius), fixed_radius * fixed_radius / (min_radius * min_radius), r2 < min_radius * min_radius)"
+    - "z = z * k"
+    - "dr = dr * k"
+
+view:
+  camera_distance: 4

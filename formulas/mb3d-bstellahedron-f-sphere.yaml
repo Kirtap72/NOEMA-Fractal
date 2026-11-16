@@ -1,0 +1,52 @@
+format: 3
+id: mb3d-bstellahedron-f-sphere
+name: _BStellahedron_F_Sphere
+description: sphere to stellahedron via two angle foldings
+credits:
+  - name: M Benesi
+    role: Authorship according to the authorised specification
+    status: unverified
+sources:
+  - reference: NewFormulas/essentials-40/36-_BStellahedron_F_Sphere.md
+    status: unverified
+added_by: Codex
+math_status: Independent implementation from authorised normalised mathematical material; the
+  licence of the project.
+reviewed: false
+provenance:
+  origin: mandelbulb3d
+  file: _BStellahedron_F_Sphere.m3f
+  credited_author: M Benesi
+  credited_authors:
+    - M Benesi
+  collection: M3Formulas
+  note: Independent reimplementation from the authorized normalized Essentials specifications. The
+    [CODE] section was not read, copied or translated. Mathematical validation is separate from MB3D
+    image verification.
+  verified_against_mb3d: false
+parameters:
+  - name: sides
+    label: Sides
+    default: 4
+    min: -8
+    max: 8
+  - name: sides2
+    label: Sides2
+    default: 4
+    min: -8
+    max: 8
+  - name: stellangle
+    label: StellAngle
+    default: 0
+    min: -8
+    max: 8
+  - name: stellangle2
+    label: StellAngle2
+    default: 0
+    min: -8
+    max: 8
+iteration:
+  kernel: mb3d-bstellahedron-f-sphere
+  iterations: 1
+view:
+  camera_distance: 5

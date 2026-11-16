@@ -1,0 +1,59 @@
+# Stereographic projection (transform). Format: see formulas/README.md
+format: 1
+id: stereographic
+name: "Stereographic projection (transform)"
+description: >
+  Wraps the horizontal plane around the unit sphere with the stereographic projection (direction 0),
+  or unwraps it (direction 1): the horizontal coordinates (x, z) are a point of the plane, the
+  height y moves the point out from the sphere. Shapes and fractals that repeat in the plane become
+  spherical, like a map on a globe. The projection is not angle-preserving in three dimensions, so
+  the derivative is left unchanged and the distance of the next formula is rough.
+
+# NOTE: the AI assistant read Wikipedia (Stereographic projection) on 2026-10-07: from the
+# plane to the unit sphere, (x, y, z) = (2X, 2Y, -1 + X^2 + Y^2) / (1 + X^2 + Y^2),
+# and back (X, Y) = (x, y) / (1 - z). Here the sphere's pole axis is the vertical
+# axis, and using the height as distance from the sphere is the assistant's own.
+# A person must still check each name and link before this is set to
+# "verified" (and reviewed: true).
+credits:
+  - name: General mathematics (textbook)
+    role: "standard definitions found in any textbook; no single person is credited (the project owner
+      agreed that general mathematics is credited this way)"
+    status: unverified
+sources:
+  - url: https://en.wikipedia.org/wiki/Stereographic_projection
+    status: unverified
+
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: >
+  General mathematics: standard definitions, not claimed as owned. Written fresh for this project;
+  no code from any program was read or copied. Source details are unverified (see credits).
+reviewed: false
+
+parameters:
+  - { name: direction, label: Direction (0 to the sphere, 1 back), default: 0, min: 0, max: 1 }
+
+iteration:
+  iterations: 1
+  # This is a transform: it has no distance. It passes the point on to the next step.
+  carry: [ z, dr ]
+  variables:
+    - { name: z, type: vec3, init: pos }
+    - { name: dr, type: float, init: 1 }
+    - { name: s2, type: float, init: 0 }
+    - { name: r, type: float, init: 1 }
+    - { name: u, type: vec3, init: "vec3(0.0, 1.0, 0.0)" }
+    - { name: a, type: vec3, init: "vec3(0.0, 0.0, 0.0)" }
+    - { name: b, type: vec3, init: "vec3(0.0, 0.0, 0.0)" }
+  steps:
+    # To the sphere: (x, z) is the point of the plane, y the height above the sphere.
+    - "s2 = z.x * z.x + z.z * z.z"
+    - "a = (1.0 + z.y) * vec3(2.0 * z.x, s2 - 1.0, 2.0 * z.z) / (1.0 + s2)"
+    # Back to the plane: the direction from the centre gives (x, z), the distance gives the height.
+    - "r = max(length(z), 0.000001)"
+    - "u = z / r"
+    - "b = vec3(u.x / max(1.0 - u.y, 0.000001), r - 1.0, u.z / max(1.0 - u.y, 0.000001))"
+    - "z = select(a, b, direction > 0.5)"
+
+view:
+  camera_distance: 4

@@ -1,0 +1,64 @@
+# Quaternion Mandelbrot set, a 3D slice of the 4D shape. Format: see formulas/README.md
+format: 1
+id: quaternion-mandelbrot
+name: Quaternion Mandelbrot (3D slice)
+description: >
+  The Mandelbrot iteration q -> q squared + c, with quaternions instead of
+  complex numbers. A point in space is a quaternion c = (x, y, z, w) where w is
+  held fixed (the slice). The iteration starts at q = c. A point belongs to the
+  set if q never grows beyond the escape radius. The set is four-dimensional;
+  this draws the part of it that lies at the chosen w.
+
+# NOTE: the AI assistant read the pages below on 2026-10-06 and wrote this
+# formula from the mathematics they give: the square of a quaternion in
+# components, the iteration z -> z^2 + c, the idea of a 3D slice, and the escape
+# radius 4. Nothing was copied from program code. The distance estimate (the
+# same kind as for the Mandelbulb: log of the length times the length, divided
+# by the running derivative) is the assistant's own transfer of that method and
+# is not taken from a source. A person must still open the sources and check
+# each name and link before this is set to "verified" (and reviewed: true).
+credits:
+  - name: William Rowan Hamilton
+    role: "discovered quaternions in 1843"
+    status: unverified
+  - name: Alan Norton
+    role: "SIGGRAPH 1982: first to display 3D slices of quaternion Julia sets (found through a search result; the paper itself was not opened)"
+    status: unverified
+sources:
+  - url: https://en.wikipedia.org/wiki/Quaternion
+    status: unverified
+  - url: https://paulbourke.net/fractals/quatjulia/
+    status: unverified
+  - url: https://history.siggraph.org/?p=106343
+    status: unverified
+
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: >
+  Mathematical idea, not claimed as owned. Written fresh for this project from
+  the public description of quaternions and of the iteration; no code from any
+  program was read or copied. The distance estimate is the assistant's own
+  transfer of a known method. Source details are unverified (see credits).
+reviewed: false
+
+parameters:
+  - { name: w, label: Slice w, default: 0, min: -1.5, max: 1.5 }
+
+iteration:
+  iterations: 12
+  # Passed on to the next step when formulas are chained.
+  carry: [q, dr]
+  variables:
+    - { name: q, type: vec4, init: "vec4(pos.x, pos.y, pos.z, w)" }
+    - { name: dr, type: float, init: 1 }
+    - { name: r, type: float, init: 0 }
+  steps:
+    - "r = length(q)"
+    - break_if: "r > 4.0"
+    # Running derivative: the length of 2 q times the old derivative, plus 1 because c moves too.
+    - "dr = 2.0 * r * dr + 1.0"
+    # q squared: (a, b, c, d)^2 = (a^2 - b^2 - c^2 - d^2, 2ab, 2ac, 2ad), then add c.
+    - "q = vec4(q.x * q.x - q.y * q.y - q.z * q.z - q.w * q.w, 2.0 * q.x * q.y, 2.0 * q.x * q.z, 2.0 * q.x * q.w) + vec4(pos.x, pos.y, pos.z, w)"
+  distance: "0.5 * log(r) * r / dr"
+
+view:
+  camera_distance: 3.5

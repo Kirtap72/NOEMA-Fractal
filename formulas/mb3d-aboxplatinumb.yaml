@@ -1,0 +1,119 @@
+format: 3
+id: mb3d-aboxplatinumb
+name: ABoxPlatinumB
+description: Independent X/Y fold projections, absolute fold and displaced radial inversion.
+credits:
+  - name: Luca GN
+    role: Formula author (2012)
+    status: unverified
+  - name: Buddhi
+    role: Inspiration, according to the description of the source
+    status: unverified
+sources:
+  - reference: NewFormulas/preset-compatibility/ABoxPlatinumB.md
+    status: unverified
+added_by: Codex
+math_status: Independent equations, validated against the typed simulator of the established recovery pipeline.
+reviewed: false
+provenance:
+  origin: mandelbulb3d
+  file: ABoxPlatinumB.m3f
+  credited_author: Luca GN
+  credited_authors:
+    - Luca GN
+  collection: M3Formulas
+  note: Independent reimplementation of the mathematical formula. Explicitly authorized mathematical
+    recovery on 2026-10-10 for the gateway pass. Luca GN 2012; Buddhi inspiration. No legacy
+    executable code included; no image equivalence claim.
+  verified_against_mb3d: false
+parameters:
+  - name: scale
+    label: Scale
+    default: 2
+    min: -8
+    max: 8
+  - name: minr_ir
+    label: MinR/IR
+    default: 0.5
+    min: -8
+    max: 8
+  - name: fold
+    label: Fold
+    default: 1
+    min: -8
+    max: 8
+  - name: rotate_x
+    label: Rotate X
+    default: 0
+    min: -180
+    max: 180
+  - name: rotate_y
+    label: Rotate Y
+    default: 0
+    min: -180
+    max: 180
+  - name: rotate_z
+    label: Rotate Z
+    default: 0
+    min: -180
+    max: 180
+  - name: inv_xc
+    label: Inv xC
+    default: 0
+    min: -8
+    max: 8
+  - name: inv_yc
+    label: Inv yC
+    default: 0
+    min: -8
+    max: 8
+  - name: inv_zc
+    label: Inv zC
+    default: 0
+    min: -8
+    max: 8
+  - name: inv_radius
+    label: Inv Radius
+    default: 1
+    min: -8
+    max: 8
+  - name: foldx_xy_angle
+    label: FoldX, XY angle
+    default: 0
+    min: -180
+    max: 180
+  - name: foldx_xz_angle
+    label: FoldX, XZ angle
+    default: 0
+    min: -180
+    max: 180
+  - name: foldy_xy_angle
+    label: FoldY, XY angle
+    default: 0
+    min: -180
+    max: 180
+  - name: foldy_yz_angle
+    label: FoldY, YZ angle
+    default: 0
+    min: -180
+    max: 180
+  - name: abs_xyz_switches
+    label: Abs XYZ switches
+    default: 0
+    min: 0
+    max: 7
+  - name: constant_w
+    label: Julia constant w
+    default: 0
+    min: -4
+    max: 4
+  - name: bailout_squared
+    label: Escape limit (radius²)
+    default: 1024
+    min: 1
+    max: 65536
+iteration:
+  kernel: mb3d-aboxplatinumb
+  iterations: 16
+view:
+  camera_distance: 5

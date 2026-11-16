@@ -1,0 +1,98 @@
+# Stellahedron (transform). Format: see formulas/README.md
+# An independent reimplementation of the mathematics of a Mandelbulb 3D formula (CLAUDE.md section 10): written
+# from the file's parameters and description only; the compiled code section was not used. See provenance below.
+format: 2
+id: stellahedron
+name: "Stellahedron: sphere to polyhedron (transform)"
+description: >
+  Pulls space towards a polyhedron in two turns. First, around the x axis: the
+  angle of the point in the y-z plane is folded into one of "sides around x"
+  equal sectors, and y and z are scaled by the cosine of that folded angle
+  (shifted by the stellation angle). Then, from the x axis: the angle between
+  the point and the x axis is folded the same way into "sides from x" sectors,
+  and the whole point is scaled the same way. With 4 and 4 sides and no
+  stellation, a sphere becomes a cube; other values give shapes that are not
+  regular polyhedra. A transform: put a fractal or a shape after it.
+
+credits:
+  - name: M Benesi
+    role: "author of the Mandelbulb 3D formula _BStellahedron_F_Sphere (sphere to polyhedron with stellation angles), as credited in the formula file"
+    status: unverified
+sources:
+  - reference: "Mandelbulb 3D 1.9.9 (sr37), collection M3Formulas, file _BStellahedron_F_Sphere.m3f: the parameters ([OPTIONS], [CONSTANTS]) and the description written by M Benesi"
+    status: unverified
+
+provenance:
+  origin: mandelbulb3d
+  file: _BStellahedron_F_Sphere.m3f
+  credited_author: M Benesi
+  collection: M3Formulas
+  note: >
+    An independent reimplementation of the mathematical formula, written for this
+    project from the file's [OPTIONS], [CONSTANTS] and description (read
+    2026-10-08). The [CODE] section was not read, copied or translated. The
+    repeated subtraction of the description is replaced by a closed expression;
+    the guards against division by zero and the derivative are this project's own.
+  verified_against_mb3d: false
+
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: >
+  Mathematical idea by M Benesi, as described in the Mandelbulb 3D formula file;
+  reimplemented independently, not claimed as owned. No code from any program was
+  read or copied. Source details are unverified (see credits).
+reviewed: false
+
+parameters:
+  - { name: sides_yz, label: Sides around x axis, default: 4, min: 2, max: 32 }
+  - { name: sides_x, label: Sides from x axis, default: 4, min: 2, max: 32 }
+  - { name: stellation_yz, label: Stellation around x (radians), default: 0, min: -3.14159, max: 3.14159 }
+  - { name: stellation_x, label: Stellation from x (radians), default: 0, min: -3.14159, max: 3.14159 }
+
+iteration:
+  iterations: 1
+  # A transform: it has no distance. It passes the point on to the next step.
+  carry: [z, dr]
+  variables:
+    - { name: z, type: vec3, init: pos }
+    - { name: dr, type: float, init: 1 }
+    - { name: half_a, type: float, init: 0.785398 }
+    - { name: half_b, type: float, init: 0.785398 }
+    - { name: rho, type: float, init: 0 }
+    - { name: ang, type: float, init: 0 }
+    - { name: den, type: float, init: 1 }
+    - { name: amp, type: float, init: 1 }
+    - { name: psi, type: float, init: 0 }
+    - { name: grow_a, type: float, init: 1 }
+    - { name: grow_b, type: float, init: 1 }
+  steps:
+    # ---- turn 1: around the x axis (y and z are scaled)
+    # Half the sector angle; the number of sides is held at 2 or more, so the division is always defined.
+    - "half_a = pi / max(sides_yz, 2.0)"
+    - "rho = sqrt(z.y * z.y + z.z * z.z)"
+    # The angle in the y-z plane from the y axis, 0 to pi (0 on the x axis itself, where it is undefined).
+    - "ang = select(abs(atan2(z.z, z.y)), 0.0, rho < 0.000000000001)"
+    # Folded into (-half, half]: take away whole sectors (2 half) as many times as needed, in one step (ceil = -floor(-x)).
+    - "ang = ang - 2.0 * half_a * max(-floor(-(ang - half_a) / (2.0 * half_a)), 0.0)"
+    # The scale factor cos(half/2) cos(ang - s) / cos(half/2 - s), with the denominator kept away from 0 (sign kept).
+    - "den = cos(0.5 * half_a - stellation_yz)"
+    - "den = select(den, select(0.000001, -0.000001, den < 0.0), abs(den) < 0.000001)"
+    - "amp = cos(0.5 * half_a) / den"
+    - "psi = ang - stellation_yz"
+    # The largest stretch of this map (singular value of its Jacobian): |amp| (|sin psi| + sqrt(sin^2 psi + 4 cos^2 psi)) / 2.
+    - "grow_a = max(abs(amp) * (abs(sin(psi)) + sqrt(sin(psi) * sin(psi) + 4.0 * cos(psi) * cos(psi))) * 0.5, 1.0)"
+    - "z = vec3(z.x, z.y * amp * cos(psi), z.z * amp * cos(psi))"
+    # ---- turn 2: from the x axis (the whole point is scaled)
+    - "half_b = pi / max(sides_x, 2.0)"
+    - "rho = sqrt(z.y * z.y + z.z * z.z)"
+    - "ang = select(abs(atan2(rho, z.x)), 0.0, rho + abs(z.x) < 0.000000000001)"
+    - "ang = ang - 2.0 * half_b * max(-floor(-(ang - half_b) / (2.0 * half_b)), 0.0)"
+    - "den = cos(0.5 * half_b - stellation_x)"
+    - "den = select(den, select(0.000001, -0.000001, den < 0.0), abs(den) < 0.000001)"
+    - "amp = cos(0.5 * half_b) / den"
+    - "psi = ang - stellation_x"
+    - "grow_b = abs(amp) * (abs(sin(psi)) + sqrt(sin(psi) * sin(psi) + 4.0 * cos(psi) * cos(psi))) * 0.5"
+    - "z = z * (amp * cos(psi))"
+    - "dr = dr * grow_a * grow_b"
+
+view:
+  camera_distance: 4

@@ -1,0 +1,45 @@
+{
+  "format": 3,
+  "id": "mb3d-trans-kochifs",
+  "name": "Trans-KochIFS",
+  "description": "Independently recovered MB3D formula; see the separate normalised specification.",
+  "credits": [ { "name": "okänd", "role": "Author of the distributed variant", "status": "unverified" } ],
+  "sources": [ { "reference": "NewFormulas/preset-compatibility/Trans-KochIFS.md", "status": "unverified" } ],
+  "added_by": "Codex",
+  "math_status": "Recovered equations validated against a typed reference, no native picture certification.",
+  "reviewed": false,
+  "provenance":
+    {
+      "origin": "mandelbulb3d",
+      "file": "Trans-KochIFS.m3f",
+      "credited_author": "okänd",
+      "credited_authors": [ "okänd" ],
+      "collection": "M3Formulas",
+      "note": "Independent reimplementation of the mathematical formula from recovered equations.
+        Explicitly authorized mathematical recovery; no native executable code distributed.",
+      "verified_against_mb3d": false
+    },
+  "parameters":
+    [
+      { "name": "add_x", "label": "Add X", "default": 0, "min": -10000, "max": 10000 },
+      { "name": "add_y", "label": "Add Y", "default": 0, "min": -10000, "max": 10000 },
+      { "name": "add_z", "label": "Add Z", "default": 0, "min": -10000, "max": 10000 },
+      { "name": "rotation_x", "label": "Rotation X", "default": 0, "min": -10000, "max": 10000 },
+      { "name": "rotation_y", "label": "Rotation Y", "default": 0, "min": -10000, "max": 10000 },
+      { "name": "rotation_z", "label": "Rotation Z", "default": 0, "min": -10000, "max": 10000 },
+      { "name": "polyfold_order", "label": "PolyFold Order", "default": 5, "min": 1, "max": 128 },
+      { "name": "koch_angle", "label": "KochAngle", "default": -30, "min": -10000, "max": 10000 },
+      {
+          "name": "koch_sub",
+          "label": "KochSub",
+          "default": 0.333333333333,
+          "min": -10000,
+          "max": 10000
+        },
+      { "name": "koch_scale", "label": "KochScale", "default": 3, "min": -10000, "max": 10000 },
+      { "name": "koch_fix_x", "label": "KochFixX", "default": 1, "min": -10000, "max": 10000 },
+      { "name": "koch_fix_z", "label": "KochFixZ", "default": 0, "min": -10000, "max": 10000 }
+    ],
+  "iteration": { "kernel": "mb3d-trans-kochifs", "iterations": 1 },
+  "view": { "camera_distance": 5 }
+}

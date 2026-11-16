@@ -1,0 +1,30 @@
+{
+  "format": "noema-knowledge-base",
+  "version": 2,
+  "atlasVersion": 1,
+  "built": "2026-11-16",
+  "about": "Built-in formula metadata. No external preset corpus or experiment collection is distributed.",
+  "privacy": "No private collection, usage statistics, preset recipes, or recorded experiments are included.",
+  "counts": {
+    "formulas": 251,
+    "findings": 0,
+    "experiments": 0,
+    "cases": 0,
+    "sources": 1
+  },
+  "corpus": {
+    "artist": {
+      "files": 0,
+      "formulaSlots": 0,
+      "slotsMappedToNoema": 0,
+      "chainsFullyMapped": 0,
+      "chainsRunnableInBridge": 0
+    },
+    "publicSet": {
+      "files": 0
+    }
+  },
+  "migrations": {
+    "1->2": "Atlasen (atlas.json) behålls oförändrad; kunskapsbasen läggs till som kb/*.json. Äldre kod som bara läser atlasen fortsätter fungera."
+  }
+}

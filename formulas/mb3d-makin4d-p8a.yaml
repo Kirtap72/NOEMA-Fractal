@@ -1,0 +1,44 @@
+format: 3
+id: mb3d-makin4d-p8a
+name: Makin4D p8a
+catalog:
+  category: fractals
+  tags: [ Makin, complex, 4D ]
+description: >-
+  David Makin's 4D formula with two complex numbers (z = x+iy and w = z+iw): the same pass as p4a,
+  repeated three times (as the file states). By |z| is meant the squared modulus (as in Ultra
+  Fractal, the same reading as Makin4D p2a), cabs is the modulus. After that C and w add are added.
+credits:
+  - {
+      name: David Makin,
+      role: "Formula author (proposed on the forums on 21 July 2014, according to the formula
+        description)",
+      status: unverified
+    }
+sources:
+  - {
+      reference: "Mandelbulb 3D 1.9.9 (sr37), M3Formulas, file Makin4D p8a.m3f: [OPTIONS] and the
+        description after [END]; the code block and code listings was never read.",
+      status: unverified
+    }
+  - { reference: NewFormulas/formula-08/BATCH-08.md, status: unverified }
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: The equations are the formula file's own description; implementation in
+  src/engine/formula/batch08Kernels.ts. No comparison with a running Mandelbulb 3D.
+reviewed: false
+provenance:
+  origin: mandelbulb3d
+  file: Makin4D p8a.m3f
+  credited_author: David Makin
+  credited_authors: [ David Makin ]
+  collection: M3Formulas
+  note: Independent reimplementation from the equations in the formula file's own description. The
+    [CODE] section was not read. Native image equivalence unverified.
+  verified_against_mb3d: false
+parameters:
+  - { name: w_add, label: "w add", default: 0, min: -4, max: 4 }
+  - { name: slice_w, label: "4D slice / extra w", default: 0, min: -4, max: 4 }
+  - { name: constant_w, label: "Julia constant w", default: 0, min: -4, max: 4 }
+  - { name: bailout_squared, label: "Escape limit (radius²)", default: 16, min: 1, max: 65536 }
+iteration: { kernel: mb3d-makin4d-p8a, iterations: 16 }
+view: { camera_distance: 5 }

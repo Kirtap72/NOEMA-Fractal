@@ -1,0 +1,87 @@
+format: 3
+id: mb3d-gencwarp
+name: _GenCWarp
+catalog:
+  category: julia
+description: selectable angle dynamics on persistent C
+credits:
+  - name: Luca G.N.
+    role: implementation, 2011
+    status: unverified
+  - name: Aexion
+    role: C Iteration concept and sample
+    status: unverified
+sources:
+  - reference: NewFormulas/essentials-40/40-_GenCWarp.md
+    status: unverified
+added_by: Codex
+math_status: Independent implementation from authorised normalised mathematical material; the
+  licence of the project.
+reviewed: false
+provenance:
+  origin: mandelbulb3d
+  file: _GenCWarp.m3f
+  credited_author: Luca G.N.
+  credited_authors:
+    - Luca G.N.
+  collection: M3Formulas
+  note: Independent reimplementation from the authorized normalized Essentials specifications. The
+    [CODE] section was not read, copied or translated. Mathematical validation is separate from MB3D
+    image verification.
+  verified_against_mb3d: false
+parameters:
+  - name: c_rotation_x
+    label: C Rotation X (degrees)
+    default: 0
+    min: -180
+    max: 180
+  - name: c_rotation_y
+    label: C Rotation Y (degrees)
+    default: 0
+    min: -180
+    max: 180
+  - name: c_rotation_z
+    label: C Rotation Z (degrees)
+    default: 0
+    min: -180
+    max: 180
+  - name: theta_anglepow
+    label: Theta-AnglePow
+    default: 8
+    min: -32
+    max: 32
+  - name: phi_anglepow
+    label: Phi-AnglePow
+    default: 8
+    min: -32
+    max: 32
+  - name: th_args_0_23
+    label: Th(args 0-23)
+    default: 2
+    min: -8
+    max: 23
+  - name: ph_args_0_23
+    label: Ph(args 0-23)
+    default: 8
+    min: -8
+    max: 23
+  - name: recipe_0_2
+    label: Recipe 0-2
+    default: 0
+    min: -8
+    max: 8
+  - name: strength_0_to_1
+    label: Strength (0 to 1)
+    default: 1
+    min: -8
+    max: 8
+  - name: xyz_strength_0_to_1
+    label: Xyz-Strength (0 to 1)
+    default: 0
+    min: -8
+    max: 8
+iteration:
+  kernel: mb3d-gencwarp
+  iterations: 1
+view:
+  camera_distance: 5

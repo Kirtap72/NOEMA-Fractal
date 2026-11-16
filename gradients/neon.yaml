@@ -1,0 +1,12 @@
+format: 1
+id: neon
+name: Neon
+author: "Fraktalmotorn project (original colours, written for this project)"
+description: Hard edged magenta and cyan bands on a dark base. Looks best with several cycles.
+stops:
+  - { position: 0.0, color: "#12002b" }
+  - { position: 0.33, color: "#12002b" }
+  - { position: 0.33, color: "#ff1fa9" }
+  - { position: 0.66, color: "#ff1fa9" }
+  - { position: 0.66, color: "#19e6ff" }
+  - { position: 1.0, color: "#19e6ff" }

@@ -1,0 +1,47 @@
+format: 3
+id: mb3d-vanderpol
+name: _vanderpol
+catalog:
+  category: transforms
+  tags: [ attractor, chaos, 4D, Van der Pol ]
+description: >-
+  Modified Van der Pol system in 4D with six parameters: x′ = (z+b·x)·S, y′ = (w+b·y)·S, z′ =
+  c·y-d·x+(a-r1·x²)·z, w′ = c·x-d·y+(f-r2·y²)·w. The strength S only acts on the first two rows,
+  exactly as the file writes.
+credits:
+  - {
+      name: Luca GN,
+      role: "Formula and implementation 2011 (according to the formula description)",
+      status: unverified
+    }
+sources:
+  - {
+      reference: "Mandelbulb 3D 1.9.9 (sr37), M3Formulas, file _vanderpol.m3f: [OPTIONS] and the
+        description after [END]; the code block and code listings was never read.",
+      status: unverified
+    }
+  - { reference: NewFormulas/formula-07/BATCH-07.md, status: unverified }
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: The equations are the formula file's own description; implementation in
+  src/engine/formula/batch07Kernels.ts. No comparison with a running Mandelbulb 3D.
+reviewed: false
+provenance:
+  origin: mandelbulb3d
+  file: _vanderpol.m3f
+  credited_author: Luca GN
+  credited_authors: [ Luca GN ]
+  collection: M3Formulas
+  note: Independent reimplementation from the equations in the formula file's own description. The
+    [CODE] section was not read. Native image equivalence unverified.
+  verified_against_mb3d: false
+parameters:
+  - { name: strength, label: "Strength", default: 1, min: -1000, max: 1000 }
+  - { name: alpha, label: "Alpha (a)", default: 2, min: -1000, max: 1000 }
+  - { name: beta, label: "Beta (b)", default: 0.6, min: -1000, max: 1000 }
+  - { name: gamma, label: "Gamma (c)", default: 0.1, min: -1000, max: 1000 }
+  - { name: delta, label: "Delta (d)", default: 0.4, min: -1000, max: 1000 }
+  - { name: phi, label: "Phi (f)", default: 2, min: -1000, max: 1000 }
+  - { name: r1, label: "r1", default: 1.4, min: -1000, max: 1000 }
+  - { name: r2, label: "r2", default: 1.4, min: -1000, max: 1000 }
+iteration: { kernel: mb3d-vanderpol, iterations: 1 }
+view: { camera_distance: 5 }

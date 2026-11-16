@@ -1,0 +1,53 @@
+# Cantor dust. Format: see formulas/README.md
+format: 1
+id: cantor-dust
+name: "Cantor dust"
+catalog:
+  category: ifs
+description: >
+  The Cantor set in three dimensions: the product of three Cantor sets, one per
+  axis. A cube is replaced by its eight corner cubes of a third of the size,
+  and the same again in each of them (dimension log 8 / log 3, about 1.89).
+  Each iteration folds the point into one corner and stretches it by three.
+
+# NOTE: the AI assistant read Wikipedia (Cantor set) on 2026-10-07: discovered by
+# Henry John Stephen Smith in 1874 and mentioned by Georg Cantor in 1883; the set
+# keeps the outer thirds of an interval, again and again. The article gives no
+# details of the 3D "dust"; it is built here as the product of three Cantor sets
+# (8 corner cubes, scale 1/3), which is the assistant's own construction from the
+# definition.
+# A person must still check each name and link before this is set to
+# "verified" (and reviewed: true).
+credits:
+  - name: Henry John Stephen Smith
+    role: "discovered the set (1874)"
+    status: unverified
+  - name: Georg Cantor
+    role: "described the set (1883)"
+    status: unverified
+sources:
+  - url: https://en.wikipedia.org/wiki/Cantor_set
+    status: unverified
+
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: >
+  Mathematical idea, not claimed as owned. Written fresh for this project from
+  the published description; no code from any program was read or copied.
+  The 3D product form and the distance are the assistant's own. Source details are unverified (see credits).
+reviewed: false
+
+iteration:
+  iterations: 6
+  carry: [z, dr]
+  variables:
+    - { name: z, type: vec3, init: pos }
+    - { name: dr, type: float, init: 1 }
+  steps:
+    - "z = abs(z)"
+    # The corner cube of a third of the size is centred at (2/3, 2/3, 2/3): scale by 3 around (1, 1, 1).
+    - "z = 3.0 * z - vec3(2.0, 2.0, 2.0)"
+    - "dr = dr * 3.0"
+  distance: "(length(max(abs(z) - vec3(1.0, 1.0, 1.0), vec3(0.0, 0.0, 0.0))) + min(max(abs(z).x - 1.0, max(abs(z).y - 1.0, abs(z).z - 1.0)), 0.0)) / dr"
+
+view:
+  camera_distance: 3.5

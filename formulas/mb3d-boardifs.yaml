@@ -1,0 +1,49 @@
+{
+  "format": 3,
+  "id": "mb3d-boardifs",
+  "name": "boardIFS",
+  "description": "Independent recovered MB3D mathematics.",
+  "credits": [ { "name": "Luca GN", "role": "Author of the distributed variant", "status": "unverified" } ],
+  "sources": [ { "reference": "NewFormulas/preset-compatibility/boardIFS.md", "status": "unverified" } ],
+  "added_by": "Codex",
+  "math_status": "Typed numeric reference verified; native picture similarity unverified.",
+  "reviewed": false,
+  "provenance":
+    {
+      "origin": "mandelbulb3d",
+      "file": "boardIFS.m3f",
+      "credited_author": "Luca GN",
+      "credited_authors": [ "Luca GN" ],
+      "collection": "M3Formulas",
+      "note": "Independent reimplementation of the mathematical formula. Explicitly authorized
+        mathematical recovery; original executable code is not distributed.",
+      "verified_against_mb3d": false
+    },
+  "parameters":
+    [
+      { "name": "bump", "label": "Bump", "default": 0.1, "min": -10000, "max": 10000 },
+      { "name": "scale", "label": "Scale", "default": 1, "min": 1e-6, "max": 10000 },
+      { "name": "z_add", "label": "Z add", "default": -0.1, "min": -10000, "max": 10000 },
+      { "name": "y_add", "label": "Y add", "default": 0, "min": -10000, "max": 10000 },
+      { "name": "x_add", "label": "X add", "default": 0, "min": -10000, "max": 10000 },
+      { "name": "checker_scale", "label": "Checker scale", "default": 2, "min": 1e-6, "max": 10000 },
+      {
+          "name": "apply_scale_add",
+          "label": "Apply scale+add",
+          "default": 0,
+          "min": -10000,
+          "max": 10000
+        },
+      { "name": "rotate_x", "label": "Rotate X", "default": 0, "min": -10000, "max": 10000 },
+      { "name": "rotate_y", "label": "Rotate Y", "default": 0, "min": -10000, "max": 10000 },
+      { "name": "rotate_z", "label": "Rotate Z", "default": 0, "min": -10000, "max": 10000 },
+      { "name": "variation", "label": "Variation", "default": 0, "min": 0, "max": 4 },
+      { "name": "otrapclr_1", "label": "OTrapClr 1", "default": 1, "min": -10000, "max": 10000 },
+      { "name": "otrapclr_2", "label": "OTrapClr 2", "default": 0, "min": -10000, "max": 10000 },
+      { "name": "otraponits", "label": "OTrapOnIts", "default": 0.1, "min": -10000, "max": 10000 },
+      { "name": "inside_render", "label": "inside_render", "default": 0, "min": 0, "max": 1 },
+      { "name": "de_stop", "label": "de_stop", "default": 0, "min": -10000, "max": 10000 }
+    ],
+  "iteration": { "kernel": "mb3d-boardifs", "iterations": 12 },
+  "view": { "camera_distance": 5 }
+}

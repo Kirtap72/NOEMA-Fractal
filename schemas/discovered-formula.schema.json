@@ -1,0 +1,243 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "id",
+    "fingerprint",
+    "structureFingerprint",
+    "seed",
+    "catalogFingerprint",
+    "name",
+    "nodes",
+    "iterations",
+    "radius",
+    "mutation",
+    "provenance"
+  ],
+  "properties": {
+    "version": {
+      "const": "FG2B-1"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^discovered-formula-[a-f0-9]{8}$"
+    },
+    "fingerprint": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{8}$"
+    },
+    "structureFingerprint": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{8}$"
+    },
+    "seed": {
+      "type": "string",
+      "maxLength": 128
+    },
+    "catalogFingerprint": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{8}$"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 120
+    },
+    "nodes": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 6,
+      "items": {
+        "oneOf": [
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "kind",
+              "fold"
+            ],
+            "properties": {
+              "kind": {
+                "const": "fold"
+              },
+              "fold": {
+                "enum": [
+                  "abs",
+                  "tetra",
+                  "octa"
+                ]
+              },
+              "axes": {
+                "enum": [
+                  "xyz",
+                  "xy",
+                  "xz",
+                  "yz"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "kind",
+              "order"
+            ],
+            "properties": {
+              "kind": {
+                "const": "permute"
+              },
+              "order": {
+                "enum": [
+                  "yzx",
+                  "zxy",
+                  "xzy"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "kind",
+              "axis",
+              "angle"
+            ],
+            "properties": {
+              "kind": {
+                "const": "rotate"
+              },
+              "axis": {
+                "enum": [
+                  "x",
+                  "y",
+                  "z"
+                ]
+              },
+              "angle": {
+                "type": "number",
+                "minimum": -40,
+                "maximum": 40
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "kind",
+              "offset"
+            ],
+            "properties": {
+              "kind": {
+                "const": "translate"
+              },
+              "offset": {
+                "type": "array",
+                "minItems": 3,
+                "maxItems": 3,
+                "items": {
+                  "type": "number",
+                  "minimum": -0.6,
+                  "maximum": 0.6
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "kind",
+              "scale",
+              "center"
+            ],
+            "properties": {
+              "kind": {
+                "const": "expand"
+              },
+              "scale": {
+                "type": "number",
+                "minimum": 1.8,
+                "maximum": 2.8
+              },
+              "center": {
+                "type": "array",
+                "minItems": 3,
+                "maxItems": 3,
+                "items": {
+                  "type": "number",
+                  "minimum": -1.5,
+                  "maximum": 1.5
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "iterations": {
+      "type": "integer",
+      "minimum": 6,
+      "maximum": 16
+    },
+    "radius": {
+      "type": "number",
+      "minimum": 0.5,
+      "maximum": 2
+    },
+    "mutation": {
+      "enum": [
+        "original",
+        "structural",
+        "parameters"
+      ]
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "author",
+        "source",
+        "reviewed",
+        "de"
+      ],
+      "properties": {
+        "author": {
+          "const": "okänd"
+        },
+        "source": {
+          "const": "NOEMA bounded geometric AST synthesis; textbook geometry"
+        },
+        "reviewed": {
+          "const": false
+        },
+        "de": {
+          "const": "finite-lipschitz-bound"
+        }
+      }
+    },
+    "parent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "fingerprint"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^discovered-formula-[a-f0-9]{8}$"
+        },
+        "fingerprint": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{8}$"
+        }
+      }
+    }
+  }
+}

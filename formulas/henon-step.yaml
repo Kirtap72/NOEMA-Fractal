@@ -1,0 +1,53 @@
+# Hénon step (transform). Format: see formulas/README.md
+format: 1
+id: henon-step
+name: "Hénon step (transform)"
+catalog:
+  category: other
+  tags:
+  - attractor
+  - chaos
+description: >
+  The Hénon map in the x-y plane as a building block: x becomes 1 - a x^2 + y
+  and y becomes b x; z is left alone. It folds and squeezes the plane like the
+  strange attractor it was made for. The derivative is multiplied by a bound on
+  the stretching (the Frobenius norm of the Jacobian).
+
+# NOTE: the AI assistant read Wikipedia (Hénon map) on 2026-10-07: Michel Hénon, 1976,
+# "A two-dimensional mapping with a strange attractor"; x' = 1 - a x^2 + y, y' = b
+# x, classic values a 1.4, b 0.3; Jacobian [[-2 a x, 1], [b, 0]]. Leaving z alone
+# and the bound on the derivative are the assistant's own.
+# A person must still check each name and link before this is set to
+# "verified" (and reviewed: true).
+credits:
+  - name: Michel Hénon
+    role: "the Hénon map (1976)"
+    status: unverified
+sources:
+  - url: https://en.wikipedia.org/wiki/H%C3%A9non_map
+    status: unverified
+
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: >
+  Mathematical idea, not claimed as owned. Written fresh for this project from
+  the published description; no code from any program was read or copied.
+  Leaving z alone and the bound on the derivative are the assistant's own. Source details are unverified (see credits).
+reviewed: false
+
+parameters:
+  - { name: a, label: a, default: 1.4, min: -2, max: 2 }
+  - { name: b, label: b, default: 0.3, min: -1, max: 1 }
+
+iteration:
+  iterations: 1
+  # This is a transform: it has no distance. It passes the point on to the next step.
+  carry: [z, dr]
+  variables:
+    - { name: z, type: vec3, init: pos }
+    - { name: dr, type: float, init: 1 }
+  steps:
+    - "dr = dr * sqrt(4.0 * a * a * z.x * z.x + 2.0 + b * b)"
+    - "z = vec3(1.0 - a * z.x * z.x + z.y, b * z.x, z.z)"
+
+view:
+  camera_distance: 4

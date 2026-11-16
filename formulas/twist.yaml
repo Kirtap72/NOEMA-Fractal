@@ -1,0 +1,50 @@
+# Twist around an axis (transform). Format: see formulas/README.md
+format: 1
+id: twist
+name: "Twist around an axis (transform)"
+description: >
+  Turns the point around the vertical (y) axis by an angle that grows with the height: k radians per
+  unit. A shape after this step is twisted like a screw. The twist stretches space, so the running
+  derivative is multiplied by a bound on the stretch (1 + |k| times the distance from the axis); the
+  distance estimate is then on the safe side but approximate.
+
+# NOTE: the twist is a rotation whose angle depends on the height (textbook). The
+# bound 1 + |k| r on how much it stretches distances is the assistant's own
+# (the rotation part keeps lengths; the extra part has size |k| r).
+# A person must still check each name and link before this is set to
+# "verified" (and reviewed: true).
+credits:
+  - name: General mathematics (textbook)
+    role: "standard definitions found in any textbook; no single person is credited (the project owner
+      agreed that general mathematics is credited this way)"
+    status: unverified
+sources:
+  - url: https://en.wikipedia.org/wiki/Rotation_matrix
+    status: unverified
+
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: >
+  General mathematics: standard definitions, not claimed as owned. Written fresh for this project;
+  no code from any program was read or copied. Source details are unverified (see credits).
+reviewed: false
+
+parameters:
+  - { name: k, label: Twist (radians per unit), default: 0.5, min: -4, max: 4 }
+
+iteration:
+  iterations: 1
+  # This is a transform: it has no distance. It passes the point on to the next step.
+  carry: [ z, dr ]
+  variables:
+    - { name: z, type: vec3, init: pos }
+    - { name: dr, type: float, init: 1 }
+    - { name: a, type: float, init: 0 }
+    - { name: r, type: float, init: 0 }
+  steps:
+    - "r = sqrt(z.x * z.x + z.z * z.z)"
+    - "a = k * z.y"
+    - "z = vec3(z.x * cos(a) - z.z * sin(a), z.y, z.x * sin(a) + z.z * cos(a))"
+    - "dr = dr * (1.0 + abs(k) * r)"
+
+view:
+  camera_distance: 4

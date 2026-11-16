@@ -1,0 +1,29 @@
+{
+ "$schema":"http://json-schema.org/draft-07/schema#",
+ "$id":"https://fraktalmotorn.local/schemas/scene-bundle-v1.json",
+ "title":"Fraktalmotorn portable scene bundle v1",
+ "type":"object",
+ "required":["format","version","exporterVersion","sourceSceneVersion","sourceScene","coordinateSystem","units","bounds","representations","primitives","planeHalfSize","materials","camera","resolution","lights","ambient","environment","metadata","diagnostics","files"],
+ "properties":{
+  "format":{"const":"fraktalmotorn-scene-bundle"},"version":{"const":1},"exporterVersion":{"const":"phase8-v1"},"sourceSceneVersion":{"type":"integer","minimum":1},
+  "sourceScene":{"$ref":"#/definitions/path"},"coordinateSystem":{"const":"right-handed Y-up"},"units":{"type":"string"},
+  "bounds":{"type":"object","required":["min","max"],"properties":{"min":{"$ref":"#/definitions/vector"},"max":{"$ref":"#/definitions/vector"}}},
+  "representations":{"type":"array","minItems":1,"items":{"type":"object","required":["id","kind","path","materialId","diagnostics"],"properties":{"id":{"type":"string","minLength":1},"kind":{"enum":["mesh","points","volume","gaussians"]},"path":{"$ref":"#/definitions/path"},"materialId":{"type":"string"},"colorsIncludeBaseColor":{"type":"boolean"},"diagnostics":{}}}},
+  "primitives":{"type":"array","items":{"type":"object","required":["id","type","enabled","position","rotation","scale","materialId"],"properties":{"id":{"type":"string"},"type":{"enum":["sphere","box","plane"]},"enabled":{"type":"boolean"},"position":{"$ref":"#/definitions/vector"},"rotation":{"$ref":"#/definitions/vector"},"scale":{"$ref":"#/definitions/vector"},"materialId":{"type":"string"}}}},
+  "planeHalfSize":{"type":"number","exclusiveMinimum":0,"maximum":1000000},
+  "materials":{"type":"array","minItems":1,"items":{"type":"object","required":["id","baseColor","metallic","roughness","reflectivity","transmission","ior","absorptionColor","absorptionDensity","emissionColor","emissionStrength","source","images"],"properties":{"id":{"type":"string"},"baseColor":{"$ref":"#/definitions/vector"},"metallic":{"$ref":"#/definitions/unit"},"roughness":{"$ref":"#/definitions/unit"},"reflectivity":{"$ref":"#/definitions/unit"},"transmission":{"$ref":"#/definitions/unit"},"ior":{"type":"number","minimum":1},"absorptionColor":{"$ref":"#/definitions/vector"},"absorptionDensity":{"type":"number","minimum":0},"emissionColor":{"$ref":"#/definitions/vector"},"emissionStrength":{"type":"number","minimum":0},"source":{"type":"object"},"images":{"type":"object","additionalProperties":{"$ref":"#/definitions/path"}}}}},
+  "camera":{"type":"object","required":["source","basis","verticalFovDegrees","focalLengthMm","sensorWidthMm","focusDistance","apertureRadius"],"properties":{"source":{"type":"object"},"basis":{"type":"object","required":["position","right","up","forward"],"properties":{"position":{"$ref":"#/definitions/vector"},"right":{"$ref":"#/definitions/vector"},"up":{"$ref":"#/definitions/vector"},"forward":{"$ref":"#/definitions/vector"}}},"verticalFovDegrees":{"type":"number","exclusiveMinimum":0,"exclusiveMaximum":180},"focalLengthMm":{"type":"number","exclusiveMinimum":0},"sensorWidthMm":{"type":"number","exclusiveMinimum":0},"focusDistance":{"type":"number","exclusiveMinimum":0},"apertureRadius":{"type":"number","minimum":0}}},
+  "resolution":{"type":"object","required":["width","height"],"properties":{"width":{"type":"integer","minimum":1},"height":{"type":"integer","minimum":1}}},
+  "lights":{"type":"array"},"ambient":{"type":"object"},
+  "environment":{"type":"object","required":["path","skyPath","source","rotationDegrees","strength","backgroundVisible"],"properties":{"path":{"$ref":"#/definitions/path"},"skyPath":{"$ref":"#/definitions/path"},"source":{"type":"object"},"rotationDegrees":{"type":"number"},"strength":{"type":"number","minimum":0},"backgroundVisible":{"type":"boolean"}}},
+  "metadata":{"type":"object"},
+  "diagnostics":{"type":"array","items":{"type":"object","required":["feature","status","reason"],"properties":{"feature":{"type":"string"},"status":{"enum":["EXPORTED","APPROXIMATED","METADATA_ONLY","UNSUPPORTED"]},"reason":{"type":"string"}}}},
+  "files":{"type":"array","items":{"type":"object","required":["path","bytes"],"properties":{"path":{"$ref":"#/definitions/path"},"bytes":{"type":"integer","minimum":0}}}}
+ },
+ "additionalProperties":false,
+ "definitions":{
+  "path":{"type":"string","pattern":"^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))[a-zA-Z0-9_./-]+$"},
+  "vector":{"type":"array","minItems":3,"maxItems":3,"items":{"type":"number"}},
+  "unit":{"type":"number","minimum":0,"maximum":1}
+ }
+}

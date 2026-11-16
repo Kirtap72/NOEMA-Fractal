@@ -1,0 +1,67 @@
+# Fisheye ("sigma") transform in a p-norm, as a step to chain. Format: see formulas/README.md
+format: 1
+id: em-fisheye
+name: Fisheye (sigma transform, p-norm)
+description: >
+  Measures the distance from the centre as a p-norm, R = (|x|^p + |y|^p +
+  |z|^p) to the power 1/p (p = 2 is the ordinary distance, p = 1 gives a
+  diamond, large p a rounded box), and then multiplies the point by
+  (sigma + R) / (sigma + 1). A large sigma changes little; a small one
+  squeezes the shape toward the centre, like a fisheye lens; a sigma close to
+  -1 makes the effect very strong, and below -1 it inverts. It changes the
+  point only and has no distance estimate of its own, so it is used in front
+  of a formula that has one. The running derivative is multiplied by the same
+  factor, which is only approximate.
+
+# NOTE: the AI assistant read section 7 ("Mathematics": "Lp spaces" and
+# "Fisheye or sigma function") of the readme that comes with the EM formula
+# package, which the project owner has allowed, and wrote this step from the
+# mathematics described there, not from any .m3f file. The p-norm is checked
+# against Wikipedia (Lp space). The derivative is the assistant's own and is
+# approximate. A person must still open the sources and check each name and
+# link before this is set to "verified" (and reviewed: true).
+credits:
+  - name: Edgar Malinovsky
+    role: "author of the EM formula package and its readme, where this transform (as 'Fisheye' in p-norm space) is described; the readme asks that users give proper credit"
+    status: unverified
+  - name: Frigyes Riesz
+    role: "introduced Lp spaces in 1910 (Wikipedia)"
+    status: unverified
+sources:
+  - reference: "Edgar Malinovsky, readme of the EM formula package for Mandelbulb 3D (EM_formulasFULL_readme.txt), section 7: 'Lp spaces' and 'Fisheye or sigma function'"
+    status: unverified
+  - url: https://en.wikipedia.org/wiki/Lp_space
+    status: unverified
+
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: >
+  Mathematical idea. The author's readme asks for proper credit when the
+  algorithms are used. Written fresh for this project from the mathematics
+  described in the readme; no code from any .m3f file was read or copied. The
+  derivative is the assistant's own. Source details are unverified (see
+  credits). Whether the readme's wording is a licence has not been checked.
+reviewed: false
+
+parameters:
+  - { name: p, label: Norm p, default: 2, min: 1, max: 8 }
+  - { name: sigma, label: Sigma (strength), default: 2, min: -0.9, max: 20 }
+
+iteration:
+  iterations: 1
+  # This is a transform: it has no distance. It passes the point on to the next step.
+  carry: [z, dr]
+  variables:
+    - { name: z, type: vec3, init: pos }
+    - { name: dr, type: float, init: 1 }
+    - { name: rr, type: float, init: 0 }
+    - { name: f, type: float, init: 1 }
+  steps:
+    # The p-norm of the point.
+    - "rr = pow(pow(abs(z.x), p) + pow(abs(z.y), p) + pow(abs(z.z), p), 1.0 / p)"
+    # The factor the point is multiplied by.
+    - "f = (sigma + rr) / (sigma + 1.0)"
+    - "z = z * f"
+    - "dr = dr * max(abs(f), 0.000001)"
+
+view:
+  camera_distance: 4

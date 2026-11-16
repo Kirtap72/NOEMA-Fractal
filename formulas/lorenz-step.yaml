@@ -1,0 +1,61 @@
+# Lorenz step (transform). Format: see formulas/README.md
+format: 1
+id: lorenz-step
+name: "Lorenz step (transform)"
+catalog:
+  category: other
+  tags:
+  - attractor
+  - chaos
+description: >
+  Moves the point a short time step along the Lorenz system, the classic model
+  of chaos. One Euler step (the point moves a short time along the flow) per iteration, as
+  a smooth distortion of space. Space is scaled so that one unit is "Units per
+  unit" of the attractor's own coordinates. The derivative is multiplied by
+  1 + h times a bound on the stretching (the Frobenius norm of the Jacobian),
+  which keeps the distance of the next formula on the safe side.
+
+# NOTE: the AI assistant read Wikipedia (Lorenz system) on 2026-10-07: Edward Lorenz,
+# 1963, "Deterministic nonperiodic flow"; dx/dt = sigma (y - x), dy/dt = x (rho -
+# z) - y, dz/dt = x y - beta z, classic values sigma 10, rho 28, beta 8/3. Using one
+# Euler step as a building block, the scaling and the bound on the derivative are
+# the assistant's own.
+# A person must still check each name and link before this is set to
+# "verified" (and reviewed: true).
+credits:
+  - name: Edward Lorenz
+    role: "the Lorenz system (1963)"
+    status: unverified
+sources:
+  - url: https://en.wikipedia.org/wiki/Lorenz_system
+    status: unverified
+
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: >
+  Mathematical idea, not claimed as owned. Written fresh for this project from
+  the published description; no code from any program was read or copied.
+  The Euler step, the scaling and the bound on the derivative are the assistant's own. Source details are unverified (see credits).
+reviewed: false
+
+parameters:
+  - { name: sigma, label: Sigma, default: 10, min: 0, max: 30 }
+  - { name: rho, label: Rho, default: 28, min: 0, max: 60 }
+  - { name: beta, label: Beta, default: 2.666666666666667, min: 0, max: 10 }
+  - { name: h, label: Time step, default: 0.005, min: 0, max: 0.05 }
+  - { name: units, label: Units per unit, default: 10, min: 0.1, max: 50 }
+
+iteration:
+  iterations: 1
+  # This is a transform: it has no distance. It passes the point on to the next step.
+  carry: [z, dr]
+  variables:
+    - { name: z, type: vec3, init: pos }
+    - { name: dr, type: float, init: 1 }
+    - { name: u, type: vec3, init: "vec3(0.0, 0.0, 0.0)" }
+  steps:
+    - "u = z * units"
+    - "dr = dr * (1.0 + h * sqrt(2.0 * sigma * sigma + (rho - u.z) * (rho - u.z) + 1.0 + 2.0 * u.x * u.x + u.y * u.y + beta * beta))"
+    - "z = (u + h * vec3(sigma * (u.y - u.x), u.x * (rho - u.z) - u.y, u.x * u.y - beta * u.z)) / units"
+
+view:
+  camera_distance: 4

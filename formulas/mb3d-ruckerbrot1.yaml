@@ -1,0 +1,42 @@
+format: 3
+id: mb3d-ruckerbrot1
+name: RuckerBrot1
+catalog:
+  category: fractals
+  tags: [ Rucker, Mandelbrot, triplex ]
+description: >-
+  Modified version of Rudy Rucker's 3D Mandelbrot from 1991 in trigonometry-free form (as described
+  in the formula file), with multipliers for x, y, z and Cz. The slice at z=0 is the ordinary
+  Mandelbrot set of power 2.
+credits:
+  - { name: okänd, role: "Author not stated in the formula file", status: unverified }
+sources:
+  - {
+      reference: "Mandelbulb 3D 1.9.9 (sr37), M3Formulas, file RuckerBrot1.m3f: [OPTIONS] and the
+        description after [END]; the code block was never read.",
+      status: unverified
+    }
+  - { reference: NewFormulas/formula-05/BATCH-05.md, status: unverified }
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: The equations are the formula file's own description; implementation in
+  src/engine/formula/batch05Kernels.ts. No comparison with a running Mandelbulb 3D.
+reviewed: false
+provenance:
+  origin: mandelbulb3d
+  file: RuckerBrot1.m3f
+  credited_author: okänd
+  credited_authors: [ okänd ]
+  collection: M3Formulas
+  note: Independent reimplementation from the equations in the formula file's own description. The
+    [CODE] section was not read. Native image equivalence unverified.
+  verified_against_mb3d: false
+parameters:
+  - { name: x_mul, label: "X mul", default: 1, min: -100, max: 100 }
+  - { name: y_mul, label: "Y mul", default: 2, min: -100, max: 100 }
+  - { name: z_mul, label: "Z mul", default: -2, min: -100, max: 100 }
+  - { name: cz_mul, label: "Cz mul", default: -1, min: -100, max: 100 }
+  - { name: slice_w, label: "4D slice / extra w", default: 0, min: -4, max: 4 }
+  - { name: constant_w, label: "Julia constant w", default: 0, min: -4, max: 4 }
+  - { name: bailout_squared, label: "Escape limit (radius²)", default: 16, min: 1, max: 65536 }
+iteration: { kernel: mb3d-ruckerbrot1, iterations: 16 }
+view: { camera_distance: 5 }

@@ -1,0 +1,75 @@
+# Sierpinski pyramid. Format: see formulas/README.md
+format: 1
+id: sierpinski-pyramid
+name: "Sierpinski pyramid"
+catalog:
+  category: ifs
+description: >
+  Five copies of a square-based pyramid, each half the size, at the apex and
+  the four base corners, and the same again inside every copy. Its dimension
+  is log 5 / log 2, about 2.32. Each iteration finds the nearest corner and
+  stretches space by two away from it; the distance is then measured to one
+  pyramid and scaled back.
+
+# NOTE: the AI assistant read Paul Bourke's page Polyhedral fractals on 2026-10-07:
+# the square-based 3D Sierpinski gasket, dimension log 5 / log 2 (the page does not give the positions of the copies). The inverse of "copy scaled by 1/s towards the vertex v" is
+# z -> s * z - (s - 1) * v for the nearest vertex. The pyramid has its apex at (0, 1, 0) and its base corners at (+-1, -1, +-1); the five copies at half size towards these corners are the assistant's reading of the construction. The distance at the end is the
+# distance to the solid (largest of its face planes, a lower bound), divided by
+# the running derivative. The nearest-vertex rule and the distance are the
+# assistant's own derivation.
+# A person must still check each name and link before this is set to
+# "verified" (and reviewed: true).
+credits:
+  - name: Wacław Sierpiński
+    role: "the Sierpiński gasket (1915); the square-based 3D version follows the same idea"
+    status: unverified
+  - name: Paul Bourke
+    role: "description of the polyhedral fractals (1993)"
+    status: unverified
+sources:
+  - url: https://paulbourke.net/fractals/polyhedral/
+    status: unverified
+
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: >
+  Mathematical idea, not claimed as owned. Written fresh for this project from
+  the published description; no code from any program was read or copied.
+  The corner positions, the nearest-corner rule and the distance are derived by the assistant. Source details are unverified (see credits).
+reviewed: false
+
+iteration:
+  iterations: 8
+  carry: [z, dr]
+  variables:
+    - { name: z, type: vec3, init: pos }
+    - { name: dr, type: float, init: 1 }
+    - { name: v, type: vec3, init: "vec3(0.0, 1.0, 0.0)" }
+    - { name: w, type: vec3, init: "vec3(0.0, 0.0, 0.0)" }
+    - { name: best, type: float, init: 0 }
+    - { name: dk, type: float, init: 0 }
+  steps:
+    # The nearest of the five corners (smallest squared distance).
+    - "v = vec3(0.0, 1.0, 0.0)"
+    - "best = dot(z - v, z - v)"
+    - "w = vec3(1.0, -1.0, 1.0)"
+    - "dk = dot(z - w, z - w)"
+    - "v = select(v, w, dk < best)"
+    - "best = min(best, dk)"
+    - "w = vec3(-1.0, -1.0, 1.0)"
+    - "dk = dot(z - w, z - w)"
+    - "v = select(v, w, dk < best)"
+    - "best = min(best, dk)"
+    - "w = vec3(1.0, -1.0, -1.0)"
+    - "dk = dot(z - w, z - w)"
+    - "v = select(v, w, dk < best)"
+    - "best = min(best, dk)"
+    - "w = vec3(-1.0, -1.0, -1.0)"
+    - "dk = dot(z - w, z - w)"
+    - "v = select(v, w, dk < best)"
+    - "best = min(best, dk)"
+    - "z = 2.0 * z - v"
+    - "dr = dr * 2.0"
+  distance: "max(-z.y - 1.0, max(max(2.0 * z.x + z.y - 1.0, -2.0 * z.x + z.y - 1.0), max(2.0 * z.z + z.y - 1.0, -2.0 * z.z + z.y - 1.0)) / sqrt(5.0)) / dr"
+
+view:
+  camera_distance: 4.5

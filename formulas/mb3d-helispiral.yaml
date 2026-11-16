@@ -1,0 +1,47 @@
+format: 3
+id: mb3d-helispiral
+name: _helispiral
+catalog:
+  category: transforms
+  tags: [ transform, helix, spiral, twist ]
+description: >-
+  Rotates the reference axis, then the xy plane with an angle that depends on z (helix) and the
+  radius (spiral), and rotates back. Optionally z and the radius are taken from C instead. Bends
+  space into screws and spirals.
+credits:
+  - {
+      name: Luca GN,
+      role: "Formula author 2011 (according to the formula description)",
+      status: unverified
+    }
+sources:
+  - {
+      reference: "Mandelbulb 3D 1.9.9 (sr37), M3Formulas, file _helispiral.m3f: [OPTIONS] and the
+        description after [END]; the code block was never read.",
+      status: unverified
+    }
+  - { reference: NewFormulas/formula-05/BATCH-05.md, status: unverified }
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: The equations are the formula file's own description; implementation in
+  src/engine/formula/batch05Kernels.ts. No comparison with a running Mandelbulb 3D.
+reviewed: false
+provenance:
+  origin: mandelbulb3d
+  file: _helispiral.m3f
+  credited_author: Luca GN
+  credited_authors: [ Luca GN ]
+  collection: M3Formulas
+  note: Independent reimplementation from the equations in the formula file's own description. The
+    [CODE] section was not read. Native image equivalence unverified.
+  verified_against_mb3d: false
+parameters:
+  - { name: rotation_x, label: "Reference rotation X (degrees)", default: 0, min: -180, max: 180 }
+  - { name: rotation_y, label: "Reference rotation Y (degrees)", default: 0, min: -180, max: 180 }
+  - { name: rotation_z, label: "Reference rotation Z (degrees)", default: 0, min: -180, max: 180 }
+  - { name: helix, label: "Helix", default: 0.03, min: -100, max: 100 }
+  - { name: spiral, label: "Spiral", default: 0.03, min: -100, max: 100 }
+  - { name: rot_by_c_h, label: "Helix from Cz", default: 0, min: 0, max: 1 }
+  - { name: rot_by_c_s, label: "Spiral from |Cxy|", default: 0, min: 0, max: 1 }
+  - { name: fix_rot, label: "Fast rotation (degrees)", default: 0, min: -360, max: 360 }
+iteration: { kernel: mb3d-helispiral, iterations: 1 }
+view: { camera_distance: 5 }

@@ -1,0 +1,13 @@
+[
+  {
+    "id": "src-noema",
+    "title": "NOEMA Fractal source code",
+    "type": "software",
+    "url": "",
+    "retrieved": "2026-11-16",
+    "format": "TypeScript",
+    "terms": "Apache-2.0",
+    "redistribution": "yes",
+    "confidence": "high"
+  }
+]

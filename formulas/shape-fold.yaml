@@ -1,0 +1,66 @@
+# Shape fold (transform). Format: see formulas/README.md
+format: 1
+id: shape-fold
+name: Shape fold (transform)
+description: >
+  The ball fold of the Mandelbox, with the ball replaced by the unit ball of a
+  p-norm: p = 1 gives an octahedron, p = 2 the ordinary sphere, and large p
+  something close to a cube. Inside the inner size the point is scaled by a
+  constant; between the inner and the outer size it is inverted in the shape;
+  outside it is left alone. Used in place of the ball fold it gives new
+  Mandelbox variants (Gregg Helt, Bridges 2018). For p other than 2 the
+  inversion does not keep angles, so the derivative is approximate.
+
+# NOTE: the AI assistant read Gregg Helt's paper (Bridges 2018, PDF) on 2026-10-07. It
+# defines inversion in a centred star-shaped set S as P' = P * |OI|^2 / |OP|^2,
+# where I is where the ray from the centre through P meets the edge of S (after
+# Gdawiec 2014). For the p-norm ball of size R, |OI| = R * |P| / |P|_p, so
+# P' = P * (R / |P|_p)^2. The inner region scaled by a constant follows the
+# paper's alternative. Using the p-norm family is the assistant's choice.
+# A person must still check each name and link before this is set to
+# "verified" (and reviewed: true).
+credits:
+  - name: Krzysztof Gdawiec
+    role: "inversion in star-shaped sets (Fractals, 2014)"
+    status: unverified
+  - name: Gregg Helt
+    role: "shape inversion in the Mandelbox (Bridges 2017 and 2018)"
+    status: unverified
+  - name: Tom Lowe
+    role: "the ball fold of the Mandelbox (2010)"
+    status: unverified
+sources:
+  - url: https://archive.bridgesmathart.org/2018/bridges2018-547.pdf
+    status: unverified
+
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: >
+  Mathematical idea, not claimed as owned. Written fresh for this project from
+  the published definition; no code from any program was read or copied. The
+  p-norm family and the derivative are the assistant's own. Source details are
+  unverified (see credits).
+reviewed: false
+
+parameters:
+  - { name: p, label: Shape (1 octahedron, 2 sphere, 16 cube), default: 2, min: 1, max: 16 }
+  - { name: min_radius, label: Inner size, default: 0.5, min: 0.05, max: 1 }
+  - { name: fixed_radius, label: Outer size, default: 1, min: 0.2, max: 3 }
+
+iteration:
+  iterations: 1
+  # This is a transform: it has no distance. It passes the point on to the next step.
+  carry: [z, dr]
+  variables:
+    - { name: z, type: vec3, init: pos }
+    - { name: dr, type: float, init: 1 }
+    - { name: m, type: float, init: 1 }
+    - { name: k, type: float, init: 1 }
+  steps:
+    # The p-norm of the point: its size measured in the chosen shape.
+    - "m = max(pow(pow(abs(z.x), p) + pow(abs(z.y), p) + pow(abs(z.z), p), 1.0 / p), 0.000001)"
+    - "k = select(select(1.0, fixed_radius * fixed_radius / (m * m), m < fixed_radius), fixed_radius * fixed_radius / (min_radius * min_radius), m < min_radius)"
+    - "z = z * k"
+    - "dr = dr * k"
+
+view:
+  camera_distance: 4

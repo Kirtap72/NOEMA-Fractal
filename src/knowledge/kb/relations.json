@@ -1,0 +1,27 @@
+{
+  "formulaClasses": {
+    "counts": {
+      "steps": 77,
+      "numeric-main": 53,
+      "difs-main": 13,
+      "helper": 73,
+      "ifs-main": 6,
+      "analytic-main": 24,
+      "difs-transform": 5
+    },
+    "meaning": {
+      "analytic-main": "huvudformel med analytiskt avståndsmått",
+      "numeric-main": "huvudformel med numeriskt avståndsmått",
+      "difs-main": "dIFS-huvudformel (egen form, t.ex. roundedbox)",
+      "difs-transform": "dIFS-transform (flyttar/vrider rummet; behöver en dIFS-huvudformel efter sig)",
+      "ifs-main": "IFS-huvudformel",
+      "helper": "hjälpformel (vridning, reciprocal m.m.; behöver en huvudformel)",
+      "steps": "formel som körs som stegprogram (t.ex. mandelbulb); kan inte kedjas med kernel-formler"
+    },
+    "rule": "Kompatibilitet avgörs per formelpar av motorns egen kontroll: använd noema_check_chain. Huvudformler med olika avståndsmått blandas inte; steps- och kernel-formler blandas inte."
+  },
+  "corpusPairs": [],
+  "corpusBigramsTop": [],
+  "publicBigramsTop": [],
+  "observedEffects": []
+}

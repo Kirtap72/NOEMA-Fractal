@@ -1,0 +1,64 @@
+# Menger sponge as a distance function. Format: see formulas/README.md
+format: 1
+id: menger-sponge
+name: Menger sponge
+catalog:
+  category: ifs
+description: >
+  Start with a cube. At every level the cube is divided into 27 smaller
+  cubes and the cross-shaped part (the middle cube of each face and the
+  centre) is removed. Here it is built as a distance function: at each
+  iteration the space is repeated three times as dense, and a cross that is
+  one third as thick is removed from the shape built so far.
+
+# NOTE: the AI assistant read the two pages below on 2026-10-06 and wrote this
+# formula from the mathematics they describe (the construction of the sponge,
+# and the cross-removal distance function). Nothing was copied from program
+# code. A person must still open the sources and check each name and link
+# before this is set to "verified" (and reviewed: true).
+credits:
+  - name: Karl Menger
+    role: "introduced the Menger sponge in 1926"
+    status: unverified
+  - name: Inigo Quilez
+    role: "published the distance function that subtracts a cross at each scale, used here"
+    status: unverified
+sources:
+  - url: https://en.wikipedia.org/wiki/Menger_sponge
+    status: unverified
+  - url: https://iquilezles.org/articles/menger/
+    status: unverified
+
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: >
+  Mathematical idea, not claimed as owned. Written fresh for this project from
+  the public description of the construction and of the distance function; no
+  code from any program was read or copied. Source details are unverified (see
+  credits).
+reviewed: false
+
+iteration:
+  iterations: 4
+  # This shape is built level by level, not by escaping. Nothing needs to be passed
+  # on to a following step, and nothing is escape tested.
+  carry: []
+  variables:
+    # Distance to a box of half-size 1 (the starting cube).
+    - { name: d, type: float, init: "length(max(abs(pos) - vec3(1.0, 1.0, 1.0), vec3(0.0, 0.0, 0.0))) + min(max(abs(pos).x, max(abs(pos).y, abs(pos).z)) - 1.0, 0.0)" }
+    - { name: s, type: float, init: 1 }
+    - { name: a, type: vec3, init: "vec3(0.0, 0.0, 0.0)" }
+    - { name: r, type: vec3, init: "vec3(0.0, 0.0, 0.0)" }
+    - { name: c, type: float, init: 0 }
+  steps:
+    # Repeat the space s times as dense, centred in each cell (the remainder of p*s divided by 2, minus 1).
+    - "a = pos * s - 2.0 * floor(pos * s * 0.5) - 1.0"
+    - "s = s * 3.0"
+    # Distance to the cross in each cell, scaled back to the real size.
+    - "r = abs(1.0 - 3.0 * abs(a))"
+    - "c = (min(max(r.x, r.y), min(max(r.y, r.z), max(r.z, r.x))) - 1.0) / s"
+    # Remove the cross from the shape built so far.
+    - "d = max(d, c)"
+  distance: "d"
+
+view:
+  camera_distance: 4

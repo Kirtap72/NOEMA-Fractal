@@ -1,0 +1,41 @@
+format: 3
+id: mb3d-bt3-transform3
+name: _BT3_Transform3
+catalog:
+  category: transforms
+  tags: [ transform, hollowing, Benesi ]
+description: >-
+  Benesi's "hollowing" transform number 3 (Benesi fold 3): like Transform2 but with absolute values
+  instead of squaring. Used sparingly, for example the second to last round. Also imported as
+  _BenesiT3.
+credits:
+  - {
+      name: M. Benesi,
+      role: "Formula author (signed M Benesi in the formula description)",
+      status: unverified
+    }
+sources:
+  - {
+      reference: "Mandelbulb 3D 1.9.9 (sr37), M3Formulas, file _BT3_Transform3.m3f: [OPTIONS] and the
+        description after [END]; the code block and code listings was never read.",
+      status: unverified
+    }
+  - { reference: NewFormulas/formula-08/BATCH-08.md, status: unverified }
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: The equations are the formula file's own description; implementation in
+  src/engine/formula/batch08Kernels.ts. No comparison with a running Mandelbulb 3D.
+reviewed: false
+provenance:
+  origin: mandelbulb3d
+  file: _BT3_Transform3.m3f
+  credited_author: M. Benesi
+  credited_authors: [ M. Benesi ]
+  collection: M3Formulas
+  note: Independent reimplementation from the equations in the formula file's own description. The
+    [CODE] section was not read. Native image equivalence unverified.
+  verified_against_mb3d: false
+parameters:
+  - { name: scale, label: "Scale", default: 1.7, min: -100, max: 100 }
+  - { name: x_off, label: "x-offset", default: 1.7, min: -100, max: 100 }
+iteration: { kernel: mb3d-bt3-transform3, iterations: 1 }
+view: { camera_distance: 5 }

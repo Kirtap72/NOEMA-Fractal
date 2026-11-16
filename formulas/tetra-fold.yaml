@@ -1,0 +1,50 @@
+# Tetrahedral fold (transform). Format: see formulas/README.md
+format: 1
+id: tetra-fold
+name: Tetrahedral fold (transform)
+description: >
+  Mirrors the point in the three planes x + y = 0, x + z = 0 and y + z = 0, each only when the point
+  is on the negative side. These are mirror planes of a regular tetrahedron with corners (1,1,1),
+  (-1,-1,1), (-1,1,-1) and (1,-1,-1). Together with "Scale and offset" (scale 2, centre 1,1,1) it
+  builds the Sierpinski tetrahedron, and with other steps many related shapes. Mirroring keeps
+  distances, so the derivative is unchanged.
+
+# NOTE: the AI assistant wrote this step from the definition of a reflection in a
+# plane (Wikipedia: Reflection) and the symmetry planes of the regular
+# tetrahedron (Wikipedia: Tetrahedral symmetry). The choice of the three planes
+# and their order is the assistant's own. One pass only: with scaling in
+# between, the iteration does the rest.
+# A person must still check each name and link before this is set to
+# "verified" (and reviewed: true).
+credits:
+  - name: General mathematics (textbook)
+    role: "standard definitions found in any textbook; no single person is credited (the project owner
+      agreed that general mathematics is credited this way)"
+    status: unverified
+sources:
+  - url: https://en.wikipedia.org/wiki/Tetrahedral_symmetry
+    status: unverified
+  - url: https://en.wikipedia.org/wiki/Reflection_(mathematics)
+    status: unverified
+
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: >
+  General mathematics: standard definitions, not claimed as owned. Written fresh for this project;
+  no code from any program was read or copied. Source details are unverified (see credits).
+reviewed: false
+
+iteration:
+  iterations: 1
+  # This is a transform: it has no distance. It passes the point on to the next step.
+  carry: [ z, dr ]
+  variables:
+    - { name: z, type: vec3, init: pos }
+    - { name: dr, type: float, init: 1 }
+  steps:
+    # Mirror in x + y = 0: (x, y) becomes (-y, -x).
+    - "z = select(z, vec3(-z.y, -z.x, z.z), z.x + z.y < 0.0)"
+    - "z = select(z, vec3(-z.z, z.y, -z.x), z.x + z.z < 0.0)"
+    - "z = select(z, vec3(z.x, -z.z, -z.y), z.y + z.z < 0.0)"
+
+view:
+  camera_distance: 4

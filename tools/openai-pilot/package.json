@@ -1,0 +1,12 @@
+{
+  "name": "noema-openai-pilot",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "MCP-01A: a minimal OpenAI Agents SDK client that drives NOEMA through the existing local MCP shim. Isolated from the app; exact pins.",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@openai/agents": "0.21.0",
+    "zod": "4.6.7"
+  }
+}

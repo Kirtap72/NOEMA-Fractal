@@ -1,0 +1,41 @@
+format: 3
+id: mb3d-benesi3pow2
+name: Benesi3Pow2
+catalog:
+  category: fractals
+  tags: [ Benesi, triplex, power 2 ]
+description: >-
+  Benesi's 3D squaring: r = y²+z²; x′ = x²−r+Cx (or −x²+r+Cx when Cx ≥ 0 and x ≥ √r); k = −2·|x|/√r;
+  y′ = k(y²−z²)+Cy, z′ = 2k·y·z+Cz.
+credits:
+  - {
+      name: M. Benesi,
+      role: "Formula author (signed M Benesi in the formula description)",
+      status: unverified
+    }
+sources:
+  - {
+      reference: "Mandelbulb 3D 1.9.9 (sr37), M3Formulas, file Benesi3Pow2.m3f: [OPTIONS] and the
+        description after [END]; the code block and code listings was never read.",
+      status: unverified
+    }
+  - { reference: NewFormulas/formula-08/BATCH-08.md, status: unverified }
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: The equations are the formula file's own description; implementation in
+  src/engine/formula/batch08Kernels.ts. No comparison with a running Mandelbulb 3D.
+reviewed: false
+provenance:
+  origin: mandelbulb3d
+  file: Benesi3Pow2.m3f
+  credited_author: M. Benesi
+  credited_authors: [ M. Benesi ]
+  collection: M3Formulas
+  note: Independent reimplementation from the equations in the formula file's own description. The
+    [CODE] section was not read. Native image equivalence unverified.
+  verified_against_mb3d: false
+parameters:
+  - { name: slice_w, label: "4D slice / extra w", default: 0, min: -4, max: 4 }
+  - { name: constant_w, label: "Julia constant w", default: 0, min: -4, max: 4 }
+  - { name: bailout_squared, label: "Escape limit (radius²)", default: 16, min: 1, max: 65536 }
+iteration: { kernel: mb3d-benesi3pow2, iterations: 16 }
+view: { camera_distance: 5 }

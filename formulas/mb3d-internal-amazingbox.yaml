@@ -1,0 +1,59 @@
+format: 3
+id: mb3d-internal-amazingbox
+name: Amazing Box (MB3D internal)
+description: Exact built-in ID 4, axis folds with C and signed analytic w. Distinct from _AmazingBox.
+credits:
+  - name: TGlad
+    role: Amazing Box / Mandbox inventor, credited by MB3D
+    status: unverified
+  - name: okänd
+    role: MB3D host implementation author not established
+    status: unverified
+sources:
+  - reference: NewFormulas/preset-compatibility/InternalAmazingBox.md
+    status: unverified
+added_by: Codex
+math_status: Independent implementation from authorised normalised mathematical material; the
+  licence of the project.
+reviewed: false
+provenance:
+  origin: mandelbulb3d
+  file: formulas.pas
+  internal_id: 4
+  credited_author: okänd
+  collection: M3Formulas
+  note: Independent reimplementation of the mathematical formula. Explicitly authorized mathematical
+    recovery on 2026-10-10. Built-in ID 4 source behavior reviewed, not copied. TGlad credited as
+    inventor. No visual equivalence claim.
+  verified_against_mb3d: false
+parameters:
+  - name: scale
+    label: Scale
+    default: 2
+    min: -8
+    max: 8
+  - name: min_r
+    label: Min R
+    default: 0.5
+    min: -8
+    max: 8
+  - name: fold
+    label: Fold
+    default: 1
+    min: -8
+    max: 8
+  - name: constant_w
+    label: Julia constant w
+    default: 0
+    min: -4
+    max: 4
+  - name: bailout_squared
+    label: Escape limit (radius²)
+    default: 1024
+    min: 1
+    max: 65536
+iteration:
+  kernel: mb3d-internal-amazingbox
+  iterations: 16
+view:
+  camera_distance: 5

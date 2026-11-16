@@ -1,0 +1,20 @@
+/* Step explorer (ARTIST-WORKFLOW 04) */
+.step-effect { margin: 8px 0; padding: 8px; border: 1px solid var(--accent, #e0b84a); border-radius: 6px; background: var(--surface, #1a212d); color: var(--text, #e9ecf1); font-size: 12px; }
+.step-effect h4 { margin: 0 0 6px; font-size: 13px; }
+.step-effect-choices { display: flex; flex-wrap: wrap; gap: 4px; }
+.step-effect-choices button { font-size: 12px; padding: 3px 8px; }
+.step-effect-choices button[aria-pressed=true] { background: color-mix(in srgb, var(--accent, #9bd0ff) 28%, var(--surface, #1a212d)); border-color: var(--accent, #9bd0ff); }
+.step-effect-unavailable { opacity: 0.55; cursor: not-allowed; }
+.step-effect-pictures { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin: 6px 0; }
+.step-effect-pictures figure { margin: 0; }
+.step-effect-pictures img { display: block; width: 100%; height: auto; border-radius: 4px; background: var(--field, #101722); min-height: 40px; }
+.step-effect-pictures figcaption { text-align: center; color: var(--muted, #b7c7da); font-size: 11px; }
+.step-effect p { margin: 6px 0; line-height: 1.4; }
+.step-effect-buttons { display: flex; flex-wrap: wrap; gap: 4px; margin: 4px 0; }
+.step-effect-buttons button { font-size: 12px; padding: 3px 8px; }
+.step-effect-buttons button[aria-pressed=true] { background: color-mix(in srgb, var(--accent, #9bd0ff) 28%, var(--surface, #1a212d)); border-color: var(--accent, #9bd0ff); }
+.step-actions .step-effect-open { font-size: 11px; padding: 2px 6px; }
+/* the panel is brought into view with a short highlight so it is never missed (STEP-EFFECT-FIX-10) */
+.step-effect-flash { animation: step-effect-flash 1.2s ease-out 1; }
+@keyframes step-effect-flash { 0% { box-shadow: 0 0 0 3px #ffd25e; } 100% { box-shadow: 0 0 0 0 transparent; } }
+@media (prefers-reduced-motion: reduce) { .step-effect-flash { animation: none; outline: 2px solid #ffd25e; } }

@@ -1,0 +1,11 @@
+format: 1
+id: aurora
+name: Aurora
+author: "Fraktalmotorn project (original colours, written for this project)"
+description: Dark green sky colours fading into violet and pink.
+stops:
+  - { position: 0.0, color: "#03130f" }
+  - { position: 0.3, color: "#0e7a4f" }
+  - { position: 0.55, color: "#4de3b0" }
+  - { position: 0.8, color: "#7b4de3" }
+  - { position: 1.0, color: "#ff9bd6" }

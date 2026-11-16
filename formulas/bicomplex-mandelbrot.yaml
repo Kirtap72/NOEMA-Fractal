@@ -1,0 +1,67 @@
+# Bicomplex Mandelbrot set, a 3D slice of the 4D shape. Format: see formulas/README.md
+format: 1
+id: bicomplex-mandelbrot
+name: Bicomplex Mandelbrot (3D slice)
+description: >
+  The Mandelbrot iteration t -> t squared + c with bicomplex numbers. A
+  bicomplex number is t = a + b i + c j + d k, where i squared is -1, j squared
+  is +1, and i j = j i = k (so k squared is -1). Unlike quaternions the order
+  of multiplication does not matter. A point in space is c = (x, y, z, w) with
+  w held fixed (the slice), and the iteration starts at t = c. The set is
+  four-dimensional; this draws the part at the chosen w. The distance is an
+  approximation.
+
+# NOTE: the AI assistant read the page below on 2026-10-06 and wrote this
+# formula from the rules it gives (i squared = -1, j squared = +1, ij = ji = k).
+# The square in components was worked out by the assistant from those rules:
+# (a + bi + cj + dk)^2 = (a^2 - b^2 + c^2 - d^2) + (2ab + 2cd) i
+# + (2ac - 2bd) j + (2ad + 2bc) k. The Mandelbrot set for bicomplex numbers is
+# credited from search results (the paper was not opened). The escape radius
+# and the distance estimate are the assistant's own choices and are
+# approximate: the Euclidean length is not exactly multiplicative for bicomplex
+# numbers, so the distance is not a true bound. A person must still open the
+# sources and check each name and link before this is set to "verified" (and
+# reviewed: true).
+credits:
+  - name: Corrado Segre
+    role: "introduced bicomplex numbers in 1892"
+    status: unverified
+  - name: Dominic Rochon
+    role: "2000: Mandelbrot set for bicomplex numbers (found through a search result; the paper itself was not opened)"
+    status: unverified
+sources:
+  - url: https://en.wikipedia.org/wiki/Bicomplex_number
+    status: unverified
+  - reference: "Dominic Rochon, A generalized Mandelbrot set for bicomplex numbers, Fractals 8(4), 2000, pp. 355-368 (reference seen in search results, not opened)"
+    status: unverified
+
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: >
+  Mathematical idea, not claimed as owned. Written fresh for this project from
+  the public rules of bicomplex numbers; no code from any program was read or
+  copied. The component formula for the square, the escape radius and the
+  distance estimate are the assistant's own. Source details are unverified
+  (see credits).
+reviewed: false
+
+parameters:
+  - { name: w, label: Slice w, default: 0, min: -1.5, max: 1.5 }
+
+iteration:
+  iterations: 12
+  # Passed on to the next step when formulas are chained.
+  carry: [t, dr]
+  variables:
+    - { name: t, type: vec4, init: "vec4(pos.x, pos.y, pos.z, w)" }
+    - { name: dr, type: float, init: 1 }
+    - { name: r, type: float, init: 0 }
+  steps:
+    - "r = length(t)"
+    - break_if: "r > 4.0"
+    - "dr = 2.0 * r * dr + 1.0"
+    # (a, b, c, d) squared with i*i = -1, j*j = +1, i*j = k, k*k = -1, then add c.
+    - "t = vec4(t.x * t.x - t.y * t.y + t.z * t.z - t.w * t.w, 2.0 * t.x * t.y + 2.0 * t.z * t.w, 2.0 * t.x * t.z - 2.0 * t.y * t.w, 2.0 * t.x * t.w + 2.0 * t.y * t.z) + vec4(pos.x, pos.y, pos.z, w)"
+  distance: "0.5 * log(r) * r / dr"
+
+view:
+  camera_distance: 3.5

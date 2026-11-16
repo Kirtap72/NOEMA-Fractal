@@ -1,0 +1,10 @@
+format: 1
+id: dunes
+name: Desert
+author: "Fraktalmotorn project (original colours, written for this project)"
+description: Warm sand and rust tones.
+stops:
+  - { position: 0.0, color: "#2b1d14" }
+  - { position: 0.4, color: "#8a5a2f" }
+  - { position: 0.75, color: "#d9a066" }
+  - { position: 1.0, color: "#f4e2b8" }

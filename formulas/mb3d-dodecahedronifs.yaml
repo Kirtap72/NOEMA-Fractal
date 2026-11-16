@@ -1,0 +1,97 @@
+format: 3
+id: mb3d-dodecahedronifs
+name: DodecahedronIFS
+catalog:
+  category: ifs
+  tags:
+    - IFS
+    - polyhedral
+description: gyllene polyhedral-IFS; eget preset
+credits:
+  - name: blob
+    role: Fast implementation - Hack by blob.
+    status: unverified
+sources:
+  - reference: NewFormulas/essentials-40/17-DodecahedronIFS.md
+    status: unverified
+added_by: Codex
+math_status: Independent implementation from authorised normalised mathematical material; the
+  licence of the project.
+reviewed: false
+provenance:
+  origin: mandelbulb3d
+  file: DodecahedronIFS.m3f
+  credited_author: blob
+  credited_authors:
+    - blob
+  collection: M3Formulas
+  note: Independent reimplementation from the authorized normalized Essentials specifications. The
+    [CODE] section was not read, copied or translated. Mathematical validation is separate from MB3D
+    image verification.
+  verified_against_mb3d: false
+parameters:
+  - name: scale
+    label: Scale
+    default: 2.63
+    min: -8
+    max: 8
+  - name: cscale_x
+    label: CScale X
+    default: 0.809016994374947
+    min: -8
+    max: 8
+  - name: cscale_y
+    label: CScale Y
+    default: 0
+    min: -8
+    max: 8
+  - name: cscale_z
+    label: CScale Z
+    default: 0.309016994374947
+    min: -8
+    max: 8
+  - name: rotation1_x
+    label: Rotation1 X (degrees)
+    default: 0
+    min: -180
+    max: 180
+  - name: rotation1_y
+    label: Rotation1 Y (degrees)
+    default: 0
+    min: -180
+    max: 180
+  - name: rotation1_z
+    label: Rotation1 Z (degrees)
+    default: 0
+    min: -180
+    max: 180
+  - name: rotation2_x
+    label: Rotation2 X (degrees)
+    default: 0
+    min: -180
+    max: 180
+  - name: rotation2_y
+    label: Rotation2 Y (degrees)
+    default: 0
+    min: -180
+    max: 180
+  - name: rotation2_z
+    label: Rotation2 Z (degrees)
+    default: 0
+    min: -180
+    max: 180
+  - name: constant_w
+    label: Julia constant w
+    default: 0
+    min: -4
+    max: 4
+  - name: bailout_squared
+    label: Escape limit (radius²)
+    default: 1024
+    min: 1
+    max: 65536
+iteration:
+  kernel: mb3d-dodecahedronifs
+  iterations: 16
+view:
+  camera_distance: 5

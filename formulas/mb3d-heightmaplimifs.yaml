@@ -1,0 +1,62 @@
+{
+  "format": 3,
+  "id": "mb3d-heightmaplimifs",
+  "name": "HeightMapLimIFS",
+  "description": "Independently recovered MB3D formula; see the separate normalised specification.",
+  "credits": [ { "name": "okänd", "role": "Author of the distributed variant", "status": "unverified" } ],
+  "sources": [ { "reference": "NewFormulas/preset-compatibility/HeightMapLimIFS.md", "status": "unverified" } ],
+  "added_by": "Codex",
+  "math_status": "Recovered equations validated against a typed reference, no native picture certification.",
+  "reviewed": false,
+  "provenance":
+    {
+      "origin": "mandelbulb3d",
+      "file": "HeightMapLimIFS.m3f",
+      "credited_author": "okänd",
+      "credited_authors": [ "okänd" ],
+      "collection": "M3Formulas",
+      "note": "Independent reimplementation of the mathematical formula from recovered equations.
+        Explicitly authorized mathematical recovery; no native executable code distributed.",
+      "verified_against_mb3d": false
+    },
+  "parameters":
+    [
+      { "name": "map_nr", "label": "Map nr", "default": 10, "min": 1, "max": 16777216 },
+      { "name": "x_size", "label": "X size", "default": 0.5, "min": -10000, "max": 10000 },
+      { "name": "y_size", "label": "Y size", "default": 0.5, "min": -10000, "max": 10000 },
+      { "name": "thickness", "label": "Thickness", "default": -0.5, "min": -10000, "max": 10000 },
+      { "name": "x_scale", "label": "X scale", "default": 1, "min": -10000, "max": 10000 },
+      { "name": "y_scale", "label": "Y scale", "default": 1, "min": -10000, "max": 10000 },
+      { "name": "h_scale", "label": "H scale", "default": -0.1, "min": -10000, "max": 10000 },
+      { "name": "rotation_x", "label": "Rotation X", "default": 0, "min": -10000, "max": 10000 },
+      { "name": "rotation_y", "label": "Rotation Y", "default": 0, "min": -10000, "max": 10000 },
+      { "name": "rotation_z", "label": "Rotation Z", "default": 0, "min": -10000, "max": 10000 },
+      { "name": "map_channel_0_2", "label": "Map channel (0..2)", "default": 0, "min": 0, "max": 2 },
+      {
+          "name": "otrap_channel_0_2",
+          "label": "OTrap channel (0..2)",
+          "default": 1,
+          "min": 0,
+          "max": 2
+        },
+      { "name": "otrap_offset", "label": "OTrap offset", "default": 0, "min": -10000, "max": 10000 },
+      {
+          "name": "otrap_multiplier",
+          "label": "OTrap multiplier",
+          "default": 1,
+          "min": -10000,
+          "max": 10000
+        },
+      { "name": "inside_render", "label": "inside_render", "default": 0, "min": 0, "max": 1 },
+      { "name": "de_stop", "label": "de_stop", "default": 0, "min": -10000, "max": 10000 },
+      {
+          "name": "source_variant",
+          "label": "Original version: 0 = collected, 1 = newHeightmaps (centred UV)",
+          "default": 1,
+          "min": 0,
+          "max": 1
+        }
+    ],
+  "iteration": { "kernel": "mb3d-heightmaplimifs", "iterations": 12 },
+  "view": { "camera_distance": 5 }
+}

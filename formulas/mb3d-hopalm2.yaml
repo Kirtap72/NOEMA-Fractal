@@ -1,0 +1,56 @@
+# _hopalm2 (transform). Format: see formulas/README.md
+# An independent reimplementation of the mathematics of a Mandelbulb 3D formula (CLAUDE.md section 10): written from the author's own description
+# in the formula file (the text after [END]) and the [OPTIONS] list only; the compiled code section was not used.
+format: 2
+id: mb3d-hopalm2
+name: "_hopalm2: transform"
+description: >
+  Modified Hopalong system in 3D, smooth version: t = b x - c z + d; x' = y - atan(t); y' = (a - x) Strength; z' = z + (a y - b x) e. The options Alpha..Epsilon are the description's a..e in order.
+credits:
+  - name: Luca GN
+    role: "Formula by Luca GN 2011 (as stated in the formula description)"
+    status: unverified
+sources:
+  - reference: "Mandelbulb 3D 1.9.9 (sr37), collection M3Formulas, file _hopalm2.m3f: the [OPTIONS] list and the description after [END]; the compiled code section was not read."
+    status: unverified
+  - reference: NewFormulas/coverage-04/BATCH-02.md
+    status: unverified
+
+provenance:
+  origin: mandelbulb3d
+  file: _hopalm2.m3f
+  credited_author: Luca GN
+  collection: M3Formulas
+  note: >
+    An independent reimplementation of the mathematical formula from the equations written in the formula file's own description. The [CODE]
+    section was not read, copied or translated. No comparison with a running Mandelbulb 3D has been made.
+  verified_against_mb3d: false
+
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: >
+  Equations taken from the formula file's own description; reimplemented independently, not claimed as owned. No code from any program was
+  read or copied. No native MB3D comparison has been made. Source details are unverified (see credits).
+reviewed: false
+
+parameters:
+  - { name: strength, label: "Strength", default: 1.0, min: -1000, max: 1000 }
+  - { name: alpha, label: "Alpha", default: -0.4, min: -1000, max: 1000 }
+  - { name: beta, label: "Beta", default: 1.0, min: -1000, max: 1000 }
+  - { name: gamma, label: "Gamma", default: 0.1, min: -1000, max: 1000 }
+  - { name: delta, label: "Delta", default: 0.1, min: -1000, max: 1000 }
+  - { name: epsilon, label: "Epsilon", default: 0.2, min: -1000, max: 1000 }
+
+iteration:
+  iterations: 1
+  # A transform: it has no distance. It passes the point on. dr is not written (DEoption -1: the analytic derivative is left alone).
+  carry: [z, dr]
+  variables:
+    - { name: z, type: vec3, init: pos }
+    - { name: dr, type: float, init: 1 }
+    - { name: t, type: float, init: 0 }
+  steps:
+    - "t = beta * z.x - gamma * z.z + delta"
+    - "z = vec3(z.y - atan(t), (alpha - z.x) * strength, z.z + (alpha * z.y - beta * z.x) * epsilon)"
+
+view:
+  camera_distance: 4

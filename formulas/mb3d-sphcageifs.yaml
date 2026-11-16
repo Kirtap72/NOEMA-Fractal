@@ -1,0 +1,44 @@
+{
+  "format": 3,
+  "id": "mb3d-sphcageifs",
+  "name": "SphCageIFS",
+  "description": "Independent recovered MB3D mathematics.",
+  "credits": [ { "name": "Luca GN", "role": "Author of the distributed variant", "status": "unverified" } ],
+  "sources": [ { "reference": "NewFormulas/preset-compatibility/SphCageIFS.md", "status": "unverified" } ],
+  "added_by": "Codex",
+  "math_status": "Typed numeric reference verified; native picture similarity unverified.",
+  "reviewed": false,
+  "provenance":
+    {
+      "origin": "mandelbulb3d",
+      "file": "SphCageIFS.m3f",
+      "credited_author": "Luca GN",
+      "credited_authors": [ "Luca GN" ],
+      "collection": "M3Formulas",
+      "note": "Independent reimplementation of the mathematical formula. Explicitly authorized
+        mathematical recovery; original executable code is not distributed.",
+      "verified_against_mb3d": false
+    },
+  "parameters":
+    [
+      { "name": "sph_radius", "label": "SphRadius", "default": 0.5, "min": -10000, "max": 10000 },
+      { "name": "scale", "label": "Scale", "default": 1, "min": 1e-6, "max": 10000 },
+      { "name": "z_add", "label": "Z add", "default": 0, "min": -10000, "max": 10000 },
+      { "name": "y_add", "label": "Y add", "default": 0, "min": -10000, "max": 10000 },
+      { "name": "x_add", "label": "X add", "default": 0, "min": -10000, "max": 10000 },
+      { "name": "cage_radius", "label": "CageRadius", "default": 0.01, "min": -10000, "max": 10000 },
+      {
+          "name": "apply_scale_add",
+          "label": "Apply scale+add",
+          "default": 1,
+          "min": -10000,
+          "max": 10000
+        },
+      { "name": "parals", "label": "Parals (2 to 1000)", "default": 8, "min": -10000, "max": 10000 },
+      { "name": "merids", "label": "Merids", "default": 20, "min": 1, "max": 1000 },
+      { "name": "inside_render", "label": "inside_render", "default": 0, "min": 0, "max": 1 },
+      { "name": "de_stop", "label": "de_stop", "default": 0, "min": -10000, "max": 10000 }
+    ],
+  "iteration": { "kernel": "mb3d-sphcageifs", "iterations": 12 },
+  "view": { "camera_distance": 5 }
+}

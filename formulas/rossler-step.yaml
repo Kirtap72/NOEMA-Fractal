@@ -1,0 +1,60 @@
+# Rössler step (transform). Format: see formulas/README.md
+format: 1
+id: rossler-step
+name: "Rössler step (transform)"
+catalog:
+  category: other
+  tags:
+  - attractor
+  - chaos
+description: >
+  Moves the point a short time step along the Rössler system. One Euler step (the point moves a short time along the flow) per iteration, as
+  a smooth distortion of space. Space is scaled so that one unit is "Units per
+  unit" of the attractor's own coordinates. The derivative is multiplied by
+  1 + h times a bound on the stretching (the Frobenius norm of the Jacobian),
+  which keeps the distance of the next formula on the safe side.
+
+# NOTE: the AI assistant read Wikipedia (Rössler attractor) on 2026-10-07: Otto Rössler,
+# 1976, "An Equation for Continuous Chaos"; dx/dt = -y - z, dy/dt = x + a y, dz/dt =
+# b + z (x - c), original values a 0.2, b 0.2, c 5.7. Using one Euler step as a
+# building block, the scaling and the bound on the derivative are the assistant's
+# own.
+# A person must still check each name and link before this is set to
+# "verified" (and reviewed: true).
+credits:
+  - name: Otto Rössler
+    role: "the Rössler system (1976)"
+    status: unverified
+sources:
+  - url: https://en.wikipedia.org/wiki/R%C3%B6ssler_attractor
+    status: unverified
+
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: >
+  Mathematical idea, not claimed as owned. Written fresh for this project from
+  the published description; no code from any program was read or copied.
+  The Euler step, the scaling and the bound on the derivative are the assistant's own. Source details are unverified (see credits).
+reviewed: false
+
+parameters:
+  - { name: a, label: a, default: 0.2, min: -1, max: 1 }
+  - { name: b, label: b, default: 0.2, min: -1, max: 2 }
+  - { name: c, label: c, default: 5.7, min: 0, max: 20 }
+  - { name: h, label: Time step, default: 0.02, min: 0, max: 0.2 }
+  - { name: units, label: Units per unit, default: 5, min: 0.1, max: 50 }
+
+iteration:
+  iterations: 1
+  # This is a transform: it has no distance. It passes the point on to the next step.
+  carry: [z, dr]
+  variables:
+    - { name: z, type: vec3, init: pos }
+    - { name: dr, type: float, init: 1 }
+    - { name: u, type: vec3, init: "vec3(0.0, 0.0, 0.0)" }
+  steps:
+    - "u = z * units"
+    - "dr = dr * (1.0 + h * sqrt(3.0 + a * a + u.z * u.z + (u.x - c) * (u.x - c)))"
+    - "z = (u + h * vec3(-u.y - u.z, u.x + a * u.y, b + u.z * (u.x - c))) / units"
+
+view:
+  camera_distance: 4

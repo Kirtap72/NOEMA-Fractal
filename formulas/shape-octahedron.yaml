@@ -1,0 +1,49 @@
+# Form: octahedron. Format: see formulas/README.md
+format: 1
+id: shape-octahedron
+name: "Form: octahedron"
+catalog:
+  category: difs
+  tags:
+    - shape
+    - SDF
+description: >
+  A regular octahedron (|x| + |y| + |z| = size) as the end of a chain. The distance used is the
+  distance to the nearest face plane, which is never more than the true distance, so it is safe.
+
+# NOTE: the octahedron is the set |x| + |y| + |z| <= s (textbook); (|x| + |y| + |z| -
+# s) / sqrt(3) is the distance to the nearest face plane, a lower bound for the
+# distance to the solid.
+# A person must still check each name and link before this is set to
+# "verified" (and reviewed: true).
+credits:
+  - name: General mathematics (textbook)
+    role: "standard definitions found in any textbook; no single person is credited (the project owner
+      agreed that general mathematics is credited this way)"
+    status: unverified
+sources:
+  - url: https://en.wikipedia.org/wiki/Octahedron
+    status: unverified
+
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: >
+  General mathematics: standard definitions, not claimed as owned. Written fresh for this project;
+  no code from any program was read or copied. Source details are unverified (see credits).
+reviewed: false
+
+parameters:
+  - { name: size, label: Size, default: 1, min: 0.05, max: 3 }
+
+iteration:
+  iterations: 1
+  # A shape: it does not move the point, it measures the distance to the shape at the end of a chain.
+  carry: [ z, dr ]
+  variables:
+    - { name: z, type: vec3, init: pos }
+    - { name: dr, type: float, init: 1 }
+  steps:
+    - "dr = dr"
+  distance: "(abs(z.x) + abs(z.y) + abs(z.z) - size) / sqrt(3.0) / abs(dr)"
+
+view:
+  camera_distance: 4

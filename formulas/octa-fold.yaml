@@ -1,0 +1,45 @@
+# Octahedral fold (transform). Format: see formulas/README.md
+format: 1
+id: octa-fold
+name: Octahedral fold (transform)
+description: >
+  Folds space into one of the 48 equal parts of a cube (or octahedron): first the absolute value of
+  each coordinate, then mirrors in the planes x = y, x = z and y = z so that x >= y >= z >= 0. Any
+  shape drawn after this step gets the full symmetry of a cube. Distances are kept.
+
+# NOTE: the AI assistant wrote this step from the symmetry group of the cube and
+# octahedron (Wikipedia: Octahedral symmetry): absolute values and sorting the
+# coordinates are reflections in its mirror planes.
+# A person must still check each name and link before this is set to
+# "verified" (and reviewed: true).
+credits:
+  - name: General mathematics (textbook)
+    role: "standard definitions found in any textbook; no single person is credited (the project owner
+      agreed that general mathematics is credited this way)"
+    status: unverified
+sources:
+  - url: https://en.wikipedia.org/wiki/Octahedral_symmetry
+    status: unverified
+
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: >
+  General mathematics: standard definitions, not claimed as owned. Written fresh for this project;
+  no code from any program was read or copied. Source details are unverified (see credits).
+reviewed: false
+
+iteration:
+  iterations: 1
+  # This is a transform: it has no distance. It passes the point on to the next step.
+  carry: [ z, dr ]
+  variables:
+    - { name: z, type: vec3, init: pos }
+    - { name: dr, type: float, init: 1 }
+  steps:
+    - "z = abs(z)"
+    # Sort the coordinates, largest first: mirrors in x = y, x = z and y = z.
+    - "z = select(z, z.yxz, z.x < z.y)"
+    - "z = select(z, z.zyx, z.x < z.z)"
+    - "z = select(z, z.xzy, z.y < z.z)"
+
+view:
+  camera_distance: 4

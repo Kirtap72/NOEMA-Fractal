@@ -1,0 +1,26 @@
+.pbr-textures{margin:10px 0}.pbr-textures[open]{padding:8px;background:#19222b;border:1px solid #435365}.pbr-map{border:1px solid #435365;margin:8px 0;padding:8px;min-width:0}.pbr-map img{vertical-align:middle;object-fit:contain;margin-right:8px}.pbr-map span{overflow-wrap:anywhere;font-size:12px}.pbr-map select{max-width:230px}.pbr-map input[type=number]{width:85px}.pbr-import-dialog,.material-library{background:#192735;color:#e7eff7;border:1px solid #64809a;border-radius:8px;width:min(900px,90vw);max-height:85vh;overflow:auto;padding:22px}.pbr-import-dialog::backdrop,.material-library::backdrop{background:#0009}.pbr-import-dialog select{max-width:65%;min-width:180px}.material-library-actions{display:flex;gap:8px;flex-wrap:wrap}.material-library-actions input[type=text]{width:240px}.material-preset-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px;margin:16px 0}.material-preset-card{padding:18px;text-align:left;background:#293f52;color:#fff;border:1px solid #607589}.material-preset-detail{border-top:1px solid #607589;padding-top:16px}.material-preset-detail button{margin:4px}.material-library output,.pbr-textures output{display:block;white-space:pre-wrap;margin:8px 0}
+
+/* ARTIST-LOOKS-01: search, swatches and a docked, non-modal library so the viewport stays visible during a trial. */
+.material-library.docked{position:fixed;inset:auto 12px 12px auto;margin:0;width:min(460px,94vw);max-height:64vh;padding:14px;z-index:30}
+.material-library.docked .material-preset-list{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));max-height:26vh;overflow:auto;margin:8px 0}
+.material-finder{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:8px 0}
+.material-finder input[type=search]{flex:1 1 180px;min-width:140px}
+.material-count{font-size:12px;opacity:.8}
+.material-trial{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:6px 0;min-height:28px}
+.material-trial[hidden]{display:none}
+.material-trial-banner{flex:1 1 200px;font-size:13px}
+.material-tile{display:flex;flex-direction:column;gap:2px}
+.material-tile .material-preset-card{display:flex;align-items:center;gap:10px;padding:8px}
+.material-swatch{flex:0 0 28px;height:28px;border-radius:50%;border:1px solid #607589;display:inline-block}
+.material-tile-info{opacity:.75;font-size:11px;line-height:1.3;min-height:1.3em}
+.material-facts{margin:6px 0;padding-left:18px;font-size:12px}
+.material-swatch-note{display:block;opacity:.7;margin:4px 0}
+.look-list{margin:8px 0}
+.look-tile{display:flex;flex-direction:column;gap:2px;margin:4px 0}
+.look-card{display:flex;align-items:center;gap:10px;padding:8px;text-align:left;background:#293f52;color:#fff;border:1px solid #607589}
+
+/* ARTIST-UX-02 phase B: shared texture size at the top of the PBR set. */
+.pbr-size { display: flex; flex-direction: column; gap: 3px; padding: 4px 0 6px; border-bottom: 1px solid #3b4651; margin-bottom: 4px; }
+.pbr-size-row { display: grid; grid-template-columns: minmax(0, 1fr) 5.5rem 1.8rem; gap: 4px; align-items: center; }
+.pbr-size-row .pbr-size-number { width: 100%; min-width: 0; box-sizing: border-box; font: 12px ui-monospace, monospace; }
+.pbr-size small { color: #bbb; line-height: 1.3; }

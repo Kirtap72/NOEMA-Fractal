@@ -1,0 +1,50 @@
+format: 3
+id: mb3d-pgbulb
+name: PG-bulb
+catalog:
+  category: fractals
+  tags: [ quaternion, bulb, 4D, Pseudogenius ]
+description: >-
+  An intermediate form between Mandelbulb and "quadratic" quaternions, generalised to integer powers
+  2 to 16: the power is built up from a repeated product with a fixed angle (cos θ, sin θ) taken
+  from C (Old angles) or from the point itself.
+credits:
+  - {
+      name: Pseudogenius,
+      role: "Formula author (fractalforums.com, according to the formula description)",
+      status: unverified
+    }
+  - {
+      name: Luca GN,
+      role: "Formula and implementation 2011 (according to the formula description)",
+      status: unverified
+    }
+sources:
+  - {
+      reference: "Mandelbulb 3D 1.9.9 (sr37), M3Formulas, file PG-bulb.m3f: [OPTIONS] and the description
+        after [END]; the code block and code listings was never read.",
+      status: unverified
+    }
+  - { reference: NewFormulas/formula-07/BATCH-07.md, status: unverified }
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: The equations are the formula file's own description; implementation in
+  src/engine/formula/batch07Kernels.ts. No comparison with a running Mandelbulb 3D.
+reviewed: false
+provenance:
+  origin: mandelbulb3d
+  file: PG-bulb.m3f
+  credited_author: Pseudogenius; Luca GN
+  credited_authors: [ Pseudogenius, Luca GN ]
+  collection: M3Formulas
+  note: Independent reimplementation from the equations in the formula file's own description. The
+    [CODE] section was not read. Native image equivalence unverified.
+  verified_against_mb3d: false
+parameters:
+  - { name: w_add, label: "w add", default: 0, min: -4, max: 4 }
+  - { name: int_power, label: "IntPower (2 to 16)", default: 8, min: 2, max: 16 }
+  - { name: old_angles, label: "Old angles", default: 1, min: 0, max: 1 }
+  - { name: slice_w, label: "4D slice / extra w", default: 0, min: -4, max: 4 }
+  - { name: constant_w, label: "Julia constant w", default: 0, min: -4, max: 4 }
+  - { name: bailout_squared, label: "Escape limit (radius²)", default: 16, min: 1, max: 65536 }
+iteration: { kernel: mb3d-pgbulb, iterations: 16 }
+view: { camera_distance: 5 }

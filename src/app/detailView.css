@@ -1,0 +1,19 @@
+/* DETAIL-LOOKDEV-03B: Detaljvy 1:1. Uses the shell's colour tokens when present. */
+#detail-view { display: flex; flex-direction: column; gap: 8px; margin: 0 0 12px; padding: 10px; border: 1px solid var(--line, #3a444d); border-radius: 8px; background: color-mix(in srgb, var(--raised, #1c2027) 60%, transparent); color: var(--text, #eee); font-size: 13px; }
+#detail-view .dv-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+#detail-view .dv-title { font: 600 14px var(--font-display, inherit); }
+#detail-view .dv-note, #detail-view .dv-info, #detail-view .dv-limit, #detail-view .dv-line { margin: 0; color: var(--muted, #a0a8b5); font-size: 12px; line-height: 1.45; }
+#detail-view .dv-line { color: var(--text, #eee); min-height: 1.3em; }
+#detail-view .dv-row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+#detail-view button { padding: 6px 10px; border-radius: 7px; border: 1px solid var(--line, #3a444d); background: var(--raised, #1c2027); color: inherit; cursor: pointer; font: 600 12.5px inherit; }
+#detail-view button:disabled { opacity: .5; cursor: default; }
+#detail-view #detail-start { border-color: var(--accent, #ffb454); }
+#detail-view .dv-nudge button { min-width: 2.2em; }
+#detail-view progress { width: 100%; }
+#detail-frame { position: fixed; z-index: 5; pointer-events: none; border: 2px solid var(--accent, #ffb454); box-shadow: 0 0 0 1px rgba(0, 0, 0, .6), 0 0 0 9999px rgba(0, 0, 0, .18); box-sizing: border-box; }
+#detail-select { position: fixed; z-index: 6; cursor: crosshair; background: rgba(0, 0, 0, .12); touch-action: none; }
+#detail-select .dv-drag { position: absolute; border: 2px dashed var(--accent, #ffb454); background: rgba(255, 180, 84, .12); pointer-events: none; }
+#detail-viewer { position: fixed; z-index: 7; right: 16px; bottom: 16px; width: fit-content; height: fit-content; max-width: min(60vw, 1200px); max-height: min(70vh, 900px); overflow: auto; resize: both; background: #111; border: 1px solid var(--line-strong, #55606b); border-radius: 8px; box-shadow: 0 10px 40px rgba(0, 0, 0, .55); }
+#detail-viewer[data-stale="true"] { outline: 2px solid #c47a2a; }
+#detail-viewer[data-stale="true"]::after { content: "Föråldrad – ritas om"; position: sticky; display: block; left: 0; bottom: 0; padding: 2px 8px; background: #c47a2a; color: #1a1203; font: 600 12px sans-serif; width: max-content; }
+#detail-image { display: block; image-rendering: pixelated; }

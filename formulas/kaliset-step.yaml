@@ -1,0 +1,62 @@
+# The Kaliset iteration as a step to chain. Format: see formulas/README.md
+format: 1
+id: kaliset-step
+name: Kaliset fold (transform)
+description: >
+  One step of Kali's iteration: take the absolute value of every coordinate,
+  divide the point by the square of its length (an inversion in the unit
+  sphere), multiply by a scale, and add a constant "Julia" vector. Repeated, it
+  makes the folded, organic structure called a Kaliset. In the thread it comes
+  from, the set is used for colouring and as bump mapping on shapes that have
+  their own distance estimates, not as a shape of its own. So this step changes
+  the point only and has no distance estimate: use it in front of a formula
+  that has one (for example the Mandelbulb).
+
+# NOTE: the AI assistant read the thread below on 2026-10-06 and wrote this
+# step from the three operations that Kali states there (absolute value,
+# division by the squared length, scale and add Julia). Nothing was copied from
+# program code. The running derivative (scale divided by the squared length) is
+# the assistant's own, from the derivative of an inversion, so that the
+# distance estimate of the next formula stays roughly consistent. The starting
+# values of the parameters are examples chosen by the assistant. A person must
+# still open the source and check each name and link before this is set to
+# "verified" (and reviewed: true).
+credits:
+  - name: Kali
+    role: "posted the Kaliset iteration on Fractal Forums (thread posted 2012-07-10); the Kaliset itself is Kali's invention"
+    status: unverified
+sources:
+  - url: https://www.fractalforums.com/3d-fractal-generation/kaliset-3d-fractal-used-as-coloring-and-bump-mapping-for-de-systems
+    status: unverified
+
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: >
+  Mathematical idea, not claimed as owned. Written fresh for this project from
+  the three operations stated in the thread; no code from any program was read
+  or copied. The derivative and the example parameters are the assistant's own.
+  Source details are unverified (see credits).
+reviewed: false
+
+parameters:
+  - { name: scale, label: Scale, default: 1.5, min: 0.2, max: 4 }
+  - { name: jx, label: Julia x, default: -0.5, min: -2, max: 2 }
+  - { name: jy, label: Julia y, default: -0.5, min: -2, max: 2 }
+  - { name: jz, label: Julia z, default: -0.5, min: -2, max: 2 }
+
+iteration:
+  iterations: 1
+  # This is a transform: it has no distance. It passes the point on to the next step.
+  carry: [z, dr]
+  variables:
+    - { name: z, type: vec3, init: pos }
+    - { name: dr, type: float, init: 1 }
+    - { name: r2, type: float, init: 0 }
+  steps:
+    - "z = abs(z)"
+    - "r2 = max(dot(z, z), 0.000001)"
+    # The inversion shrinks lengths locally by 1 / r2; the scale multiplies them.
+    - "dr = dr * scale / r2"
+    - "z = z / r2 * scale + vec3(jx, jy, jz)"
+
+view:
+  camera_distance: 4

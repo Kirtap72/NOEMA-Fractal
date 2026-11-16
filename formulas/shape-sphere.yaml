@@ -1,0 +1,50 @@
+# Form: sphere. Format: see formulas/README.md
+format: 1
+id: shape-sphere
+name: "Form: sphere"
+catalog:
+  category: difs
+  tags:
+    - shape
+    - SDF
+description: >
+  A sphere as the end of a chain: the distance from the (folded, scaled) point to a sphere of the
+  given radius, divided by the running derivative. Folds and scaling steps in front of it turn the
+  single sphere into many.
+
+# NOTE: the distance to a sphere is the length minus the radius (textbook). Dividing
+# by the running derivative is how distance estimates of folded fractals work
+# (as in the project's other formulas).
+# A person must still check each name and link before this is set to
+# "verified" (and reviewed: true).
+credits:
+  - name: General mathematics (textbook)
+    role: "standard definitions found in any textbook; no single person is credited (the project owner
+      agreed that general mathematics is credited this way)"
+    status: unverified
+sources:
+  - reference: "Distance to a sphere (textbook geometry)"
+    status: unverified
+
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: >
+  General mathematics: standard definitions, not claimed as owned. Written fresh for this project;
+  no code from any program was read or copied. Source details are unverified (see credits).
+reviewed: false
+
+parameters:
+  - { name: radius, label: Radius, default: 1, min: 0.05, max: 3 }
+
+iteration:
+  iterations: 1
+  # A shape: it does not move the point, it measures the distance to the shape at the end of a chain.
+  carry: [ z, dr ]
+  variables:
+    - { name: z, type: vec3, init: pos }
+    - { name: dr, type: float, init: 1 }
+  steps:
+    - "dr = dr"
+  distance: "(length(z) - radius) / abs(dr)"
+
+view:
+  camera_distance: 4

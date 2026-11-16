@@ -1,0 +1,948 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://example.invalid/fraktalmotorn/scene.schema.json",
+  "title": "Fraktalmotorn scene, version 49",
+  "description": "A scene: camera, camera paths and what to draw. Data only, never code. The $id is a placeholder until a permanent home for the schema is chosen.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "camera",
+    "color",
+    "animation",
+    "content"
+  ],
+  "properties": {
+    "geometryDetail": {"type":"object","additionalProperties":false,"required":["enabled","detailLevel","stepMultiplier","budget","maxSteps"],"properties":{"enabled":{"type":"boolean"},"detailLevel":{"type":"number","exclusiveMinimum":0},"stepMultiplier":{"type":"number","exclusiveMinimum":0},"budget":{"enum":["automatic","manual"]},"maxSteps":{"type":"integer","minimum":1,"maximum":1048576}}},
+    "discoveredFormulas": {"type":"array","maxItems":32,"items":{"type":"object","additionalProperties":false,"required":["version","id","fingerprint","structureFingerprint","seed","catalogFingerprint","name","nodes","iterations","radius","mutation","provenance"],"properties":{"version":{"const":"FG2B-1"},"id":{"type":"string","pattern":"^discovered-formula-[a-f0-9]{8}$"},"fingerprint":{"type":"string","pattern":"^[a-f0-9]{8}$"},"structureFingerprint":{"type":"string","pattern":"^[a-f0-9]{8}$"},"seed":{"type":"string","maxLength":128},"catalogFingerprint":{"type":"string","pattern":"^[a-f0-9]{8}$"},"name":{"type":"string","minLength":1,"maxLength":120},"nodes":{"type":"array","minItems":3,"maxItems":6,"items":{"oneOf":[{"type":"object","additionalProperties":false,"required":["kind","fold"],"properties":{"kind":{"const":"fold"},"fold":{"enum":["abs","tetra","octa"]},"axes":{"enum":["xyz","xy","xz","yz"]}}},{"type":"object","additionalProperties":false,"required":["kind","order"],"properties":{"kind":{"const":"permute"},"order":{"enum":["yzx","zxy","xzy"]}}},{"type":"object","additionalProperties":false,"required":["kind","axis","angle"],"properties":{"kind":{"const":"rotate"},"axis":{"enum":["x","y","z"]},"angle":{"type":"number","minimum":-40,"maximum":40}}},{"type":"object","additionalProperties":false,"required":["kind","offset"],"properties":{"kind":{"const":"translate"},"offset":{"type":"array","minItems":3,"maxItems":3,"items":{"type":"number","minimum":-0.6,"maximum":0.6}}}},{"type":"object","additionalProperties":false,"required":["kind","scale","center"],"properties":{"kind":{"const":"expand"},"scale":{"type":"number","minimum":1.8,"maximum":2.8},"center":{"type":"array","minItems":3,"maxItems":3,"items":{"type":"number","minimum":-1.5,"maximum":1.5}}}}]}},"iterations":{"type":"integer","minimum":6,"maximum":16},"radius":{"type":"number","minimum":0.5,"maximum":2},"mutation":{"enum":["original","structural","parameters"]},"provenance":{"type":"object","additionalProperties":false,"required":["author","source","reviewed","de"],"properties":{"author":{"const":"okänd"},"source":{"const":"NOEMA bounded geometric AST synthesis; textbook geometry"},"reviewed":{"const":false},"de":{"const":"finite-lipschitz-bound"}}},"parent":{"type":"object","additionalProperties":false,"required":["id","fingerprint"],"properties":{"id":{"type":"string","pattern":"^discovered-formula-[a-f0-9]{8}$"},"fingerprint":{"type":"string","pattern":"^[a-f0-9]{8}$"}}}}}},
+    "cameraFlight": {"anyOf":[{"type":"object","additionalProperties":false,"required":["version","enabled","duration_seconds","fps","loop","tracks"],"properties":{"version":{"const":1},"enabled":{"type":"boolean"},"duration_seconds":{"type":"number","minimum":0.1,"maximum":2199023255551},"fps":{"type":"integer","minimum":1,"maximum":120},"loop":{"type":"boolean"},"tracks":{"type":"array","minItems":1,"maxItems":1,"items":{"type":"object","additionalProperties":false,"required":["id","kind","target","interpolation","keyframes"],"properties":{"id":{"const":"camera"},"kind":{"const":"camera"},"target":{"type":"object","additionalProperties":false,"required":["kind"],"properties":{"kind":{"const":"scene-camera"}}},"interpolation":{"enum":["linear","smooth"]},"keyframes":{"type":"array","maxItems":64,"items":{"type":"object","additionalProperties":false,"required":["id","time_seconds","camera","fov_axis"],"properties":{"id":{"type":"string","pattern":"^[-\\w]{1,64}$"},"time_seconds":{"type":"number","minimum":0,"maximum":2199023255551},"camera":{"$ref":"#/properties/camera"},"fov_axis":{"enum":["horizontal","vertical"]}}}},"enabled":{"type":"boolean"}}}}}},{"type":"object","additionalProperties":false,"required":["version","enabled","duration_seconds","fps","loop","tracks"],"properties":{"version":{"const":2},"enabled":{"type":"boolean"},"duration_seconds":{"type":"number","minimum":0.1,"maximum":2199023255551},"fps":{"type":"integer","minimum":1,"maximum":120},"loop":{"type":"boolean"},"tracks":{"type":"array","maxItems":33,"items":{"anyOf":[{"type":"object","additionalProperties":false,"required":["id","kind","target","interpolation","keyframes"],"properties":{"id":{"const":"camera"},"kind":{"const":"camera"},"target":{"type":"object","additionalProperties":false,"required":["kind"],"properties":{"kind":{"const":"scene-camera"}}},"interpolation":{"enum":["linear","smooth"]},"keyframes":{"type":"array","maxItems":64,"items":{"type":"object","additionalProperties":false,"required":["id","time_seconds","camera","fov_axis"],"properties":{"id":{"type":"string","pattern":"^[-\\w]{1,64}$"},"time_seconds":{"type":"number","minimum":0,"maximum":2199023255551},"camera":{"$ref":"#/properties/camera"},"fov_axis":{"enum":["horizontal","vertical"]}}}},"enabled":{"type":"boolean"}}},{"type":"object","additionalProperties":false,"required":["id","kind","enabled","target","valueType","interpolation","keyframes"],"properties":{"id":{"type":"string","pattern":"^[-\\w]{1,64}$"},"kind":{"const":"property"},"enabled":{"type":"boolean"},"target":{"oneOf":[{"type":"object","additionalProperties":false,"required":["kind","contentId","stepId","formulaId","parameter"],"properties":{"kind":{"const":"formula-parameter"},"contentId":{"type":"string","pattern":"^[-\\w]{1,64}$"},"stepId":{"type":"string","pattern":"^[-\\w]{1,64}$"},"formulaId":{"type":"string"},"parameter":{"type":"string","pattern":"^[a-zA-Z_][\\w]*$"}}},{"type":"object","additionalProperties":false,"required":["kind","contentId","property"],"properties":{"kind":{"const":"julia"},"contentId":{"type":"string","pattern":"^[-\\w]{1,64}$"},"property":{"enum":["c","x","y","z","enabled"]}}}]},"valueType":{"enum":["float","vector","step"]},"interpolation":{"enum":["linear","smooth","step"]},"keyframes":{"type":"array","maxItems":64,"items":{"type":"object","additionalProperties":false,"required":["id","time_seconds","value"],"properties":{"id":{"type":"string","pattern":"^[-\\w]{1,64}$"},"time_seconds":{"type":"number","minimum":0,"maximum":2199023255551},"value":{"anyOf":[{"type":"number"},{"type":"array","minItems":3,"maxItems":3,"items":{"type":"number"}},{"type":"boolean"}]}}}}},"allOf":[{"if":{"properties":{"valueType":{"const":"float"}}},"then":{"properties":{"keyframes":{"items":{"properties":{"value":{"type":"number"}}}}}}},{"if":{"properties":{"valueType":{"const":"vector"}}},"then":{"properties":{"keyframes":{"items":{"properties":{"value":{"type":"array","minItems":3,"maxItems":3,"items":{"type":"number"}}}}}}}},{"if":{"properties":{"valueType":{"const":"step"}}},"then":{"properties":{"keyframes":{"items":{"properties":{"value":{"type":"boolean"}}}},"interpolation":{"const":"step"}}}},{"if":{"properties":{"target":{"properties":{"kind":{"const":"formula-parameter"}}}}},"then":{"properties":{"valueType":{"const":"float"}}}},{"if":{"properties":{"target":{"required":["property"],"properties":{"kind":{"const":"julia"},"property":{"const":"c"}}}}},"then":{"properties":{"valueType":{"const":"vector"}}}},{"if":{"properties":{"target":{"required":["property"],"properties":{"kind":{"const":"julia"},"property":{"const":"enabled"}}}}},"then":{"properties":{"valueType":{"const":"step"}}}},{"if":{"properties":{"target":{"required":["property"],"properties":{"kind":{"const":"julia"},"property":{"const":"x"}}}}},"then":{"properties":{"valueType":{"const":"float"}}}},{"if":{"properties":{"target":{"required":["property"],"properties":{"kind":{"const":"julia"},"property":{"const":"y"}}}}},"then":{"properties":{"valueType":{"const":"float"}}}},{"if":{"properties":{"target":{"required":["property"],"properties":{"kind":{"const":"julia"},"property":{"const":"z"}}}}},"then":{"properties":{"valueType":{"const":"float"}}}}]}]}}}},{"type":"object","additionalProperties":false,"required":["version","enabled","duration_seconds","fps","loop","tracks"],"properties":{"version":{"const":3},"enabled":{"type":"boolean"},"duration_seconds":{"type":"number","minimum":0.1,"maximum":2199023255551},"fps":{"type":"integer","minimum":1,"maximum":120},"loop":{"type":"boolean"},"tracks":{"type":"array","maxItems":33,"items":{"anyOf":[{"type":"object","additionalProperties":false,"required":["id","kind","target","interpolation","keyframes"],"properties":{"id":{"const":"camera"},"kind":{"const":"camera"},"target":{"type":"object","additionalProperties":false,"required":["kind"],"properties":{"kind":{"const":"scene-camera"}}},"interpolation":{"enum":["linear","smooth"]},"keyframes":{"type":"array","maxItems":64,"items":{"type":"object","additionalProperties":false,"required":["id","time_seconds","camera","fov_axis"],"properties":{"id":{"type":"string","pattern":"^[-\\w]{1,64}$"},"time_seconds":{"type":"number","minimum":0,"maximum":2199023255551},"camera":{"$ref":"#/properties/camera"},"fov_axis":{"enum":["horizontal","vertical"]}}}},"enabled":{"type":"boolean"}}},{"type":"object","additionalProperties":false,"required":["id","kind","enabled","target","valueType","interpolation","keyframes"],"properties":{"id":{"type":"string","pattern":"^[-\\w]{1,64}$"},"kind":{"const":"property"},"enabled":{"type":"boolean"},"target":{"oneOf":[{"type":"object","additionalProperties":false,"required":["kind","contentId","stepId","formulaId","parameter"],"properties":{"kind":{"const":"formula-parameter"},"contentId":{"type":"string","pattern":"^[-\\w]{1,64}$"},"stepId":{"type":"string","pattern":"^[-\\w]{1,64}$"},"formulaId":{"type":"string"},"parameter":{"type":"string","pattern":"^[a-zA-Z_][\\w]*$"}}},{"type":"object","additionalProperties":false,"required":["kind","contentId","property"],"properties":{"kind":{"const":"julia"},"contentId":{"type":"string","pattern":"^[-\\w]{1,64}$"},"property":{"enum":["c","x","y","z","enabled"]}}},{"type":"object","additionalProperties":false,"required":["kind","objectId","property"],"properties":{"kind":{"const":"material"},"objectId":{"anyOf":[{"type":"string","pattern":"^[-\\w]{1,64}$"},{"const":"@scene"}]},"property":{"enum":["roughness","metallic","reflectivity","emissionStrength","baseColor","emissionColor"]}}},{"type":"object","additionalProperties":false,"required":["kind","objectId","property"],"properties":{"kind":{"const":"light"},"objectId":{"type":"string","pattern":"^[-\\w]{1,64}$"},"property":{"enum":["intensity","color","position","direction","enabled"]}}},{"type":"object","additionalProperties":false,"required":["kind","stopId","property"],"properties":{"kind":{"const":"gradient-stop"},"stopId":{"type":"string","pattern":"^[-\\w]{1,64}$"},"property":{"const":"color"}}},{"type":"object","additionalProperties":false,"required":["kind","property"],"properties":{"kind":{"const":"color"},"property":{"enum":["cycles","offset"]}}},{"type":"object","additionalProperties":false,"required":["kind","property"],"properties":{"kind":{"const":"ambient"},"property":{"enum":["intensity","color"]}}},{"type":"object","additionalProperties":false,"required":["kind","property"],"properties":{"kind":{"const":"environment"},"property":{"enum":["intensity","rotation_degrees"]}}}]},"valueType":{"enum":["float","vector","step","color"]},"interpolation":{"enum":["linear","smooth","step"]},"keyframes":{"type":"array","maxItems":64,"items":{"type":"object","additionalProperties":false,"required":["id","time_seconds","value"],"properties":{"id":{"type":"string","pattern":"^[-\\w]{1,64}$"},"time_seconds":{"type":"number","minimum":0,"maximum":2199023255551},"value":{"anyOf":[{"type":"number"},{"type":"array","minItems":3,"maxItems":3,"items":{"type":"number"}},{"type":"boolean"},{"type":"string","pattern":"^#[0-9a-fA-F]{6}$"}]}}}}},"allOf":[{"if":{"properties":{"valueType":{"const":"float"}}},"then":{"properties":{"keyframes":{"items":{"properties":{"value":{"type":"number"}}}}}}},{"if":{"properties":{"valueType":{"const":"vector"}}},"then":{"properties":{"keyframes":{"items":{"properties":{"value":{"type":"array","minItems":3,"maxItems":3,"items":{"type":"number"}}}}}}}},{"if":{"properties":{"valueType":{"const":"step"}}},"then":{"properties":{"keyframes":{"items":{"properties":{"value":{"type":"boolean"}}}},"interpolation":{"const":"step"}}}},{"if":{"properties":{"target":{"properties":{"kind":{"const":"formula-parameter"}}}}},"then":{"properties":{"valueType":{"const":"float"}}}},{"if":{"properties":{"target":{"required":["property"],"properties":{"kind":{"const":"julia"},"property":{"const":"c"}}}}},"then":{"properties":{"valueType":{"const":"vector"}}}},{"if":{"properties":{"target":{"required":["property"],"properties":{"kind":{"const":"julia"},"property":{"const":"enabled"}}}}},"then":{"properties":{"valueType":{"const":"step"}}}},{"if":{"properties":{"target":{"required":["property"],"properties":{"kind":{"const":"julia"},"property":{"const":"x"}}}}},"then":{"properties":{"valueType":{"const":"float"}}}},{"if":{"properties":{"target":{"required":["property"],"properties":{"kind":{"const":"julia"},"property":{"const":"y"}}}}},"then":{"properties":{"valueType":{"const":"float"}}}},{"if":{"properties":{"target":{"required":["property"],"properties":{"kind":{"const":"julia"},"property":{"const":"z"}}}}},"then":{"properties":{"valueType":{"const":"float"}}}},{"if":{"properties":{"valueType":{"const":"color"}}},"then":{"properties":{"keyframes":{"items":{"properties":{"value":{"anyOf":[{"type":"string","pattern":"^#[0-9a-fA-F]{6}$"},{"type":"array","minItems":3,"maxItems":3,"items":{"type":"number","minimum":0,"maximum":1}}]}}}}}}},{"if":{"properties":{"target":{"required":["kind","property"],"properties":{"kind":{"const":"material"},"property":{"enum":["roughness","metallic","reflectivity"]}}}}},"then":{"properties":{"valueType":{"const":"float"},"keyframes":{"items":{"properties":{"value":{"type":"number","minimum":0,"maximum":1}}}}}}},{"if":{"properties":{"target":{"required":["kind","property"],"properties":{"kind":{"const":"material"},"property":{"enum":["emissionStrength"]}}}}},"then":{"properties":{"valueType":{"const":"float"},"keyframes":{"items":{"properties":{"value":{"type":"number","minimum":0,"maximum":1000}}}}}}},{"if":{"properties":{"target":{"required":["kind","property"],"properties":{"kind":{"const":"material"},"property":{"enum":["baseColor","emissionColor"]}}}}},"then":{"properties":{"valueType":{"const":"color"},"keyframes":{"items":{"properties":{"value":{"type":"array","minItems":3,"maxItems":3,"items":{"type":"number","minimum":0,"maximum":1}}}}}}}},{"if":{"properties":{"target":{"required":["kind","property"],"properties":{"kind":{"const":"light"},"property":{"enum":["intensity"]}}}}},"then":{"properties":{"valueType":{"const":"float"},"keyframes":{"items":{"properties":{"value":{"type":"number","minimum":0,"maximum":10000}}}}}}},{"if":{"properties":{"target":{"required":["kind","property"],"properties":{"kind":{"const":"light"},"property":{"enum":["color"]}}}}},"then":{"properties":{"valueType":{"const":"color"},"keyframes":{"items":{"properties":{"value":{"type":"string","pattern":"^#[0-9a-fA-F]{6}$"}}}}}}},{"if":{"properties":{"target":{"required":["kind","property"],"properties":{"kind":{"const":"light"},"property":{"enum":["position"]}}}}},"then":{"properties":{"valueType":{"const":"vector"},"keyframes":{"items":{"properties":{"value":{"type":"array","minItems":3,"maxItems":3,"items":{"type":"number","minimum":-10000,"maximum":10000}}}}}}}},{"if":{"properties":{"target":{"required":["kind","property"],"properties":{"kind":{"const":"light"},"property":{"enum":["direction"]}}}}},"then":{"properties":{"valueType":{"const":"vector"},"keyframes":{"items":{"properties":{"value":{"type":"array","minItems":3,"maxItems":3,"items":{"type":"number","minimum":-1000000.0,"maximum":1000000.0},"not":{"const":[0,0,0]}}}}}}}},{"if":{"properties":{"target":{"required":["kind","property"],"properties":{"kind":{"const":"light"},"property":{"enum":["enabled"]}}}}},"then":{"properties":{"valueType":{"const":"step"},"keyframes":{"items":{"properties":{"value":{"type":"boolean"}}}}}}},{"if":{"properties":{"target":{"required":["kind","property"],"properties":{"kind":{"const":"gradient-stop"},"property":{"enum":["color"]}}}}},"then":{"properties":{"valueType":{"const":"color"},"keyframes":{"items":{"properties":{"value":{"type":"string","pattern":"^#[0-9a-fA-F]{6}$"}}}}}}},{"if":{"properties":{"target":{"required":["kind","property"],"properties":{"kind":{"const":"color"},"property":{"enum":["cycles"]}}}}},"then":{"properties":{"valueType":{"const":"float"},"keyframes":{"items":{"properties":{"value":{"type":"number","minimum":0.05,"maximum":20}}}}}}},{"if":{"properties":{"target":{"required":["kind","property"],"properties":{"kind":{"const":"color"},"property":{"enum":["offset"]}}}}},"then":{"properties":{"valueType":{"const":"float"},"keyframes":{"items":{"properties":{"value":{"type":"number","minimum":-100,"maximum":100}}}}}}},{"if":{"properties":{"target":{"required":["kind","property"],"properties":{"kind":{"const":"ambient"},"property":{"enum":["color"]}}}}},"then":{"properties":{"valueType":{"const":"color"},"keyframes":{"items":{"properties":{"value":{"type":"string","pattern":"^#[0-9a-fA-F]{6}$"}}}}}}},{"if":{"properties":{"target":{"required":["kind","property"],"properties":{"kind":{"const":"ambient"},"property":{"enum":["intensity"]}}}}},"then":{"properties":{"valueType":{"const":"float"},"keyframes":{"items":{"properties":{"value":{"type":"number","minimum":0,"maximum":10}}}}}}},{"if":{"properties":{"target":{"required":["kind","property"],"properties":{"kind":{"const":"environment"},"property":{"enum":["intensity"]}}}}},"then":{"properties":{"valueType":{"const":"float"},"keyframes":{"items":{"properties":{"value":{"type":"number","minimum":0,"maximum":100}}}}}}},{"if":{"properties":{"target":{"required":["kind","property"],"properties":{"kind":{"const":"environment"},"property":{"enum":["rotation_degrees"]}}}}},"then":{"properties":{"valueType":{"const":"float"},"keyframes":{"items":{"properties":{"value":{"type":"number","minimum":-36000,"maximum":36000}}}}}}}]}]}}}}]},
+    "display":{"type":"object","additionalProperties":false,"required":["exposure","toneMapping","transfer"],"properties":{"exposure":{"type":"number","minimum":-20,"maximum":20},"toneMapping":{"enum":["linear","reinhard","filmic"]},"transfer":{"enum":["legacy-gamma","srgb"]}}},
+    "transport": {"type":"object","additionalProperties":false,"required":["enabled","maxBounces"],"properties":{"enabled":{"type":"boolean"},"maxBounces":{"type":"integer","minimum":0,"maximum":8}}},
+    "denoise":{"type":"object","additionalProperties":false,"required":["enabled"],"properties":{"enabled":{"type":"boolean"}}},
+    "primitives": {"type":"array","maxItems":32,"items":{"type":"object","additionalProperties":false,"required":["id","type","enabled","position","rotation","scale","color","material"],"properties":{"id":{"type":"string","pattern":"^[-\\w]{1,64}$"},"type":{"enum":["sphere","box","plane"]},"enabled":{"type":"boolean"},"position":{"type":"array","minItems":3,"maxItems":3,"items":{"type":"number","minimum":-1000000.0,"maximum":1000000.0}},"rotation":{"type":"array","minItems":3,"maxItems":3,"items":{"type":"number","minimum":-1000000.0,"maximum":1000000.0}},"scale":{"type":"array","minItems":3,"maxItems":3,"items":{"type":"number","minimum":0.0001,"maximum":1000000.0}},"color":{"type":"array","minItems":3,"maxItems":3,"items":{"type":"number","minimum":0,"maximum":1}},"material":{"anyOf":[{"const":"scene"},{"$ref":"#/definitions/material"}]},"placement":{"type":"object","additionalProperties":false,"required":["position","normal","objectId","keepGrounded"],"properties":{"position":{"type":"array","minItems":3,"maxItems":3,"items":{"type":"number","minimum":-1000000.0,"maximum":1000000.0}},"normal":{"type":"array","minItems":3,"maxItems":3,"items":{"type":"number","minimum":-1,"maximum":1}},"objectId":{"type":"string","pattern":"^[-\\w]{1,64}$"},"keepGrounded":{"type":"boolean"}}}}}},
+    "reflections": {"$ref":"#/definitions/reflections"},
+    "formulaFields": {"type":"array","items":{"type":"object","required":["id","reference","sampler"],"additionalProperties":false,"properties":{"id":{"type":"integer","minimum":1,"maximum":16777216},"reference":{"type":"string"},"status":{"enum":["MISSING","AMBIGUOUS"]},"sampler":{"const":"periodic-bspline"},"width":{"type":"integer","minimum":1},"height":{"type":"integer","minimum":1},"rgb8":{"type":"string"},"rgb8Encoding":{"const":"gray8-rle-v1"}}}},
+    "schema_version": {
+      "const": 49
+    },
+    "units": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Label for exports, for example \"meter\"."
+    },
+    "composition": { "$ref": "#/definitions/composition" },
+    "camera": {
+      "$ref": "#/definitions/camera"
+    },
+    "animation": {
+      "$ref": "#/definitions/animation"
+    },
+    "color": {
+      "$ref": "#/definitions/color"
+    },
+    "fog": {
+      "$ref": "#/definitions/fog"
+    },
+    "environment": {
+      "$ref": "#/definitions/environment"
+    },
+    "cutout": { "$ref": "#/definitions/cutout" },
+    "details": { "$ref": "#/definitions/details" },
+    "material": {
+      "$ref": "#/definitions/material"
+    },
+    "lights": {
+      "$ref": "#/definitions/lights"
+    },
+    "ambient": {
+      "$ref": "#/definitions/ambient"
+    },
+    "render": {
+      "$ref": "#/definitions/render"
+    },
+    "content": {
+      "type": "array",
+      "description": "What is drawn. Entries of unknown types are ignored with a warning by the engine.",
+      "items": {
+        "type": "object",
+        "required": [
+          "type"
+        ],
+        "properties": {
+          "id":{"type":"string","pattern":"^[-\\w]{1,64}$"},
+          "type": {
+            "type": "string"
+          },
+          "chain": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 8,
+            "description": "Formula steps, run one after the other.",
+            "items": {
+              "type": "object",
+              "required": [
+                "formula"
+              ],
+              "properties": {
+                "id":{"type":"string","pattern":"^[-\\w]{1,64}$"},
+                "formula": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "The id of a formula file."
+                },
+                "iterations": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 64,
+                  "description": "Left out: the formula's own default."
+                },
+                "step_factor": {
+                  "type": "number",
+                  "minimum": 0.05,
+                  "maximum": 1,
+                  "description": "Safety margin for this formula (version 10): march steps are multiplied by the smallest factor in the chain. Left out: 1."
+                },
+                "every": { "type": "integer", "minimum": 1, "maximum": 64, "description": "Alternate mode (version 11): run on every n-th round. Left out: 1." },
+                "start": { "type": "integer", "minimum": 0, "maximum": 63, "description": "Alternate mode (version 11): the first round (from 0) the step runs on. Left out: 0." },
+                "weight": { "type": "number", "minimum": 0, "maximum": 10, "description": "Interpolate mode (version 11): the weight of this step in the blend. Left out: 1." },
+                "parameters": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "number"
+                  }
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "rounds": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 64,
+            "description": "How many times the whole chain is repeated."
+          },
+          "mode": {
+            "enum": ["sequence", "alternate", "interpolate"],
+            "description": "How the steps are combined (version 11). Left out: sequence."
+          },
+          "execution": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "kind",
+                    "groups",
+                    "fieldStop"
+                  ],
+                  "properties": {
+                    "kind": {
+                      "const": "mapped-field"
+                    },
+                    "fieldStop": {
+                      "const": "query"
+                    },
+                    "coloring": {"const": "field-otrap", "description": "Opt-in winning dIFS shape OTrap; omitted retains legacy distance coloring."},
+                    "groups": {
+                      "type": "array",
+                      "minItems": 2,
+                      "maxItems": 2,
+                      "items": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "start",
+                          "end",
+                          "repeat",
+                          "maxIterations"
+                        ],
+                        "properties": {
+                          "start": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 7
+                          },
+                          "end": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 7
+                          },
+                          "repeat": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 7
+                          },
+                          "maxIterations": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 256
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "kind",
+                    "groups",
+                    "distance"
+                  ],
+                  "properties": {
+                    "kind": {
+                      "const": "bounded-sequence"
+                    },
+                    "groups": {
+                      "type": "array",
+                      "minItems": 1,
+                      "maxItems": 1,
+                      "items": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "start",
+                          "end",
+                          "repeat",
+                          "maxIterations"
+                        ],
+                        "properties": {
+                          "start": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 7
+                          },
+                          "end": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 7
+                          },
+                          "repeat": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 7
+                          },
+                          "maxIterations": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 256
+                          }
+                        }
+                      }
+                    },
+                    "distance": {
+                      "enum": ["radius-over-w", "difs-minimum"]
+                    }
+                  }
+                },
+                  {"type":"object","additionalProperties":false,"required":["kind","operation","groups"],"properties":{"kind":{"const":"independent-field"},"groups":{"type":"array","minItems":2,"maxItems":2,"items":{"type":"object","additionalProperties":false,"required":["start","end","repeat","maxIterations"],"properties":{"start":{"type":"integer","minimum":0,"maximum":7},"end":{"type":"integer","minimum":0,"maximum":7},"repeat":{"type":"integer","minimum":0,"maximum":7},"maxIterations":{"type":"integer","minimum":1,"maximum":256}}}},"operation":{"enum":["max-inverted-second","min","max","smooth-min","smooth-min-cubic"]},"smooth":{"type":"number","exclusiveMinimum":0,"maximum":10}},"allOf":[{"if":{"properties":{"operation":{"enum":["smooth-min","smooth-min-cubic"]}}},"then":{"required":["smooth"]},"else":{"not":{"required":["smooth"]}}}]}
+              ]
+            },
+          "julia": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "Julia mode (version 11): the constant c is added in every iteration instead of the point itself.",
+            "properties": {
+              "enabled": { "type": "boolean" },
+              "c": { "type": "array", "minItems": 3, "maxItems": 3, "items": { "type": "number", "minimum": -1000, "maximum": 1000 } }
+            }
+          }
+        },
+        "if": {
+          "properties": {
+            "type": {
+              "const": "fractal"
+            }
+          }
+        },
+        "then": {
+          "required": [
+            "chain"
+          ]
+        }
+      }
+    },
+    "credits": {
+      "type": "array",
+      "description": "Filled in when a scene is saved. Authors and sources of the formulas used, with their verification status.",
+      "items": {
+        "type": "object",
+        "required": [
+          "formula",
+          "kind",
+          "text",
+          "status"
+        ],
+        "properties": {
+          "formula": {
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "author",
+              "source"
+            ]
+          },
+          "text": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string",
+            "pattern": "^https?://"
+          },
+          "status": {
+            "enum": [
+              "verified",
+              "unverified"
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "definitions": {
+    "reflections": {"type":"object","additionalProperties":false,"properties":{"secondary_radiance_gain":{"type":"number","minimum":0,"maximum":1},"maxReflectionBounces":{"type":"integer","minimum":0,"maximum":4},"enabled":{"type":"boolean"},"max_steps":{"type":"integer","minimum":1,"maximum":1024},"max_distance":{"type":"number","minimum":0.001,"maximum":1000000},"hit_threshold":{"type":"number","minimum":1e-8,"maximum":0.1},"samples":{"type":"integer","minimum":1,"maximum":32}}},
+    "cutout": {
+      "type": "object",
+      "required": [
+        "planes"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "box": {"type": "object", "additionalProperties": false, "required": ["enabled", "outline", "position", "axes", "min", "max", "resetMin", "resetMax"], "properties": {"enabled": {"type": "boolean"}, "outline": {"type": "boolean"}, "axes": {"type": "array", "items": {"type": "array", "items": {"type": "number", "minimum": -1000000.0, "maximum": 1000000.0}, "minItems": 3, "maxItems": 3}, "minItems": 3, "maxItems": 3}, "position": {"type": "array", "items": {"type": "number", "minimum": -1000000.0, "maximum": 1000000.0}, "minItems": 3, "maxItems": 3}, "min": {"type": "array", "items": {"type": "number", "minimum": -1000000.0, "maximum": 1000000.0}, "minItems": 3, "maxItems": 3}, "max": {"type": "array", "items": {"type": "number", "minimum": -1000000.0, "maximum": 1000000.0}, "minItems": 3, "maxItems": 3}, "resetMin": {"type": "array", "items": {"type": "number", "minimum": -1000000.0, "maximum": 1000000.0}, "minItems": 3, "maxItems": 3}, "resetMax": {"type": "array", "items": {"type": "number", "minimum": -1000000.0, "maximum": 1000000.0}, "minItems": 3, "maxItems": 3}}},
+        "planes": {
+          "type": "array",
+          "maxItems": 3,
+          "items": {
+            "type": "object",
+            "required": [
+              "enabled",
+              "normal",
+              "offset",
+              "invert"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "enabled": {
+                "type": "boolean"
+              },
+              "invert": {
+                "type": "boolean"
+              },
+              "offset": {
+                "type": "number",
+                "minimum": -1000000,
+                "maximum": 1000000
+              },
+              "normal": {
+                "type": "array",
+                "minItems": 3,
+                "maxItems": 3,
+                "items": {
+                  "type": "number",
+                  "minimum": -1000000,
+                  "maximum": 1000000
+                },
+                "not": {
+                  "const": [
+                    0,
+                    0,
+                    0
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "details": {
+      "type": "object",
+      "required": [
+        "ao",
+        "cavity"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "sculpt": {
+          "type": "object", "additionalProperties": false,
+          "required": ["enabled", "far_strength", "far_radius", "bent_environment", "contact_length"],
+          "properties": {
+            "enabled": { "type": "boolean" },
+            "far_strength": { "type": "number", "minimum": 0, "maximum": 1 },
+            "far_radius": { "type": "number", "minimum": 0.000001, "maximum": 1000 },
+            "bent_environment": { "type": "boolean" },
+            "contact_length": { "type": "number", "minimum": 0.001, "maximum": 0.5 },
+            "spec_filter": { "type": "number", "minimum": 0, "maximum": 4 },
+            "spec_pixels": { "type": "number", "minimum": 0.5, "maximum": 32 },
+            "indirect_occlusion": { "type": "number", "minimum": 0, "maximum": 2 }
+          }
+        },
+        "ao": {
+          "$ref": "#/definitions/occlusion"
+        },
+        "cavity": {
+          "$ref": "#/definitions/cavity"
+        },
+        "edge_softening": { "$ref": "#/definitions/edgeSoftening" }
+      }
+    },
+    "cavity": {
+      "type": "object", "additionalProperties": false,
+      "required": ["enabled", "strength", "radius", "samples"],
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "strength": { "type": "number", "minimum": 0, "maximum": 1 },
+        "radius": { "type": "number", "minimum": 0.000001, "maximum": 1000 },
+        "samples": { "type": "integer", "minimum": 1, "maximum": 32 },
+        "contrast": { "type": "number", "minimum": 0, "maximum": 4 }
+      }
+    },
+    "edgeSoftening": {
+      "type": "object", "additionalProperties": false,
+      "required": ["enabled", "radius", "strength", "preserve_fine_detail"],
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "radius": { "type": "number", "minimum": 0.000001, "maximum": 1000 },
+        "strength": { "type": "number", "minimum": 0, "maximum": 1 },
+        "preserve_fine_detail": { "type": "boolean" }
+      }
+    },
+    "occlusion": {
+      "type": "object",
+      "required": [
+        "enabled",
+        "strength",
+        "radius",
+        "samples"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "strength": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "radius": {
+          "type": "number",
+          "minimum": 0.000001,
+          "maximum": 1000
+        },
+        "samples": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 32
+        }
+      }
+    },
+    "lights": {
+      "type": "array",
+      "maxItems": 8,
+      "description": "Light sources (added in version 9). Left out: the one directional light the shader used to have built in.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {"type": "string", "pattern": "^[-\\w]{1,64}$"},
+          "name": { "type": "string", "maxLength": 80 },
+          "enabled": { "type": "boolean" },
+          "type": { "enum": ["directional", "point", "spot"] },
+          "color": { "type": "string", "pattern": "^#[0-9a-fA-F]{6}$" },
+          "intensity": { "type": "number", "minimum": 0, "maximum": 10000, "description": "Directional: brightness. Point and spot: brightness at distance 1 (it weakens with the square of the distance)." },
+          "direction": { "type": "array", "minItems": 3, "maxItems": 3, "items": { "type": "number" }, "description": "The direction the light shines in (directional and spot). Not all 0." },
+          "position": { "type": "array", "minItems": 3, "maxItems": 3, "items": { "type": "number", "minimum": -10000, "maximum": 10000 }, "description": "Where the light is (point and spot)." },
+          "cone_degrees": { "type": "number", "minimum": 1, "maximum": 89, "description": "Spot: half angle of the cone." },
+          "cone_softness": { "type": "number", "minimum": 0, "maximum": 1 },
+          "shadows": { "enum": ["none", "hard", "soft", "contact"] },
+          "shadow_softness": { "type": "number", "minimum": 0, "maximum": 1 }
+        }
+      }
+    },
+    "ambient": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "The ambient light (added in version 9). Left out: white at 0.12, as before.",
+      "properties": {
+        "color": { "type": "string", "pattern": "^#[0-9a-fA-F]{6}$" },
+        "intensity": { "type": "number", "minimum": 0, "maximum": 10 }
+      }
+    },
+    "materialProperty": {
+      "description": "A number from 0 to 1, or a property driven by a measure of the surface through a curve.",
+      "oneOf": [
+        { "type": "number", "minimum": 0, "maximum": 1 },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["measure", "curve"],
+          "properties": {
+            "measure": { "enum": ["color", "iterations", "orbit_trap", "slope", "cavity", "radius"], "description": "color means the same measure as the colour uses." },
+            "curve": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 16,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["position", "value"],
+                "properties": {
+                  "position": { "type": "number", "minimum": 0, "maximum": 1 },
+                  "value": { "type": "number", "minimum": 0, "maximum": 1 }
+                }
+              },
+              "description": "Points with rising positions; the value is interpolated between them and held beyond the ends."
+            },
+            "cycles": { "type": "number", "minimum": 0.1, "maximum": 10 },
+            "offset": { "type": "number", "minimum": 0, "maximum": 1 },
+            "wrap": { "enum": ["repeat", "mirror"] }
+          }
+        }
+      ]
+    },
+    "proceduralDetail": {"type": "object", "additionalProperties": false, "properties": {"enabled": {"type": "boolean"}, "pattern": {"enum": ["fine-noise", "fbm", "brushed", "hammered", "stone", "ridged"]}, "strength": {"type": "number", "minimum": 0, "maximum": 4}, "scale": {"type": "number", "minimum": 1e-06, "maximum": 16777216}, "octaves": {"type": "integer", "minimum": 1, "maximum": 8}, "lacunarity": {"type": "number", "minimum": 1.25, "maximum": 4}, "persistence": {"type": "number", "minimum": 0, "maximum": 1}, "seed": {"type": "integer", "minimum": 0, "maximum": 16777215}, "rotation": {"type": "number", "minimum": -36000, "maximum": 36000}, "anisotropy": {"type": "number", "minimum": 1, "maximum": 128}, "roughnessModulation": {"type": "number", "minimum": -1, "maximum": 1}}},
+    "surfaceImage": {"type": "object", "additionalProperties": false, "required": ["data"], "properties": {"data": {"type": "string", "maxLength": 8000000, "pattern": "^data:image/(png|jpeg);base64,[A-Za-z0-9+/]+={0,2}$"}, "name": {"type": "string", "maxLength": 100}}},
+    "surfaceMap": {"type": "object", "additionalProperties": false, "properties": {"enabled": {"type": "boolean"}, "strength": {"type": "number", "minimum": 0, "maximum": 4}, "texture": {"$ref": "#/definitions/surfaceImage"}}},
+    "surfaceDetail": {"type": "object", "additionalProperties": false, "properties": {"normalFlipY": {"type":"boolean"},"bump": {"$ref": "#/definitions/surfaceMap"}, "normal": {"$ref": "#/definitions/surfaceMap"}, "mapping": {"enum": ["triplanar", "analytic"]}, "scale": {"type": "number", "minimum": 1e-06, "maximum": 16777216}, "rotation": {"type": "number", "minimum": -36000, "maximum": 36000}, "offset": {"type": "array", "minItems": 2, "maxItems": 2, "items": {"type": "number", "minimum": -1000000, "maximum": 1000000}}, "procedural": {"$ref": "#/definitions/proceduralDetail"}}},
+    "materialTextures": {"type": "object", "additionalProperties": false, "required": ["maps"], "properties": {"maps": {"type": "object", "additionalProperties": false, "properties": {"baseColor": {"type": "object", "additionalProperties": false, "required": ["enabled", "strength", "mode"], "properties": {"enabled": {"type": "boolean"}, "strength": {"type": "number", "minimum": 0, "maximum": 1}, "mode": {"enum": ["multiply", "replace"]}, "texture": {"$ref": "#/definitions/surfaceImage"}}}, "roughness": {"type": "object", "additionalProperties": false, "required": ["enabled", "strength", "mode"], "properties": {"enabled": {"type": "boolean"}, "strength": {"type": "number", "minimum": 0, "maximum": 1}, "mode": {"enum": ["multiply", "replace"]}, "texture": {"$ref": "#/definitions/surfaceImage"}}}, "metallic": {"type": "object", "additionalProperties": false, "required": ["enabled", "strength", "mode"], "properties": {"enabled": {"type": "boolean"}, "strength": {"type": "number", "minimum": 0, "maximum": 1}, "mode": {"enum": ["multiply", "replace"]}, "texture": {"$ref": "#/definitions/surfaceImage"}}}, "ao": {"type": "object", "additionalProperties": false, "required": ["enabled", "strength", "mode"], "properties": {"enabled": {"type": "boolean"}, "strength": {"type": "number", "minimum": 0, "maximum": 1}, "mode": {"enum": ["multiply", "replace"]}, "texture": {"$ref": "#/definitions/surfaceImage"}}}, "emission": {"type": "object", "additionalProperties": false, "required": ["enabled", "strength", "mode"], "properties": {"enabled": {"type": "boolean"}, "strength": {"type": "number", "minimum": 0, "maximum": 1}, "mode": {"enum": ["multiply", "replace"]}, "texture": {"$ref": "#/definitions/surfaceImage"}}}}}}},
+    "displacement": {"type":"object","additionalProperties":false,"properties":{"enabled":{"type":"boolean"},"strength":{"type":"number","minimum":0,"maximum":1},"heightScale":{"type":"number","minimum":0,"maximum":0.25},"reference":{"type":"number","minimum":0,"maximum":1},"texture":{"$ref":"#/definitions/surfaceImage"}}},
+    "material": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "The material of the surface (added in version 13): glTF metallic-roughness. Left out: matt, no metal, no reflection, exactly as before.",
+      "properties": {
+        "displacement": { "$ref": "#/definitions/displacement" },
+        "surfaceDetail": { "$ref": "#/definitions/surfaceDetail" },
+        "textures": { "$ref": "#/definitions/materialTextures" },
+        "metallic": { "$ref": "#/definitions/materialProperty" },
+        "roughness": { "$ref": "#/definitions/materialProperty" },
+        "reflectivity": { "$ref": "#/definitions/materialProperty" },
+        "orbitColorInfluence": {"type":"number","minimum":0,"maximum":1},
+        "diffuseColor": {"type":"array","minItems":3,"maxItems":3,"items":{"type":"number","minimum":0,"maximum":1}},
+        "baseColor": {"type":"array","minItems":3,"maxItems":3,"items":{"type":"number","minimum":0,"maximum":1}},
+        "absorptionColor": {"type":"array","minItems":3,"maxItems":3,"items":{"type":"number","minimum":0,"maximum":1}},
+        "emissionColor": {"type":"array","minItems":3,"maxItems":3,"items":{"type":"number","minimum":0,"maximum":1}},
+        "transmission": {"type":"number","minimum":0,"maximum":1},
+        "ior": {"type":"number","minimum":1,"maximum":4},
+        "absorptionDensity": {"type":"number","minimum":0,"maximum":1000},
+        "emissionStrength": {"type":"number","minimum":0,"maximum":1000}
+      }
+    },
+    "environment": {
+      "description": "What is seen behind the shape and what lights it from all sides (added in version 12). Left out: the gradient sky.",
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind"],
+          "properties": { "kind": { "const": "gradient" } }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "data", "source", "license"],
+          "properties": {
+            "kind": { "const": "hdri" },
+            "data": { "type": "string", "pattern": "^data:image/vnd\\.radiance;base64,[A-Za-z0-9+/]+={0,2}$", "maxLength": 3200000, "description": "A Radiance .hdr picture (an equirectangular map, twice as wide as high, at most 1024 x 512), as a data address." },
+            "name": { "type": "string", "maxLength": 500 },
+            "author": { "type": "string", "maxLength": 500, "description": "Who made the picture, as far as the user knows." },
+            "source": { "type": "string", "minLength": 1, "maxLength": 500, "description": "Where the picture comes from: a link or a reference (LICENSING.md section 9)." },
+            "license": { "type": "string", "minLength": 1, "maxLength": 500, "description": "The licence of the picture, for example CC0 1.0." },
+            "rotation_degrees": { "type": "number", "minimum": -36000, "maximum": 36000 },
+            "intensity": { "type": "number", "minimum": 0, "maximum": 100, "description": "A factor on the light of the picture (exposure). Left out: 1." },
+            "background_visible": { "type": "boolean", "description": "Whether the picture is seen behind the shape. Left out: true." }
+          }
+        }
+      ]
+    },
+    "fog": {
+      "type": "object",
+      "description": "Fog (added in version 8): colour mixed in with distance, 1 - exp(-density * (distance - start)), or the squared form. Left out: switched off.",
+      "additionalProperties": false,
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "color": { "type": "string", "pattern": "^#[0-9a-fA-F]{6}$" },
+        "density": { "type": "number", "minimum": 0, "maximum": 100000000 },
+        "start": { "type": "number", "minimum": 0, "maximum": 1000 },
+        "mode": { "enum": ["exponential", "exponential_squared"] },
+        "affects_sky": { "type": "boolean", "description": "Whether the sky (rays that hit nothing) becomes the fog colour." }
+      }
+    },
+    "render": {
+      "type": "object",
+      "description": "Image format and size. Optional exact manual resolution (version 18). GPU jobs are tiled independently of output dimensions.",
+      "additionalProperties": false,
+      "properties": {
+        "resolution": {
+          "type": "object", "additionalProperties": false, "required": ["width", "height"],
+          "properties": {
+            "width": {"type":"integer", "minimum":1, "maximum":8388608},
+            "height": {"type":"integer", "minimum":1, "maximum":8388608}
+          }
+        },
+        "format": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "preset"
+          ],
+          "properties": {
+            "preset": {
+              "enum": [
+                "free",
+                "16:9",
+                "3:2",
+                "2:3",
+                "1:1",
+                "4:3",
+                "3:4",
+                "9:16",
+                "21:9", "4:5", "5:4", "A4 portrait", "A4 landscape",
+                "custom"
+              ]
+            },
+            "ratio": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "items": {
+                "type": "number",
+                "exclusiveMinimum": 0,
+                "maximum": 1000
+              },
+              "description": "Width and height proportions, only used with preset custom (at most 10 to 1)."
+            }
+          }
+        },
+        "fov_axis": {
+          "enum": [
+            "vertical",
+            "horizontal"
+          ],
+          "description": "Which direction camera.fov_degrees is measured in."
+        },
+        "long_side": {
+          "type": "integer",
+          "minimum": 16,
+          "maximum": 8388608,
+          "description": "Pixels on the longest side."
+        },
+        "quality": {
+          "type": "object",
+          "description": "Detail controls for final pictures (added in version 7). Left out: the values that were built into the shader before (1 sample, hit_precision 0.0004, step_factor 0.75, max_steps 220, max_distance 60, normal_epsilon 0.0008).",
+          "additionalProperties": false,
+          "properties": {
+            "samples_per_pixel": { "type": "integer", "minimum": 1, "maximum": 64 },
+            "camera_sampling": {"enum":["legacy","stratified"],"description":"Opt-in progressive per-pixel scrambled camera coverage. Absent preserves the original R2 sequence."},
+            "normal_policy": {"enum":["legacy","film-detail"],"description":"Opt-in primary surface shading detail relative to the target film. Absent preserves legacy behavior."},
+            "hit_policy": {"enum":["legacy","film-half-pixel"],"description":"Opt-in half target-film pixel primary acceptance cap. Normals, DE semantics and march budgets remain separate. Absent preserves legacy behavior."},
+            "precision_floor": { "type": "number", "minimum": 0.02, "maximum": 1, "description": "Opt-in scale of the Float32 floor of hit threshold and normal step. Absent or 1 = the floor of earlier scenes." },
+            "hit_precision": { "type": "number", "minimum": 1e-7, "maximum": 0.05 },
+            "step_factor": { "type": "number", "minimum": 0.05, "maximum": 1 },
+            "max_steps": { "type": "integer", "minimum": 20, "maximum": 20000 },
+            "max_distance": { "type": "number", "minimum": 1, "maximum": 1000 },
+            "normal_epsilon": { "type": "number", "minimum": 1e-7, "maximum": 0.05 },
+            "shadow_steps": { "type": "integer", "minimum": 4, "maximum": 2048 },
+            "precision_mode": { "enum": ["fixed", "pixel"], "description": "fixed: hit_precision and normal_epsilon; pixel: hit_pixels and normal_pixels, a share of one pixel (version 10)." },
+            "hit_pixels": { "type": "number", "minimum": 0.01, "maximum": 4 },
+            "normal_pixels": { "type": "number", "minimum": 0.05, "maximum": 16 },
+            "seed": { "type": "integer", "minimum": 0, "maximum": 2147483647 }
+          }
+        }
+      }
+    },
+    "vec3": {
+      "type": "array",
+      "items": {
+        "type": "number"
+      },
+      "minItems": 3,
+      "maxItems": 3
+    },
+    "composition": { "type": "object", "additionalProperties": false, "properties": { "thirds": { "type": "boolean" }, "center": { "type": "boolean" }, "safe": { "type": "boolean" }, "diagonals": { "type": "boolean" }, "locked": { "type": "boolean" } } },
+    "camera": {
+      "type": "object",
+      "required": [
+        "position",
+        "target"
+      ],
+      "properties": {
+        "position": {
+          "$ref": "#/definitions/vec3"
+        },
+        "target": {
+          "$ref": "#/definitions/vec3"
+        },
+        "up": {
+          "$ref": "#/definitions/vec3"
+        },
+        "projection": { "enum": ["perspective", "orthographic"] },
+        "ortho_height": { "type": "number", "minimum": 0.000000001, "maximum": 100000000 },
+        "lens": { "type": "object", "additionalProperties": false, "required": ["focal_length_mm", "sensor_width_mm"], "properties": { "focal_length_mm": { "type": "number", "minimum": 1, "maximum": 2000 }, "sensor_width_mm": { "type": "number", "minimum": 1, "maximum": 200 } } },
+        "dof": { "type": "object", "additionalProperties": false, "required": ["enabled", "focus_mode", "focus_distance", "aperture_radius"], "properties": { "enabled": { "type": "boolean" }, "focus_mode": { "enum": ["target", "manual"] }, "focus_distance": { "type": "number", "minimum": 0.000000001, "maximum": 100000000 }, "aperture_radius": { "type": "number", "minimum": 0, "maximum": 1000 } } },
+        "fov_degrees": {
+          "type": "number",
+          "minimum": 10,
+          "maximum": 120
+        }
+      },
+      "additionalProperties": false
+    },
+    "color": {
+  "type": "object",
+  "description": "How the surface is coloured. The gradient is stored inside the scene, so the file is self-contained.",
+  "required": [
+    "gradient",
+    "measure"
+  ],
+  "properties": {
+    "gradient": {
+      "type": "object",
+      "required": [
+        "stops"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*$"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "stops": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 256,
+          "items": {
+            "type": "object",
+            "required": [
+              "position",
+              "color"
+            ],
+            "properties": {
+              "position": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "color": {
+                "type": "string",
+                "pattern": "^#[0-9a-fA-F]{6}$"
+              },
+              "id": {
+                "type": "string",
+                "pattern": "^[-\\w]{1,64}$"
+              },
+              "transition": {
+                "description": "Material Gradient: width of the blend towards the next stop, 0 (hard) to 1 (whole interval, the old linear blend).",
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "softness": {
+                "description": "Material Gradient 2: how soft the edges of the transition band are, 0 (crisp linear ramp) to 1 (smooth step). Absent = the old behaviour.",
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "material": {
+                "description": "Material Gradient: a self-contained snapshot of the blendable part of a material. active=false keeps it for reversibility. At most 16 stops per gradient.",
+                "type": "object",
+                "required": ["active", "metallic", "roughness", "reflectivity"],
+                "properties": {
+                  "active": { "type": "boolean" },
+                  "name": { "type": "string", "maxLength": 100 },
+                  "source": {
+                    "type": "object",
+                    "required": ["id"],
+                    "properties": {
+                      "id": { "type": "string", "minLength": 1, "maxLength": 128 },
+                      "fingerprint": { "type": "string", "maxLength": 128 },
+                      "provider": { "type": "string", "minLength": 1, "maxLength": 40 },
+                      "license": { "type": "string", "minLength": 1, "maxLength": 60 },
+                      "author": { "type": "string", "minLength": 1, "maxLength": 100 },
+                      "url": { "type": "string", "pattern": "^https://", "maxLength": 300 }
+                    },
+                    "additionalProperties": false
+                  },
+                  "metallic": { "type": "number", "minimum": 0, "maximum": 1 },
+                  "roughness": { "type": "number", "minimum": 0, "maximum": 1 },
+                  "reflectivity": { "type": "number", "minimum": 0, "maximum": 1 },
+                  "baseColor": { "type": "array", "minItems": 3, "maxItems": 3, "items": { "type": "number", "minimum": 0, "maximum": 8 } },
+                  "notBlended": { "type": "array", "maxItems": 12, "items": { "type": "string", "minLength": 1, "maxLength": 60 } },
+                  "textures": { "$ref": "#/definitions/materialTextures", "description": "Material Gradient 2: the PBR maps of the material (baseColor, roughness, metallic, ao only; at most 4 distinct textured materials per gradient)." },
+                  "textureScale": { "type": "number", "minimum": 0.001, "maximum": 100000, "description": "Material Gradient 2: repetitions per object unit for all maps of this material." }
+                },
+                "additionalProperties": false
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "measure": {
+      "enum": [
+        "iterations",
+        "orbit_trap",
+        "slope",
+        "cavity",
+        "radius"
+      ]
+    },
+    "cycles": {
+      "type": "number",
+      "minimum": 0.05,
+      "maximum": 20
+    },
+    "offset": {
+      "type": "number",
+      "minimum": -100,
+      "maximum": 100
+    },
+    "wrap": {
+      "enum": [
+        "repeat",
+        "mirror"
+      ]
+    },
+    "texture": {
+      "type": "object",
+      "description": "A picture laid over the surface colour. The picture is stored inside the scene as a data address.",
+      "required": [
+        "data",
+        "mapping",
+        "scale",
+        "strength"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "maxLength": 100
+        },
+        "data": {
+          "type": "string",
+          "pattern": "^data:image/(png|jpeg);base64,[A-Za-z0-9+/]+={0,2}$",
+          "maxLength": 8000000
+        },
+        "mapping": {
+          "enum": [
+            "triplanar",
+            "spherical"
+          ]
+        },
+        "scale": {
+          "type": "number",
+          "minimum": 0.05,
+          "maximum": 16777216
+        },
+        "strength": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+},
+    "animation": {
+      "type": "object",
+      "description": "Keyframes along a timeline. The chain of formulas stays the same for the whole animation; each keyframe holds the camera, the parameter values of each chain step (same order) and the colouring.",
+      "required": [
+        "duration_seconds",
+        "fps",
+        "speed_mode",
+        "keyframes"
+      ],
+      "properties": {
+        "duration_seconds": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 3600
+        },
+        "fps": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 120
+        },
+        "speed_mode": {
+          "enum": [
+            "adaptive",
+            "uniform"
+          ],
+          "description": "How the camera moves between keyframes. Both keep the keyframe times."
+        },
+        "keyframes": {
+          "type": "array",
+          "maxItems": 64,
+          "description": "In time order, each later than the one before.",
+          "items": {
+            "type": "object",
+            "required": [
+              "time_seconds",
+              "camera",
+              "steps",
+              "color"
+            ],
+            "properties": {
+              "time_seconds": {
+                "type": "number",
+                "minimum": 0
+              },
+              "camera": {
+                "$ref": "#/definitions/camera"
+              },
+              "steps": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "parameters"
+                  ],
+                  "properties": {
+                    "parameters": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "number"
+                      }
+                    },
+                    "weight": { "type": "number", "minimum": 0, "maximum": 10 }
+                  },
+                  "additionalProperties": false
+                }
+              },
+              "color": {
+                "$ref": "#/definitions/color"
+              },
+              "fog": {
+                "$ref": "#/definitions/fog"
+              },
+              "julia_c": {
+                "type": "array",
+                "minItems": 3,
+                "maxItems": 3,
+                "items": { "type": "number", "minimum": -1000, "maximum": 1000 },
+                "description": "The Julia constant at this keyframe (version 11)."
+              },
+              "lights": {
+                "$ref": "#/definitions/lights"
+              },
+              "ambient": {
+                "$ref": "#/definitions/ambient"
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,49 @@
+# Form: torus. Format: see formulas/README.md
+format: 1
+id: shape-torus
+name: "Form: torus"
+catalog:
+  category: difs
+  tags:
+    - shape
+    - SDF
+description: >
+  A torus (ring) around the vertical axis as the end of a chain: the distance to a circle of the
+  ring radius, minus the tube radius, divided by the running derivative.
+
+# NOTE: the distance to a torus is the textbook formula: the distance to the central
+# circle minus the tube radius.
+# A person must still check each name and link before this is set to
+# "verified" (and reviewed: true).
+credits:
+  - name: General mathematics (textbook)
+    role: "standard definitions found in any textbook; no single person is credited (the project owner
+      agreed that general mathematics is credited this way)"
+    status: unverified
+sources:
+  - reference: "Distance to a torus (textbook geometry)"
+    status: unverified
+
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: >
+  General mathematics: standard definitions, not claimed as owned. Written fresh for this project;
+  no code from any program was read or copied. Source details are unverified (see credits).
+reviewed: false
+
+parameters:
+  - { name: ring, label: Ring radius, default: 1, min: 0.1, max: 3 }
+  - { name: tube, label: Tube radius, default: 0.3, min: 0.01, max: 2 }
+
+iteration:
+  iterations: 1
+  # A shape: it does not move the point, it measures the distance to the shape at the end of a chain.
+  carry: [ z, dr ]
+  variables:
+    - { name: z, type: vec3, init: pos }
+    - { name: dr, type: float, init: 1 }
+  steps:
+    - "dr = dr"
+  distance: "(length(vec3(sqrt(z.x * z.x + z.z * z.z) - ring, z.y, 0.0)) - tube) / abs(dr)"
+
+view:
+  camera_distance: 4

@@ -1,0 +1,39 @@
+format: 3
+id: mb3d-amazingboxsse2
+name: _AmazingBoxSSE2
+catalog:
+  category: fractals
+  tags: [ Amazing Box ]
+description: >-
+  Amazing Box without adding the C component, with a slider for Fold; intended to be combined with
+  other formulas (the description).
+credits:
+  - { name: okänd, role: "Author not stated in the formula file", status: unverified }
+sources:
+  - {
+      reference: "Mandelbulb 3D 1.9.9 (sr37), M3Formulas, file _AmazingBoxSSE2.m3f: [OPTIONS] and the
+        description after [END]; the code block was never read.",
+      status: unverified
+    }
+  - { reference: NewFormulas/final-fixes-08/BATCH-04.md, status: unverified }
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: The equations are the formula file's own description; implementation in
+  src/engine/formula/followupKernels.ts. No comparison with a running Mandelbulb 3D.
+reviewed: false
+provenance:
+  origin: mandelbulb3d
+  file: _AmazingBoxSSE2.m3f
+  credited_author: okänd
+  credited_authors: [ okänd ]
+  collection: M3Formulas
+  note: Independent reimplementation from the equations in the formula file's own description. The
+    [CODE] section was not read. Native image equivalence unverified.
+  verified_against_mb3d: false
+parameters:
+  - { name: scale, label: "Scale", default: 2, min: -8, max: 8 }
+  - { name: min_r, label: "Min R", default: 0.5, min: -8, max: 8 }
+  - { name: fold, label: "Fold", default: 1, min: -8, max: 8 }
+  - { name: constant_w, label: "Julia constant w", default: 0, min: -4, max: 4 }
+  - { name: bailout_squared, label: "Escape limit (radius²)", default: 1024, min: 1, max: 65536 }
+iteration: { kernel: mb3d-amazingboxsse2, iterations: 16 }
+view: { camera_distance: 5 }

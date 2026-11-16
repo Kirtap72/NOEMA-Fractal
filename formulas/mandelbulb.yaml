@@ -1,0 +1,68 @@
+# Mandelbulb (power n). Format: see formulas/README.md
+format: 1
+id: mandelbulb
+name: Mandelbulb
+description: >
+  A 3D version of the Mandelbrot set. Each point is turned into spherical
+  coordinates, its angles are multiplied by the power and its distance from
+  the centre is raised to the power, then the starting point is added. Power 8
+  gives the well known shape.
+
+# WARNING: the names and links below were written from memory by the AI
+# assistant and have NOT been checked against the real sources. Do not publish
+# them as fact until someone has checked each entry and changed the status to
+# "verified" (then also set reviewed: true).
+credits:
+  - name: Daniel White
+    role: "recalled from memory: named the Mandelbulb and developed the power-8 formula with Paul Nylander, 2009"
+    status: unverified
+  - name: Paul Nylander
+    role: "recalled from memory: worked out the trigonometric power formula with Daniel White, 2009"
+    status: unverified
+  - name: Rudy Rucker
+    role: "read by the AI assistant on 2026-10-06 in his 2009 blog post: describes his own spherical-coordinate squaring (radius squared, angles doubled) from 1988, before White's work in 2007"
+    status: unverified
+  - name: Mikael Hvidtfeldt Christensen
+    role: "recalled from memory: wrote a widely read explanation of distance estimates for 3D fractals (blog Syntopia)"
+    status: unverified
+sources:
+  - url: https://www.rudyrucker.com/blog/2009/09/15/in-search-of-the-mandelbulb/
+    status: unverified
+  - url: https://www.skytopia.com/project/fractal/mandelbulb.html
+    status: unverified
+  - url: https://www.bugman123.com/Hypercomplex/index.html
+    status: unverified
+
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: >
+  Mathematical idea, not claimed as owned. The file text and code are written
+  fresh for this project from the public description of the formula, not copied
+  from any other program. Source details are unverified (see credits).
+reviewed: false
+
+parameters:
+  - { name: power, label: Power, default: 8, min: 2, max: 16 }
+
+iteration:
+  iterations: 12
+  # Passed on to the next step when formulas are chained.
+  carry: [z, dr]
+  variables:
+    - { name: z, type: vec3, init: pos }
+    - { name: dr, type: float, init: 1 }
+    - { name: r, type: float, init: 0 }
+    - { name: theta, type: float, init: 0 }
+    - { name: phi, type: float, init: 0 }
+  steps:
+    - "r = length(z)"
+    - break_if: "r > 4.0"
+    # Angles of the point in spherical coordinates, multiplied by the power.
+    - "theta = acos(clamp(z.z / r, -1.0, 1.0)) * power"
+    - "phi = atan2(z.y, z.x) * power"
+    # Running derivative, used for the distance estimate below.
+    - "dr = pow(r, power - 1.0) * power * dr + 1.0"
+    - "z = pow(r, power) * vec3(sin(theta) * cos(phi), sin(theta) * sin(phi), cos(theta)) + pos"
+  distance: "0.5 * log(r) * r / dr"
+
+view:
+  camera_distance: 3.5

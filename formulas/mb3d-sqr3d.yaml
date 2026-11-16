@@ -1,0 +1,53 @@
+# _sqr_3D (transform). Format: see formulas/README.md
+# An independent reimplementation of the mathematics of a Mandelbulb 3D formula (CLAUDE.md section 10): written from the author's own description
+# in the formula file (the text after [END]) and the [OPTIONS] list only; the compiled code section was not used.
+format: 2
+id: mb3d-sqr3d
+name: "_sqr_3D: transform"
+description: >
+  Squares each coordinate, scales and shifts: p' = Scale (x^2, y^2, z^2) + fix. The author advises disabling the analytical DE to see the effect.
+credits:
+  - name: okänd
+    role: "author not named in the formula file"
+    status: unverified
+sources:
+  - reference: "Mandelbulb 3D 1.9.9 (sr37), collection M3Formulas, file _sqr_3D.m3f: the [OPTIONS] list and the description after [END]; the compiled code section was not read."
+    status: unverified
+  - reference: NewFormulas/coverage-02/BATCH-01.md
+    status: unverified
+
+provenance:
+  origin: mandelbulb3d
+  file: _sqr_3D.m3f
+  credited_author: okänd
+  collection: M3Formulas
+  note: >
+    An independent reimplementation of the mathematical formula from the equations written in the formula file's own description. The [CODE]
+    section was not read, copied or translated. No comparison with a running Mandelbulb 3D has been made.
+  verified_against_mb3d: false
+
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: >
+  Equations taken from the formula file's own description; reimplemented independently, not claimed as owned. No code from any program was
+  read or copied. No native MB3D comparison has been made. Source details are unverified (see credits).
+reviewed: false
+
+parameters:
+  - { name: scale, label: "Scale", default: 1, min: -1000, max: 1000 }
+  - { name: fixx, label: "fixX", default: 0, min: -1000, max: 1000 }
+  - { name: fixy, label: "fixY", default: 0, min: -1000, max: 1000 }
+  - { name: fixz, label: "fixZ", default: 0, min: -1000, max: 1000 }
+
+iteration:
+  iterations: 1
+  # A transform: it has no distance. It passes the point on. dr is not written (DEoption -1: the analytic derivative is left alone).
+  carry: [z, dr]
+  variables:
+    - { name: z, type: vec3, init: pos }
+    - { name: dr, type: float, init: 1 }
+
+  steps:
+    - "z = vec3(scale * z.x * z.x + fixx, scale * z.y * z.y + fixy, scale * z.z * z.z + fixz)"
+
+view:
+  camera_distance: 4

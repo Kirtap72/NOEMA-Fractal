@@ -1,0 +1,52 @@
+# Kaleidoscope around an axis (transform). Format: see formulas/README.md
+format: 1
+id: polygon-fold
+name: Kaleidoscope around an axis (transform)
+description: >
+  Folds space around the vertical (y) axis into n equal wedges, each mirrored like a kaleidoscope,
+  so a shape drawn after this step repeats n times around the axis. The angle around the axis is
+  taken modulo 360/n degrees and mirrored in the middle of the wedge. Distances are kept.
+
+# NOTE: the AI assistant wrote this step from the dihedral symmetry group (Wikipedia:
+# Dihedral group): rotations by 360/n degrees and mirrors. The use of the
+# angle around the y axis is the assistant's choice.
+# A person must still check each name and link before this is set to
+# "verified" (and reviewed: true).
+credits:
+  - name: General mathematics (textbook)
+    role: "standard definitions found in any textbook; no single person is credited (the project owner
+      agreed that general mathematics is credited this way)"
+    status: unverified
+sources:
+  - url: https://en.wikipedia.org/wiki/Dihedral_group
+    status: unverified
+
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: >
+  General mathematics: standard definitions, not claimed as owned. Written fresh for this project;
+  no code from any program was read or copied. Source details are unverified (see credits).
+reviewed: false
+
+parameters:
+  - { name: n, label: Number of wedges, default: 6, min: 2, max: 16 }
+
+iteration:
+  iterations: 1
+  # This is a transform: it has no distance. It passes the point on to the next step.
+  carry: [ z, dr ]
+  variables:
+    - { name: z, type: vec3, init: pos }
+    - { name: dr, type: float, init: 1 }
+    - { name: r, type: float, init: 0 }
+    - { name: a, type: float, init: 0 }
+    - { name: w, type: float, init: 1 }
+  steps:
+    - "w = 2.0 * pi / floor(n + 0.5)"
+    - "r = sqrt(z.x * z.x + z.z * z.z)"
+    - "a = w * fract(atan2(z.z, z.x) / w)"
+    # Mirror in the middle of the wedge.
+    - "a = min(a, w - a)"
+    - "z = vec3(r * cos(a), z.y, r * sin(a))"
+
+view:
+  camera_distance: 4

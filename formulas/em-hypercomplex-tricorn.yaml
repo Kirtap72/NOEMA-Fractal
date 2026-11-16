@@ -1,0 +1,61 @@
+# Hypercomplex tricorn, a 3D slice of a 4D shape. Format: see formulas/README.md
+format: 1
+id: em-hypercomplex-tricorn
+name: Hypercomplex tricorn (3D slice)
+description: >
+  The iteration q -> conj(q squared) + c with four-dimensional hypercomplex
+  numbers q = (x, y, z, w), where "conj" flips the sign of the y component
+  only. A point in space is c = (x, y, z, w) with w held fixed (the slice),
+  and the iteration starts at q = c. The set is four-dimensional; this draws
+  the part at the chosen w. It is a three-dimensional counterpart of the
+  tricorn (the Mandelbrot set with the complex conjugate). The distance is an
+  approximation.
+
+# NOTE: the AI assistant read section 7 ("Mathematics", the part "Conj function
+# of Y") and the description of "HyperTricorn" in section 5 of the readme that
+# comes with the EM formula package, which the project owner has allowed, and
+# wrote this formula from the four component equations given there. Nothing
+# was taken from any .m3f file. The escape radius and the distance estimate are
+# the assistant's own choices and are approximate. A person must still open the
+# source and check each name and link before this is set to "verified" (and
+# reviewed: true).
+credits:
+  - name: Edgar Malinovsky
+    role: "author of the EM formula package and its readme, where this formula is described; the readme asks that users give proper credit"
+    status: unverified
+sources:
+  - reference: "Edgar Malinovsky, readme of the EM formula package for Mandelbulb 3D (EM_formulasFULL_readme.txt), section 5 ('HyperTricorn') and section 7 ('Conj function of Y')"
+    status: unverified
+
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: >
+  Mathematical idea. The author's readme asks for proper credit when the
+  algorithms are used. Written fresh for this project from the component
+  equations in the readme; no code from any .m3f file was read or copied. The
+  escape radius and the distance estimate are the assistant's own. Source
+  details are unverified (see credits). Whether the readme's wording is a
+  licence has not been checked.
+reviewed: false
+
+parameters:
+  - { name: w, label: Slice w, default: 0, min: -1.5, max: 1.5 }
+
+iteration:
+  iterations: 12
+  # Passed on to the next step when formulas are chained.
+  carry: [q, dr]
+  variables:
+    - { name: q, type: vec4, init: "vec4(pos.x, pos.y, pos.z, w)" }
+    - { name: dr, type: float, init: 1 }
+    - { name: r, type: float, init: 0 }
+  steps:
+    - "r = length(q)"
+    - break_if: "r > 4.0"
+    - "dr = 2.0 * r * dr + 1.0"
+    # The square with the y component flipped, as given in the readme, then add c:
+    # x1 = x^2 - y^2 - z^2 + w^2, y1 = 2zw - 2xy, z1 = 2xz - 2yw, w1 = 2xw + 2yz.
+    - "q = vec4(q.x * q.x - q.y * q.y - q.z * q.z + q.w * q.w, 2.0 * q.z * q.w - 2.0 * q.x * q.y, 2.0 * q.x * q.z - 2.0 * q.y * q.w, 2.0 * q.x * q.w + 2.0 * q.y * q.z) + vec4(pos.x, pos.y, pos.z, w)"
+  distance: "0.5 * log(r) * r / dr"
+
+view:
+  camera_distance: 3.5

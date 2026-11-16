@@ -1,0 +1,102 @@
+format: 3
+id: octahedron-4
+name: Octahedron4
+description: Polyhedral escape-time IFS in 4D. See the batch specification for domains and states.
+credits:
+  - name: LUCA GN
+    role: Credited author according to the specification
+    status: unverified
+sources:
+  - reference: "NewFormulas/batch-02/08-Octahedron4.md; authorised normalised mathematical specification
+      from M3Formulas/Octahedron4.m3f. Provenance and recovery evidence:
+      NewFormulas/batch-02/manifest.json (m3formulas--octahedron4--977d13cf)."
+    status: unverified
+added_by: Codex
+math_status: Independent implementation from the authorised mathematical migration package of the
+  project owner; the licence of the project.
+reviewed: false
+provenance:
+  origin: mandelbulb3d
+  file: Octahedron4.m3f
+  credited_author: LUCA GN
+  collection: M3Formulas
+  note: Independent reimplementation from the normalized mathematical migration specification
+    authorized by the project owner. The [CODE] section was not read, copied or translated by this
+    implementation. Mathematical recovery validation is not native MB3D or image verification.
+  verified_against_mb3d: false
+parameters:
+  - name: scale
+    label: Scale
+    default: 2
+    min: -8
+    max: 8
+  - name: cscale_x
+    label: CScale X
+    default: 0
+    min: -8
+    max: 8
+  - name: cscale_y
+    label: CScale Y
+    default: 1
+    min: -8
+    max: 8
+  - name: cscale_z
+    label: CScale Z
+    default: 0
+    min: -8
+    max: 8
+  - name: cscale_w
+    label: CScale W
+    default: 0
+    min: -8
+    max: 8
+  - name: rotation_yz
+    label: Rotation YZ
+    default: 0
+    min: -180
+    max: 180
+  - name: rotation_xz
+    label: Rotation XZ
+    default: 0
+    min: -180
+    max: 180
+  - name: rotation_xy
+    label: Rotation XY
+    default: 0
+    min: -180
+    max: 180
+  - name: rotation_xw
+    label: Rotation XW
+    default: 0
+    min: -180
+    max: 180
+  - name: rotation_yw
+    label: Rotation YW
+    default: 0
+    min: -180
+    max: 180
+  - name: rotation_zw
+    label: Rotation ZW
+    default: 0
+    min: -180
+    max: 180
+  - name: slice_w
+    label: 4D slice / extra w
+    default: 0
+    min: -4
+    max: 4
+  - name: constant_w
+    label: Julia constant w
+    default: 0
+    min: -4
+    max: 4
+  - name: bailout_squared
+    label: Escape limit (radius²)
+    default: 1024
+    min: 1
+    max: 65536
+iteration:
+  kernel: octahedron-4
+  iterations: 16
+view:
+  camera_distance: 5

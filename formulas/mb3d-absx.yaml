@@ -1,0 +1,24 @@
+format: 3
+id: mb3d-absx
+name: _AbsX
+description: Absolute value folding around x=-fixX; uncounted helper slot with preserved state.
+credits:
+  - { name: Luca GN, role: Formula author 2011, status: unverified }
+sources:
+  - { reference: NewFormulas/preset-compatibility/_AbsX.md, status: unverified }
+added_by: Codex
+math_status: Independent implementation of a documented and recovered equation; typed reference validated.
+reviewed: false
+provenance:
+  origin: mandelbulb3d
+  file: _AbsX.m3f
+  credited_author: Luca GN
+  credited_authors: [ Luca GN ]
+  collection: M3Formulas
+  note: Independent reimplementation from recovered equations. Explicitly authorized mathematical
+    recovery. No executable legacy code included. Native image equivalence unverified.
+  verified_against_mb3d: false
+parameters:
+  - { name: fix_x, label: fixX, default: 0, min: -8, max: 8 }
+iteration: { kernel: mb3d-absx, iterations: 1 }
+view: { camera_distance: 5 }

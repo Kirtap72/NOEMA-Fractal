@@ -1,0 +1,57 @@
+format: 3
+id: aex-octo
+name: Aex-Octo
+description: Asymmetric coupled quadratic 3D recursion. See the batch specification for domains and states.
+credits:
+  - name: Aexion
+    role: Credited author according to the specification
+    status: unverified
+sources:
+  - reference: "NewFormulas/batch-02/03-Aex-Octo.md; authorised normalised mathematical specification
+      from M3Formulas/Aex-Octo.m3f. Provenance and recovery evidence:
+      NewFormulas/batch-02/manifest.json (m3formulas--aex-octo--afea3c50)."
+    status: unverified
+added_by: Codex
+math_status: Independent implementation from the authorised mathematical migration package of the
+  project owner; the licence of the project.
+reviewed: false
+provenance:
+  origin: mandelbulb3d
+  file: Aex-Octo.m3f
+  credited_author: Aexion
+  collection: M3Formulas
+  note: Independent reimplementation from the normalized mathematical migration specification
+    authorized by the project owner. The [CODE] section was not read, copied or translated by this
+    implementation. Mathematical recovery validation is not native MB3D or image verification.
+  verified_against_mb3d: false
+parameters:
+  - name: xz_mul
+    label: XZ mul
+    default: 1.25
+    min: -8
+    max: 8
+  - name: sq_mul
+    label: Sq mul
+    default: 1
+    min: -8
+    max: 8
+  - name: slice_w
+    label: 4D slice / extra w
+    default: 0
+    min: -4
+    max: 4
+  - name: constant_w
+    label: Julia constant w
+    default: 0
+    min: -4
+    max: 4
+  - name: bailout_squared
+    label: Escape limit (radius²)
+    default: 16
+    min: 1
+    max: 65536
+iteration:
+  kernel: aex-octo
+  iterations: 16
+view:
+  camera_distance: 5

@@ -1,0 +1,87 @@
+{
+  "format": 3,
+  "id": "mb3d-roomdoorsifs",
+  "name": "RoomDoorsIFS",
+  "description": "Independent normalized mathematics; see source contract.",
+  "credits": [ { "name": "Luca GN", "role": "Author of the distributed variant", "status": "unverified" } ],
+  "sources": [ { "reference": "NewFormulas/preset-compatibility/RoomDoorsIFS.md", "status": "unverified" } ],
+  "added_by": "Codex",
+  "math_status": "Typed numeric reference verified; native image equivalence unverified.",
+  "reviewed": false,
+  "provenance":
+    {
+      "origin": "mandelbulb3d",
+      "file": "RoomDoorsIFS.m3f",
+      "credited_author": "Luca GN",
+      "credited_authors": [ "Luca GN" ],
+      "collection": "M3Formulas",
+      "note": "Independent reimplementation of the mathematical formula. Explicitly authorized
+        mathematical recovery; no original executable code distributed.",
+      "verified_against_mb3d": false
+    },
+  "parameters":
+    [
+      {
+          "name": "wall_width",
+          "label": "WofWall (- for roof)",
+          "default": 0.1,
+          "min": -10000,
+          "max": 10000
+        },
+      { "name": "wall_height", "label": "HofWall", "default": 1.0, "min": -10000, "max": 10000 },
+      { "name": "door_height", "label": "HofDoor", "default": 0.65, "min": -10000, "max": 10000 },
+      { "name": "scale", "label": "Scale", "default": 2.0, "min": 1e-6, "max": 10000 },
+      { "name": "z_add", "label": "Z add", "default": 0.0, "min": -10000, "max": 10000 },
+      {
+          "name": "door_position",
+          "label": "Door pos (Y+)",
+          "default": 0.0,
+          "min": -10000,
+          "max": 10000
+        },
+      {
+          "name": "wall_position",
+          "label": "Wall pos (X+)",
+          "default": -2.0,
+          "min": -10000,
+          "max": 10000
+        },
+      {
+          "name": "fold_order",
+          "label": "PFOrder, apply if +",
+          "default": -4,
+          "min": -10000,
+          "max": 10000
+        },
+      { "name": "door_width", "label": "WofDoor", "default": 0.2, "min": -10000, "max": 10000 },
+      { "name": "wall_angle", "label": "Wall Rho", "default": 0, "min": -10000, "max": 10000 },
+      { "name": "door_angle", "label": "DoorSides Rho", "default": 0, "min": -10000, "max": 10000 },
+      {
+          "name": "door_period",
+          "label": "DoorPeriod (0 OFF)",
+          "default": 0,
+          "min": -10000,
+          "max": 10000
+        },
+      { "name": "arc_radius", "label": "ArcR", "default": 1e-25, "min": -10000, "max": 10000 },
+      {
+          "name": "orbit_iterations",
+          "label": "OTrapOnIts",
+          "default": 0.1,
+          "min": -10000,
+          "max": 10000
+        },
+      { "name": "orbit_offset", "label": "OTrapOffset", "default": 0, "min": -10000, "max": 10000 },
+      {
+          "name": "orbit_roof",
+          "label": "OTrapRoof (neg OFF)",
+          "default": -1,
+          "min": -10000,
+          "max": 10000
+        },
+      { "name": "inside_render", "label": "Inside render", "default": 0, "min": 0, "max": 1 },
+      { "name": "de_stop", "label": "DE stop", "default": 0, "min": 0, "max": 10000 }
+    ],
+  "iteration": { "kernel": "mb3d-roomdoorsifs", "iterations": 12 },
+  "view": { "camera_distance": 5 }
+}

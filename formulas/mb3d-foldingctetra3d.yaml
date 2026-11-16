@@ -1,0 +1,43 @@
+format: 3
+id: mb3d-foldingctetra3d
+name: _FoldingCTetra3d
+catalog:
+  category: transforms
+  tags: [ transform, fold, tetrahedron, C vector ]
+description: >-
+  Tetrahedral-symmetric foldings of the C vector (and optionally also of xyz): the first half swaps
+  axes when x+y, x+z or y+z are negative, the second half when x-y, x-z or y-z are negative. If the
+  first half is turned off the second still runs, so the transformation never becomes empty. Gives
+  Sierpinski-like tetrahedron shapes when placed before an ordinary formula.
+credits:
+  - {
+      name: Luca GN,
+      role: "Formula author 2011 (according to the formula description)",
+      status: unverified
+    }
+sources:
+  - {
+      reference: "Mandelbulb 3D 1.9.9 (sr37), M3Formulas, file _FoldingCTetra3d.m3f: [OPTIONS] and the
+        description after [END]; the code block was never read.",
+      status: unverified
+    }
+  - { reference: NewFormulas/formula-05/BATCH-05.md, status: unverified }
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: The equations are the formula file's own description; implementation in
+  src/engine/formula/batch05Kernels.ts. No comparison with a running Mandelbulb 3D.
+reviewed: false
+provenance:
+  origin: mandelbulb3d
+  file: _FoldingCTetra3d.m3f
+  credited_author: Luca GN
+  credited_authors: [ Luca GN ]
+  collection: M3Formulas
+  note: Independent reimplementation from the equations in the formula file's own description. The
+    [CODE] section was not read. Native image equivalence unverified.
+  verified_against_mb3d: false
+parameters:
+  - { name: c_fold_first_half, label: "C-fold 1:a halvan", default: 1, min: 0, max: 1 }
+  - { name: c_fold_second_half, label: "C-fold 2:a halvan", default: 1, min: 0, max: 1 }
+  - { name: fold_xyz_too, label: "Also fold xyz", default: 0, min: 0, max: 1 }
+iteration: { kernel: mb3d-foldingctetra3d, iterations: 1 }
+view: { camera_distance: 5 }

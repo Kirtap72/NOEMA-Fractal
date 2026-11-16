@@ -1,0 +1,202 @@
+/* ARTIST-UX-POLISH-02: the artist-first shell. Scoped to body.artist-shell, so nothing here can change a scene value.
+   Design rule: the viewport carries nothing but the artwork. Every control lives in the top bar or the sidebar; texture and
+   background images are drawn only on two layers (.chrome-bg) that sit behind those two areas and never overlap the picture. */
+body.artist-shell {
+  /* The theme (Utseende) overwrites the colour tokens inline; these are the defaults (theme "Grafit"). */
+  --bg: #0e1014; --surface: #15181d; --raised: #1c2027; --line: #292e37; --line-strong: #3b424d; --glow-a: #2b2a2e; --glow-b: #171a20;
+  --text: #e9ecf1; --muted: #a0a8b5; --accent: #ffb454; --accent-ink: #1a1203; --good: #7fd1a0; --warn: #f2b35b;
+  --radius: 10px; --bar: 52px; --panel-alpha: 0.92;
+  /* Cards behind labels and controls: the artist's "Panelernas täthet" decides how solid they are; the background is never darkened to make room for text. */
+  --card: color-mix(in srgb, var(--surface) calc(var(--panel-alpha) * 100%), transparent);
+  --card-raised: color-mix(in srgb, var(--raised) calc(var(--panel-alpha) * 100%), transparent);
+  --field: color-mix(in srgb, var(--bg) 70%, black);
+  --hover: color-mix(in srgb, var(--text) 7%, transparent);
+  --font: "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-display: "Segoe UI Variable Display", "Segoe UI Semibold", "Segoe UI", system-ui, sans-serif;
+  font-family: var(--font); color: var(--text); font-feature-settings: "kern", "liga"; -webkit-font-smoothing: antialiased;
+}
+body.artist-shell.theme-light { --good: #1f7a45; --warn: #8f5200; --field: color-mix(in srgb, var(--surface) 55%, white); }
+body.artist-shell [hidden] { display: none !important; }
+body.artist-shell.has-bg-image #controls .panel, body.artist-shell.has-bg-image .settings-part-bar button { backdrop-filter: blur(6px); }
+/* Text that sits directly on the background (not on a card) gets a soft halo in the theme's own ground colour instead of a darker picture. */
+body.artist-shell.has-bg-image #artist-bar :is(.shell-tab, .shell-brand, #panel-toggle), body.artist-shell.has-bg-image #controls :is(h2.settings-group, .settings-group-count) { text-shadow: 0 0 3px var(--bg), 0 0 9px var(--bg); }
+
+/* ---- background layers (chrome only) ---------------------------------------------------------------------------- */
+.chrome-bg { position: fixed; overflow: hidden; pointer-events: none; z-index: 1; }
+.chrome-bg[data-region=bar] { z-index: 9; }
+.cb-base, .cb-pattern, .cb-dim { position: absolute; inset: 0; }
+.cb-base { background: radial-gradient(130% 120% at 0% 0%, var(--glow-a) 0%, transparent 62%), linear-gradient(180deg, var(--glow-b), var(--bg)); }
+.cb-pattern { background-repeat: repeat; -webkit-mask-image: linear-gradient(180deg, #000 0%, #000a 55%, #0003 100%); mask-image: linear-gradient(180deg, #000 0%, #000a 55%, #0003 100%); }
+.cb-image { position: absolute; inset: -30px; background-attachment: fixed; }
+.chrome-bg[data-region=side] { border-right: 1px solid var(--line); box-sizing: border-box; }
+.chrome-bg[data-region=bar] { border-bottom: 1px solid var(--line); box-sizing: border-box; box-shadow: 0 6px 24px #0006; }
+
+/* ---- top bar ---------------------------------------------------------------------------------------------------- */
+#artist-bar { position: fixed; z-index: 10; top: 0; left: 0; right: 0; height: var(--bar); box-sizing: border-box; display: flex; align-items: center; gap: 14px; padding: 0 14px; background: transparent; color: var(--text); }
+#artist-bar #panel-toggle { position: static; padding: 6px 10px; font: 500 12px var(--font); color: var(--muted); background: transparent; border: 1px solid var(--line); border-radius: 8px; cursor: pointer; white-space: nowrap; }
+#artist-bar #panel-toggle:hover { color: var(--text); border-color: var(--line-strong); }
+.shell-brand { display: flex; align-items: center; gap: 8px; font: 600 15px var(--font-display); letter-spacing: .03em; white-space: nowrap; }
+.shell-logo { color: var(--accent); font-size: 20px; line-height: 1; }
+.shell-tabs [role=tablist] { display: flex; gap: 2px; }
+.shell-tab { appearance: none; background: transparent; border: 0; color: var(--muted); font: 600 13.5px var(--font); letter-spacing: .01em; padding: 8px 12px; border-radius: 8px; cursor: pointer; position: relative; white-space: nowrap; }
+.shell-tab:hover { color: var(--text); background: var(--hover); }
+.shell-tab.on { color: var(--text); background: color-mix(in srgb, var(--text) 10%, transparent); }
+.shell-tab.on::after { content: ""; position: absolute; left: 12px; right: 12px; bottom: 2px; height: 2px; border-radius: 2px; background: var(--accent); }
+.shell-spacer { flex: 1; }
+.shell-icon, .shell-mode { appearance: none; background: var(--raised); color: var(--text); border: 1px solid var(--line); border-radius: 8px; padding: 6px 12px; font: 500 13px var(--font); cursor: pointer; }
+.shell-icon:hover:not(:disabled), .shell-mode:hover { border-color: var(--line-strong); background: color-mix(in srgb, var(--raised) 88%, white); }
+.shell-icon:disabled { opacity: .4; cursor: default; }
+.shell-mode[aria-pressed=true] { border-color: var(--accent); color: var(--accent); }
+#artist-bar button:focus-visible, .shell-create button:focus-visible, .shell-view button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* ---- nothing floats over the artwork ----------------------------------------------------------------------------- */
+body.artist-shell #hint, body.artist-shell #lookdev-restore, body.artist-shell #ai-dock-toggle { display: none !important; }
+
+/* ---- sidebar ---------------------------------------------------------------------------------------------------- */
+body.artist-shell #controls { top: var(--bar) !important; left: 0; bottom: 0; padding: 14px 14px 40px; box-sizing: border-box; gap: 12px; background: transparent; scrollbar-width: thin; scrollbar-color: var(--line-strong) transparent; z-index: 2; }
+body.artist-shell[data-shell-tab=ai]:not(.shell-advanced) #controls { width: min(max(var(--sidebar-width, 460px), 560px), calc(100vw - 28px)) !important; }
+body.artist-shell #controls .panel { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); color: var(--text); box-shadow: 0 1px 0 color-mix(in srgb, var(--text) 4%, transparent) inset, 0 8px 22px #0002; }
+body.artist-shell #controls button:not(.shell-link):not(.shell-seg):not(.macro-button):not(.preset-card):not(.shell-primary):not(.theme-card) { background: var(--raised); color: var(--text); border: 1px solid var(--line); border-radius: 7px; padding: 4px 10px; font-family: var(--font); }
+body.artist-shell #controls button:not(:disabled):hover { border-color: var(--line-strong); }
+body.artist-shell #controls input[type=number], body.artist-shell #controls input[type=text], body.artist-shell #controls input[type=search], body.artist-shell #controls select, body.artist-shell #controls textarea { background: var(--field); color: var(--text); border: 1px solid var(--line); border-radius: 6px; padding: 3px 6px; font-family: var(--font); }
+body.artist-shell #controls input[type=range] { accent-color: var(--accent); }
+body.artist-shell #controls input:focus-visible, body.artist-shell #controls select:focus-visible, body.artist-shell #controls button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+body.artist-shell #controls summary { color: var(--text); cursor: pointer; }
+body.artist-shell:not(.shell-advanced) .settings-group-row { display: none; }
+body.artist-shell:not(.shell-advanced) .settings-chips, body.artist-shell:not(.shell-advanced) .settings-all { display: none; }
+body.artist-shell #settings-nav { position: sticky; top: -14px; z-index: 4; margin: -14px -14px 0; padding: 14px 14px 10px; background: color-mix(in srgb, var(--bg) calc(var(--panel-alpha) * 85%), transparent); backdrop-filter: blur(10px); border: 0; border-bottom: 1px solid var(--line); border-radius: 0; }
+body.artist-shell #settings-nav input[type=search] { width: 100%; box-sizing: border-box; }
+body.artist-shell .settings-part-bar button { background: var(--card) !important; border: 1px solid var(--line) !important; border-radius: 8px !important; color: var(--text); font: 600 13px var(--font) !important; padding: 8px 10px !important; text-align: left; width: 100%; }
+body.artist-shell .settings-part-bar button:hover { border-color: var(--line-strong) !important; }
+body.artist-shell h2.settings-group, body.artist-shell .settings-group { font: 600 12px var(--font); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+body.artist-shell .dup-title { display: none !important; }
+body.artist-shell #controls .note, body.artist-shell #controls .ainfo { color: var(--muted); }
+
+/* ---- view tab: what used to float over the picture --------------------------------------------------------------- */
+.shell-view { position: static !important; display: flex; flex-direction: column; gap: 16px; padding: 14px !important; }
+.view-section { display: flex; flex-direction: column; gap: 8px; }
+.view-section > .shell-h { margin: 0; }
+.shell-view #preview-access { position: static !important; max-width: none !important; width: auto; background: transparent !important; border: 0 !important; padding: 0 !important; box-shadow: none; color: var(--text); gap: 10px !important; left: auto !important; }
+.shell-view #preview-access > div[role=group] { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.shell-view #preview-access button, .shell-view #preview-access select { background: var(--raised); color: var(--text); border: 1px solid var(--line); border-radius: 7px; padding: 6px 11px !important; font: 500 13px var(--font) !important; cursor: pointer; }
+.shell-view #preview-access button:hover { border-color: var(--line-strong); }
+.shell-view #preview-access [aria-pressed=true] { border-color: var(--accent); color: var(--accent); background: color-mix(in srgb, var(--accent) 12%, var(--raised)); }
+body.artist-shell .shell-primary { color: var(--accent-ink); }
+.shell-view #viewport-quality { position: static !important; top: auto; right: auto; background: transparent; border: 0; color: var(--muted); font: 500 13px var(--font); }
+.shell-view #lookdev-focus { border-color: var(--line-strong); }
+.shell-view #preview-access #preview-controls-toggle { margin-left: 0 !important; }
+.shell-view #lookdev-state, .shell-view #lookdev-preview { color: var(--muted) !important; }
+.view-status { display: flex; flex-direction: column; gap: 4px; font-size: 12.5px; color: var(--muted); }
+.shell-view #fps, .shell-view #camera-frame-label, .shell-view #lookdev-status { position: static !important; display: block; background: transparent !important; border: 0 !important; padding: 0 !important; font: 12.5px var(--font) !important; color: var(--muted) !important; max-width: none !important; pointer-events: auto; }
+.shell-view #fps { color: var(--text) !important; font-weight: 600 !important; }
+.shell-view #preview-diagnostics { position: static !important; max-width: none !important; background: transparent !important; padding: 0 !important; font-size: 12px; color: var(--muted); }
+.shell-view #preview-diagnostics summary { cursor: pointer; }
+.shell-view #preview-diagnostics pre { max-height: 220px; }
+
+/* ---- AI studio tab (the existing chat and approval panels, moved here) ------------------------------------------- */
+body.artist-shell #ai-dock { position: static !important; display: block; min-width: 0; max-width: none; width: auto; background: transparent; border: 0; box-shadow: none; z-index: auto; color: var(--text); }
+body.artist-shell #ai-dock .ai-dock-body { overflow: visible; padding: 0; }
+
+/* ---- create tab -------------------------------------------------------------------------------------------------- */
+.shell-create { position: static !important; display: flex; flex-direction: column; gap: 18px; padding: 14px !important; }
+.shell-h { margin: 0 0 4px; font: 600 15px var(--font-display); letter-spacing: .01em; }
+.shell-sub { margin: 14px 0 6px; font: 600 12px var(--font); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.shell-note { margin: 0 0 10px; color: var(--muted); font-size: 12.5px; line-height: 1.5; }
+.shell-welcome { background: linear-gradient(135deg, color-mix(in srgb, var(--accent) 16%, var(--raised)), var(--raised)); border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--line)); border-radius: var(--radius); padding: 14px; }
+.shell-welcome p { margin: 4px 0 12px; color: var(--text); font-size: 13px; line-height: 1.5; }
+.shell-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.shell-primary { appearance: none; background: var(--accent); color: var(--accent-ink); border: 0; border-radius: 8px; padding: 9px 14px; font: 650 13px var(--font); cursor: pointer; }
+.shell-primary:hover { filter: brightness(1.08); }
+.shell-link { appearance: none; background: transparent; border: 0; color: var(--accent); font: 500 12.5px var(--font); cursor: pointer; padding: 4px 2px; text-decoration: underline; text-underline-offset: 3px; }
+.shell-link:disabled { color: var(--muted); cursor: default; text-decoration: none; }
+.macro-grid { display: grid; gap: 8px; }
+.macro-card { background: var(--card-raised); border: 1px solid var(--line); border-radius: var(--radius); padding: 10px 12px; transition: border-color .2s, box-shadow .2s; }
+.macro-card:hover { border-color: var(--line-strong); }
+.macro-card.applied { border-color: var(--accent); box-shadow: 0 0 0 1px #ffb45444, 0 0 22px #ffb45422; }
+.macro-button { appearance: none; display: flex; flex-direction: column; gap: 3px; width: 100%; text-align: left; background: transparent; border: 0; color: var(--text); cursor: pointer; padding: 0; font-family: inherit; }
+.macro-title { font-size: 14.5px; font-weight: 650; }
+.macro-title::before { content: "✦ "; color: var(--accent); }
+.macro-blurb { font-size: 12.5px; color: var(--muted); line-height: 1.4; }
+.macro-feedback { font-size: 12px; line-height: 1.5; margin-top: 8px; }
+.macro-feedback:empty { display: none; }
+.macro-feedback.done { color: var(--text); }
+.macro-feedback.done strong { color: var(--good); display: block; margin-bottom: 2px; }
+.macro-feedback ul { margin: 2px 0 0 16px; padding: 0; }
+.macro-feedback .macro-limits { color: var(--warn); margin-top: 6px; }
+.macro-feedback.limit { color: var(--warn); }
+.preset-tabs { display: inline-flex; gap: 2px; background: var(--field); border: 1px solid var(--line); border-radius: 9px; padding: 2px; margin-bottom: 10px; }
+.shell-seg { appearance: none; background: transparent; border: 0; color: var(--muted); font: 600 13px var(--font); padding: 6px 14px; border-radius: 7px; cursor: pointer; }
+.shell-seg.on { background: var(--raised); color: var(--text); box-shadow: inset 0 0 0 1px var(--line-strong); }
+.preset-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.preset-card { appearance: none; display: flex; flex-direction: column; gap: 4px; background: transparent; border: 2px solid transparent; border-radius: 9px; padding: 3px; cursor: pointer; color: var(--text); font-family: inherit; }
+.preset-card:hover { border-color: var(--line-strong); }
+.preset-card.on { border-color: var(--accent); }
+.preset-pic { display: block; aspect-ratio: 4 / 3; border-radius: 6px; background: var(--field); overflow: hidden; border: 1px solid var(--line); }
+.preset-pic.missing { display: flex; align-items: center; justify-content: center; text-align: center; border-style: dashed; }
+.preset-missing { font-size: 11px; color: var(--muted, #b7c7da); padding: 4px; background: #0008; border-radius: 4px; }
+.preset-strip { display: block; height: 6px; margin-top: 3px; border-radius: 3px; border: 1px solid var(--line); }
+.preset-pic img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.preset-pic.loading { background: linear-gradient(100deg, var(--surface) 30%, var(--raised) 50%, var(--surface) 70%) 0 0 / 200% 100%; animation: shell-shimmer 1.4s linear infinite; }
+.preset-label { font-size: 11.5px; line-height: 1.25; text-align: left; color: var(--text); padding: 0 2px 2px; }
+@keyframes shell-shimmer { to { background-position: -200% 0; } }
+#shell-flash { position: fixed; z-index: 8; inset: var(--bar) 0 0 0; pointer-events: none; opacity: 0; box-shadow: inset 0 0 0 3px var(--accent), inset 0 0 60px #ffb45440; }
+#shell-flash.go { animation: shell-flash .9s ease-out; }
+@keyframes shell-flash { 0% { opacity: .9; } 100% { opacity: 0; } }
+
+/* ---- Utseende (appearance) --------------------------------------------------------------------------------------- */
+.shell-view .panel, .shell-appearance { position: static !important; }
+.shell-appearance { padding: 0 !important; overflow: hidden; }
+.shell-appearance > summary { padding: 10px 14px; font: 600 14px var(--font-display); }
+.shell-appearance > :not(summary) { margin-left: 14px; margin-right: 14px; }
+.shell-appearance > :last-child { margin-bottom: 14px; }
+.theme-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.theme-card { appearance: none; display: flex; flex-direction: column; gap: 4px; background: transparent; border: 2px solid transparent; border-radius: 9px; padding: 3px; cursor: pointer; color: var(--text); font: 500 12px var(--font); }
+.theme-card:hover { border-color: var(--line-strong); }
+.theme-card.on { border-color: var(--accent); }
+.theme-swatch { display: block; height: 38px; border-radius: 6px; border: 1px solid; position: relative; }
+.theme-swatch i { position: absolute; right: 6px; bottom: 6px; width: 10px; height: 10px; border-radius: 50%; }
+.theme-label { text-align: left; padding: 0 2px 2px; }
+.shell-appearance select { width: 100%; box-sizing: border-box; margin-bottom: 6px; }
+.shell-slider { display: grid; grid-template-columns: 8.5em 1fr 4em; gap: 8px; align-items: center; font-size: 12.5px; color: var(--text); margin: 4px 14px; }
+.shell-slider output { text-align: right; color: var(--muted); font-variant-numeric: tabular-nums; }
+.shell-slider input:disabled { opacity: .4; }
+.shell-file { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; }
+.shell-file input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+.shell-filebtn { background: var(--raised); border: 1px solid var(--line); border-radius: 7px; padding: 6px 12px; font: 500 13px var(--font); }
+.shell-file:hover .shell-filebtn, .shell-file:focus-within .shell-filebtn { border-color: var(--accent); }
+.shell-radio { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; }
+.shell-reset { margin-top: 10px; }
+
+body.artist-shell #message { top: auto !important; bottom: 24px !important; left: 50% !important; right: auto !important; transform: translateX(-50%); max-width: min(560px, 60vw); background: var(--raised) !important; color: var(--text) !important; border: 1px solid var(--accent); border-radius: var(--radius); padding: 10px 16px !important; font: 500 13px var(--font); box-shadow: 0 8px 30px #000a; cursor: pointer; z-index: 8; }
+body.artist-shell #controls input[type=file]::file-selector-button { background: var(--raised); color: var(--text); border: 1px solid var(--line); border-radius: 6px; padding: 3px 9px; margin-right: 8px; cursor: pointer; }
+body.artist-shell #controls label.open { color: var(--muted) !important; }
+@media (max-width: 1100px) { .shell-name { display: none; } .shell-tab { padding: 8px 9px; font-size: 13px; } #artist-bar { gap: 8px; } }
+@media (max-width: 860px) { #artist-bar { gap: 6px; padding: 0 8px; } .shell-icon { padding: 6px 8px; } .shell-tab { padding: 8px 6px; font-size: 12.5px; } }
+@media (prefers-reduced-motion: reduce) { #shell-flash.go { animation: none; } .preset-pic.loading { animation: none; } .macro-card { transition: none; } }
+
+/* ---- light themes ------------------------------------------------------------------------------------------------ */
+/* The older panels were written for a dark ground and carry their own pale text colours. In a light theme their text follows the theme instead. */
+body.artist-shell.theme-light #controls :is(div, span, p, small, label, summary, strong, h2, h3, h4, legend, output, li, td, th, b, i, em, dt, dd) { color: var(--text); }
+body.artist-shell.theme-light #controls :is(.note, .ainfo, .rstatus, .total, small, .step-badge, .tname, .shell-note, .macro-blurb, .settings-group-count, .ai-bridge-info, .material-gradient-info, .view-status > *) { color: var(--muted); }
+body.artist-shell.theme-light #controls :is(.ai-bridge-warning, .math-unresolved, .discovery-warning, .macro-limits, .unverified) { color: var(--warn) !important; }
+body.artist-shell.theme-light #controls :is(.ai-bridge-error, .error) { color: #a02323 !important; }
+body.artist-shell.theme-light #controls a { color: var(--accent); }
+body.artist-shell.theme-light #controls .ai-chat-progress li { background: var(--raised); color: var(--muted); border-color: var(--line); }
+body.artist-shell.theme-light #controls .ai-chat-progress li.active { color: var(--accent); border-color: var(--accent); }
+body.artist-shell.theme-light #controls .shell-link { color: var(--accent); }
+body.artist-shell.theme-light #controls .macro-title::before, body.artist-shell.theme-light #controls .shell-primary { color: var(--accent-ink); }
+body.artist-shell.theme-light #controls .macro-title::before { color: var(--accent); }
+body.artist-shell.theme-light .macro-card.applied { box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 40%, transparent), 0 0 18px color-mix(in srgb, var(--accent) 18%, transparent); }
+body.artist-shell.theme-light #controls input[type=range] { accent-color: var(--accent); }
+body.artist-shell.theme-light .shell-tab:hover { background: color-mix(in srgb, var(--text) 8%, transparent); }
+body.artist-shell.theme-light .chrome-bg[data-region=bar] { box-shadow: 0 6px 20px #0000001a; }
+/* Over a picture the tab strip and the brand get a card of their own (its density is the same "Panelernas täthet"), so the picture needs no darkening. */
+body.artist-shell.has-bg-image .shell-tabs [role=tablist], body.artist-shell.has-bg-image .shell-brand { background: var(--card); border-radius: 10px; padding: 3px; backdrop-filter: blur(6px); }
+body.artist-shell.has-bg-image .shell-brand { padding: 5px 10px; }
+body.artist-shell.has-bg-image #artist-bar :is(.shell-tab, .shell-brand, #panel-toggle) { text-shadow: none; }
+body.artist-shell.theme-light #controls :is(.ai-chat-explain, .ai-draft, .ai-bridge-panel) { background: var(--raised); }
+body.artist-shell.theme-light #controls .ai-chat-explain * { color: var(--text); }
+body.artist-shell.has-bg-image #artist-bar #panel-toggle { background: var(--card); color: var(--text); backdrop-filter: blur(6px); }
+
+/* The active view mode: the generic sidebar button rule (body.artist-shell #controls button:not(...)) is more specific than the earlier pressed rule, so the chosen mode looked like the others. */
+body.artist-shell #controls #preview-access button[data-preview-mode][aria-pressed="true"] { background: var(--accent); color: #161616; border-color: var(--accent); font-weight: 700; }

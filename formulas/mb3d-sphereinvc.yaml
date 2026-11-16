@@ -1,0 +1,35 @@
+format: 3
+id: mb3d-sphereinvc
+name: _SphereInvC
+catalog:
+  category: transforms
+  tags: [ transform, inversion, C vector ]
+description: >-
+  Full sphere inversion of both the vector and the added constant C: both are divided by their
+  squared length. Once as the first formula (with repetition on the second) inverts the whole
+  coordinate system; slice at z = 0 to see the inside (the description).
+credits:
+  - { name: okänd, role: "Author not stated in the formula file", status: unverified }
+sources:
+  - {
+      reference: "Mandelbulb 3D 1.9.9 (sr37), M3Formulas, file _SphereInvC.m3f: [OPTIONS] and the
+        description after [END]; the code block and code listings was never read.",
+      status: unverified
+    }
+  - { reference: NewFormulas/formula-06/BATCH-06.md, status: unverified }
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: The equations are the formula file's own description; implementation in
+  src/engine/formula/batch06Kernels.ts. No comparison with a running Mandelbulb 3D.
+reviewed: false
+provenance:
+  origin: mandelbulb3d
+  file: _SphereInvC.m3f
+  credited_author: okänd
+  credited_authors: [ okänd ]
+  collection: M3Formulas
+  note: Independent reimplementation from the equations in the formula file's own description. The
+    [CODE] section was not read. Native image equivalence unverified.
+  verified_against_mb3d: false
+parameters: []
+iteration: { kernel: mb3d-sphereinvc, iterations: 1 }
+view: { camera_distance: 5 }

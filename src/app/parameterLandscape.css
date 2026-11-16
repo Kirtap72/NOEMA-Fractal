@@ -1,0 +1,23 @@
+/* Parameter landscape (ARTIST-WORKFLOW 03) */
+.landscape { margin: 6px 0; padding: 6px 8px; border: 1px solid #ffffff1a; border-radius: 6px; }
+.landscape > summary { cursor: pointer; font-weight: 600; }
+.landscape > small { display: block; margin: 4px 0; color: var(--muted, #b7c7da); }
+.landscape-exploring { border-color: var(--accent, #e0b84a); }
+.landscape-selects { display: grid; gap: 4px; margin: 6px 0; }
+.landscape-row { display: grid; grid-template-columns: 70px minmax(0, 1fr) 70px; gap: 6px; align-items: center; font-size: 12px; }
+.landscape-row select { min-width: 0; font-size: 12px; }
+.landscape-pad { position: relative; width: 100%; max-width: 240px; aspect-ratio: 1; margin: 8px auto; border-radius: 8px; border: 1px solid #586b83; background: linear-gradient(#ffffff10, #ffffff10) center / 1px 100% no-repeat, linear-gradient(#ffffff10, #ffffff10) center / 100% 1px no-repeat, radial-gradient(circle at center, #2a3a52, #141b27); touch-action: none; cursor: crosshair; user-select: none; }
+.landscape-pad:focus-visible { outline: 2px solid #9bd0ff; outline-offset: 2px; }
+.landscape-disabled { opacity: 0.4; cursor: not-allowed; }
+.landscape-dot { position: absolute; left: 50%; top: 50%; width: 16px; height: 16px; margin: -8px 0 0 -8px; border-radius: 50%; background: #ffd25e; border: 2px solid #fff; box-shadow: 0 0 6px #000a; pointer-events: none; }
+.landscape-dot-original { background: #8fd0ff; }
+.landscape-pinmark { position: absolute; width: 14px; height: 14px; margin: -7px 0 0 -7px; border-radius: 50%; background: #3b6ea5; border: 1px solid #fff; color: #fff; font-size: 9px; line-height: 12px; text-align: center; pointer-events: none; }
+.landscape-readout { font-size: 11px; color: var(--text, #d6e2f0); min-height: 15px; text-align: center; }
+.landscape-buttons { display: flex; flex-wrap: wrap; gap: 4px; margin: 4px 0; }
+.landscape-buttons button { font-size: 12px; padding: 3px 8px; }
+.landscape-buttons button[aria-pressed=true] { background: color-mix(in srgb, var(--accent, #9bd0ff) 28%, var(--surface, #1a212d)); border-color: var(--accent, #9bd0ff); }
+.landscape-pins { display: flex; gap: 6px; overflow-x: auto; padding: 4px 0; }
+.landscape-pin { position: relative; flex: 0 0 72px; }
+.landscape-pin > button:first-child { display: flex; flex-direction: column; gap: 2px; align-items: stretch; width: 100%; padding: 2px; font-size: 10px; }
+.landscape-pin img { display: block; width: 100%; height: auto; border-radius: 3px; }
+.landscape-pin-remove { position: absolute; top: 0; right: 0; padding: 0 4px; font-size: 11px; line-height: 14px; }

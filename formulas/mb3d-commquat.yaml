@@ -1,0 +1,72 @@
+format: 3
+id: mb3d-commquat
+name: CommQuat
+description: kommutativ hyperkomplex kvadrering
+credits:
+  - name: Fracmonk
+    role: Authorship according to the authorised specification
+    status: unverified
+sources:
+  - reference: NewFormulas/essentials-40/08-CommQuat.md
+    status: unverified
+added_by: Codex
+math_status: Independent implementation from authorised normalised mathematical material; the
+  licence of the project.
+reviewed: false
+provenance:
+  origin: mandelbulb3d
+  file: CommQuat.m3f
+  credited_author: Fracmonk
+  credited_authors:
+    - Fracmonk
+  collection: M3Formulas
+  note: Independent reimplementation from the authorized normalized Essentials specifications. The
+    [CODE] section was not read, copied or translated. Mathematical validation is separate from MB3D
+    image verification.
+  verified_against_mb3d: false
+parameters:
+  - name: x_mul
+    label: X mul
+    default: 1
+    min: -8
+    max: 8
+  - name: y_mul
+    label: Y mul
+    default: 1
+    min: -8
+    max: 8
+  - name: z_mul
+    label: Z mul
+    default: 1
+    min: -8
+    max: 8
+  - name: w_mul
+    label: W mul
+    default: 1
+    min: -8
+    max: 8
+  - name: w_add
+    label: W add
+    default: 0
+    min: -8
+    max: 8
+  - name: slice_w
+    label: 4D slice / extra w
+    default: 0
+    min: -4
+    max: 4
+  - name: constant_w
+    label: Julia constant w
+    default: 0
+    min: -4
+    max: 4
+  - name: bailout_squared
+    label: Escape limit (radius²)
+    default: 16
+    min: 1
+    max: 65536
+iteration:
+  kernel: mb3d-commquat
+  iterations: 16
+view:
+  camera_distance: 5

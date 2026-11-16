@@ -1,0 +1,36 @@
+format: 3
+id: mb3d-scalec4d
+name: _ScaleC4d
+catalog:
+  category: transforms
+  tags: [ transform, scale, C vector, 4D ]
+description: >-
+  Scales the 4D vector with Scale and the 4D constant C with Scale C. Useful for scaling the whole
+  coordinate system, for example in DE combination.
+credits:
+  - { name: okänd, role: "Author not stated in the formula description", status: unverified }
+sources:
+  - {
+      reference: "Mandelbulb 3D 1.9.9 (sr37), M3Formulas, file _ScaleC4d.m3f: [OPTIONS] and the
+        description after [END]; the code block and code listings was never read.",
+      status: unverified
+    }
+  - { reference: NewFormulas/formula-07/BATCH-07.md, status: unverified }
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: The equations are the formula file's own description; implementation in
+  src/engine/formula/batch07Kernels.ts. No comparison with a running Mandelbulb 3D.
+reviewed: false
+provenance:
+  origin: mandelbulb3d
+  file: _ScaleC4d.m3f
+  credited_author: okänd
+  credited_authors: [ okänd ]
+  collection: M3Formulas
+  note: Independent reimplementation from the equations in the formula file's own description. The
+    [CODE] section was not read. Native image equivalence unverified.
+  verified_against_mb3d: false
+parameters:
+  - { name: scale, label: "Scale", default: 1, min: -1000, max: 1000 }
+  - { name: scale_c, label: "Scale C", default: 1, min: -1000, max: 1000 }
+iteration: { kernel: mb3d-scalec4d, iterations: 1 }
+view: { camera_distance: 5 }

@@ -1,0 +1,50 @@
+format: 3
+id: mb3d-kochcube
+name: koch_cube
+catalog:
+  category: ifs
+  tags: [ IFS, Koch ]
+description: >-
+  Cubic Koch fractal (Luca GN 2011, inspired by a Wikipedia picture). x,y,z = 3|·|, sorted
+  descending, plus X/Y/Z Add, rotation, then Koch cube folding with XY Stretch and Z Fold, finally
+  Post-scale.
+credits:
+  - {
+      name: Luca GN,
+      role: "Formula author 2011 (according to the formula description)",
+      status: unverified
+    }
+sources:
+  - {
+      reference: "Mandelbulb 3D 1.9.9 (sr37), M3Formulas, file koch_cube.m3f: [OPTIONS] and the
+        description after [END]; the code block was never read.",
+      status: unverified
+    }
+  - { reference: NewFormulas/final-fixes-08/BATCH-04.md, status: unverified }
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: The equations are the formula file's own description; implementation in
+  src/engine/formula/followupKernels.ts. No comparison with a running Mandelbulb 3D.
+reviewed: false
+provenance:
+  origin: mandelbulb3d
+  file: koch_cube.m3f
+  credited_author: Luca GN
+  credited_authors: [ Luca GN ]
+  collection: M3Formulas
+  note: Independent reimplementation from the equations in the formula file's own description. The
+    [CODE] section was not read. Native image equivalence unverified.
+  verified_against_mb3d: false
+parameters:
+  - { name: postscale, label: "Post-scale", default: 1, min: -1000, max: 1000 }
+  - { name: xy_stretch, label: "XY Stretch", default: 1, min: -1000, max: 1000 }
+  - { name: z_fold, label: "Z Fold", default: 1, min: -1000, max: 1000 }
+  - { name: x_add, label: "X Add", default: 0, min: -1000, max: 1000 }
+  - { name: y_add, label: "Y Add", default: 0, min: -1000, max: 1000 }
+  - { name: z_add, label: "Z Add", default: 0, min: -1000, max: 1000 }
+  - { name: rotation_x, label: "Rotation X (degrees)", default: 0, min: -180, max: 180 }
+  - { name: rotation_y, label: "Rotation Y (degrees)", default: 0, min: -180, max: 180 }
+  - { name: rotation_z, label: "Rotation Z (degrees)", default: 0, min: -180, max: 180 }
+  - { name: constant_w, label: "Julia constant w", default: 0, min: -4, max: 4 }
+  - { name: bailout_squared, label: "Escape limit (radius²)", default: 1024, min: 1, max: 65536 }
+iteration: { kernel: mb3d-kochcube, iterations: 16 }
+view: { camera_distance: 5 }

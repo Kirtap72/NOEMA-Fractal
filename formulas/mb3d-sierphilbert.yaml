@@ -1,0 +1,48 @@
+{
+  "format": 3,
+  "id": "mb3d-sierphilbert",
+  "name": "SierpHilbert",
+  "description": "Independently recovered MB3D formula; see the separate normalised specification.",
+  "credits": [ { "name": "okänd", "role": "Author of the distributed variant", "status": "unverified" } ],
+  "sources": [ { "reference": "NewFormulas/preset-compatibility/SierpHilbert.md", "status": "unverified" } ],
+  "added_by": "Codex",
+  "math_status": "Recovered equations validated against a typed reference, no native picture certification.",
+  "reviewed": false,
+  "provenance":
+    {
+      "origin": "mandelbulb3d",
+      "file": "SierpHilbert.m3f",
+      "credited_author": "okänd",
+      "credited_authors": [ "okänd" ],
+      "collection": "M3Formulas",
+      "note": "Independent reimplementation of the mathematical formula from recovered equations.
+        Explicitly authorized mathematical recovery; no native executable code distributed.",
+      "verified_against_mb3d": false
+    },
+  "parameters":
+    [
+      { "name": "scale", "label": "Scale", "default": 3, "min": 0.01, "max": 8 },
+      { "name": "cscale_x", "label": "CScale X", "default": 1, "min": -10000, "max": 10000 },
+      { "name": "cscale_y", "label": "CScale Y", "default": 1, "min": -10000, "max": 10000 },
+      { "name": "cscale_z", "label": "CScale Z", "default": 1, "min": -10000, "max": 10000 },
+      { "name": "rotation1_x", "label": "Rotation1 X", "default": 0, "min": -10000, "max": 10000 },
+      { "name": "rotation1_y", "label": "Rotation1 Y", "default": 0, "min": -10000, "max": 10000 },
+      { "name": "rotation1_z", "label": "Rotation1 Z", "default": 0, "min": -10000, "max": 10000 },
+      { "name": "rotation2_x", "label": "Rotation2 X", "default": 0, "min": -10000, "max": 10000 },
+      { "name": "rotation2_y", "label": "Rotation2 Y", "default": 0, "min": -10000, "max": 10000 },
+      { "name": "rotation2_z", "label": "Rotation2 Z", "default": 0, "min": -10000, "max": 10000 },
+      { "name": "edge1", "label": "Edge1", "default": 2, "min": -10000, "max": 10000 },
+      { "name": "edge2", "label": "Edge2", "default": 1, "min": -10000, "max": 10000 },
+      { "name": "slice_w", "label": "slice_w", "default": 0, "min": -4, "max": 4 },
+      { "name": "constant_w", "label": "constant_w", "default": 0, "min": -4, "max": 4 },
+      {
+          "name": "bailout_squared",
+          "label": "bailout_squared",
+          "default": 1024,
+          "min": 1,
+          "max": 65536
+        }
+    ],
+  "iteration": { "kernel": "mb3d-sierphilbert", "iterations": 12 },
+  "view": { "camera_distance": 5 }
+}

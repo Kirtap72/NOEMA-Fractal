@@ -1,0 +1,40 @@
+format: 3
+id: mb3d-bt1-4d-clampxyz
+name: _BT1_4D_clampXYZ
+catalog:
+  category: transforms
+  tags: [ transform, 4D, Benesi ]
+description: >-
+  Like _BT1_4D_Transform1 but xyz are scaled so that their original length is preserved (part of the
+  length otherwise ends up in w), exactly as the lines of the description are written.
+credits:
+  - {
+      name: M. Benesi,
+      role: "Formula author (signed M Benesi in the formula description)",
+      status: unverified
+    }
+sources:
+  - {
+      reference: "Mandelbulb 3D 1.9.9 (sr37), M3Formulas, file _BT1_4D_clampXYZ.m3f: [OPTIONS] and the
+        description after [END]; the code block and code listings was never read.",
+      status: unverified
+    }
+  - { reference: NewFormulas/formula-06/BATCH-06.md, status: unverified }
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: The equations are the formula file's own description; implementation in
+  src/engine/formula/batch06Kernels.ts. No comparison with a running Mandelbulb 3D.
+reviewed: false
+provenance:
+  origin: mandelbulb3d
+  file: _BT1_4D_clampXYZ.m3f
+  credited_author: M. Benesi
+  credited_authors: [ M. Benesi ]
+  collection: M3Formulas
+  note: Independent reimplementation from the equations in the formula file's own description. The
+    [CODE] section was not read. Native image equivalence unverified.
+  verified_against_mb3d: false
+parameters:
+  - { name: scale, label: "Skala", default: 2, min: -100, max: 100 }
+  - { name: x_off, label: "x-offset", default: 2, min: -100, max: 100 }
+iteration: { kernel: mb3d-bt1-4d-clampxyz, iterations: 1 }
+view: { camera_distance: 5 }

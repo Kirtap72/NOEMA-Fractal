@@ -1,0 +1,49 @@
+# Cylindrical coordinates (transform). Format: see formulas/README.md
+format: 1
+id: cylindrical-coordinates
+name: Cylindrical coordinates (transform)
+description: >
+  Replaces the point (x, y, z) by (rho, phi, z): the distance from the z axis, the angle around it,
+  and the height. With direction 1 it goes the other way and reads the point as (rho, phi, z). This
+  is not a conformal map, so the running derivative is left unchanged and the distance estimate of
+  the following formula is only rough. It has no distance estimate of its own, so it is used in
+  front of a formula that has one.
+
+# NOTE: the AI assistant read the page below on 2026-10-06 and wrote this step
+# from the conversion formulas it gives (rho = distance from the z axis, phi =
+# angle with atan2, z unchanged). A person must still check each name and link
+# before this is set to "verified".
+credits:
+  - name: General mathematics (textbook)
+    role: "standard definitions found in any textbook; no single person is credited (the project owner
+      agreed that general mathematics is credited this way)"
+    status: unverified
+sources:
+  - url: https://en.wikipedia.org/wiki/Cylindrical_coordinate_system
+    status: unverified
+
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: >
+  General mathematics: standard definitions, not claimed as owned. Written fresh for this project;
+  no code from any program was read or copied. Source details are unverified (see credits).
+reviewed: false
+
+parameters:
+  - { name: direction, label: Direction (0 to, 1 from), default: 0, min: 0, max: 1 }
+
+iteration:
+  iterations: 1
+  # This is a transform: it has no distance. It passes the point on to the next step.
+  carry: [ z, dr ]
+  variables:
+    - { name: z, type: vec3, init: pos }
+    - { name: dr, type: float, init: 1 }
+    - { name: to, type: vec3, init: "vec3(0.0, 0.0, 0.0)" }
+    - { name: back, type: vec3, init: "vec3(0.0, 0.0, 0.0)" }
+  steps:
+    - "to = vec3(length(z.xy), atan2(z.y, z.x), z.z)"
+    - "back = vec3(z.x * cos(z.y), z.x * sin(z.y), z.z)"
+    - "z = select(to, back, direction > 0.5)"
+
+view:
+  camera_distance: 4

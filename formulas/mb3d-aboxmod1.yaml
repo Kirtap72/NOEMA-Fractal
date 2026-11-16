@@ -1,0 +1,50 @@
+format: 3
+id: mb3d-aboxmod1
+name: ABoxMod1
+catalog:
+  category: fractals
+  tags: [ Amazing Box, Kali, fold ]
+description: >-
+  Amazing Box variant with double folding (Fold − ||x+FoldXMod| − Fold| − |FoldXMod| per axis),
+  variable scale (Scale + Scale vary·(|Scale|−1)) and sphere folding; exactly as the file writes, Cy
+  is added to x and Cx to y.
+credits:
+  - { name: okänd, role: "Author not stated in the formula description", status: unverified }
+  - {
+      name: Kali,
+      role: "Inspiration: a 2D formula proposed on fractalforums.com (according to the formula
+        description)",
+      status: unverified
+    }
+sources:
+  - {
+      reference: "Mandelbulb 3D 1.9.9 (sr37), M3Formulas, file ABoxMod1.m3f: [OPTIONS] and the description
+        after [END]; the code block and code listings was never read.",
+      status: unverified
+    }
+  - { reference: NewFormulas/formula-08/BATCH-08.md, status: unverified }
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: The equations are the formula file's own description; implementation in
+  src/engine/formula/batch08Kernels.ts. No comparison with a running Mandelbulb 3D.
+reviewed: false
+provenance:
+  origin: mandelbulb3d
+  file: ABoxMod1.m3f
+  credited_author: okänd; Kali
+  credited_authors: [ okänd, Kali ]
+  collection: M3Formulas
+  note: Independent reimplementation from the equations in the formula file's own description. The
+    [CODE] section was not read. Native image equivalence unverified.
+  verified_against_mb3d: false
+parameters:
+  - { name: scale, label: "Scale", default: 2, min: -8, max: 8 }
+  - { name: min_r, label: "Min R", default: 0, min: -8, max: 8 }
+  - { name: fold, label: "Fold", default: 2, min: -8, max: 8 }
+  - { name: scale_vary, label: "Scale vary", default: 0, min: -8, max: 8 }
+  - { name: fold_x_mod, label: "FoldXMod", default: 0, min: -8, max: 8 }
+  - { name: fold_y_mod, label: "FoldYMod", default: 0, min: -8, max: 8 }
+  - { name: fold_z_mod, label: "FoldZMod", default: 0, min: -8, max: 8 }
+  - { name: constant_w, label: "Julia constant w", default: 0, min: -4, max: 4 }
+  - { name: bailout_squared, label: "Escape limit (radius²)", default: 1024, min: 1, max: 65536 }
+iteration: { kernel: mb3d-aboxmod1, iterations: 16 }
+view: { camera_distance: 5 }

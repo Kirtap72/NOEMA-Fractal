@@ -1,0 +1,37 @@
+format: 3
+id: mb3d-translatec4d
+name: _TranslateC4d
+catalog:
+  category: spatial
+description: >
+  Adds a constant to the 4D point (x, y, z, w) and to the 4D iteration constant (Cx, Cy, Cz, Cw). Useful for translating the whole coordinate system. Uncounted 4D helper.
+credits:
+  - {name: okänd, role: "author not named in the formula file", status: unverified}
+sources:
+  - {reference: NewFormulas/coverage-04/C-VECTOR.md, status: unverified}
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: >
+  Equations taken from the formula file's own description; reimplemented independently, not claimed as owned. No code from any program was read or copied.
+  No native MB3D comparison has been made.
+reviewed: false
+provenance:
+  origin: mandelbulb3d
+  file: _TranslateC4d.m3f
+  credited_author: okänd
+  credited_authors: [okänd]
+  collection: M3Formulas
+  note: >
+    An independent reimplementation from the equations in the formula file's own description (the text after [END]) and its [OPTIONS] list. The [CODE]
+    section was not read, copied or translated. No comparison with a running Mandelbulb 3D has been made.
+  verified_against_mb3d: false
+parameters:
+  - {name: x_add, label: "x add", default: 0, min: -1000, max: 1000}
+  - {name: y_add, label: "y add", default: 0, min: -1000, max: 1000}
+  - {name: z_add, label: "z add", default: 0, min: -1000, max: 1000}
+  - {name: w_add, label: "w add", default: 0, min: -1000, max: 1000}
+  - {name: cx_add, label: "Cx add", default: 0, min: -1000, max: 1000}
+  - {name: cy_add, label: "Cy add", default: 0, min: -1000, max: 1000}
+  - {name: cz_add, label: "Cz add", default: 0, min: -1000, max: 1000}
+  - {name: cw_add, label: "Cw add", default: 0, min: -1000, max: 1000}
+iteration: {kernel: mb3d-translatec4d, iterations: 1}
+view: {camera_distance: 5}

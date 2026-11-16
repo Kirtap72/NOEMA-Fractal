@@ -1,0 +1,60 @@
+# Form: helix. Format: see formulas/README.md
+format: 1
+id: shape-helix
+name: "Form: helix"
+catalog:
+  category: difs
+  tags:
+    - shape
+    - SDF
+description: >
+  A tube wound as a helix (spiral) around the vertical axis, as the end of a chain. The distance is
+  measured across the spiral and corrected for its slope; it is approximate (slightly too large far
+  from the tube), so lower the step factor if the surface shows gaps.
+
+# NOTE: a helix of radius R and pitch P (height per turn) is textbook. The distance
+# here uses the radial offset and the vertical offset to the nearest turn, the
+# latter multiplied by the cosine of the slope; this approximation is the
+# assistant's own.
+# A person must still check each name and link before this is set to
+# "verified" (and reviewed: true).
+credits:
+  - name: General mathematics (textbook)
+    role: "standard definitions found in any textbook; no single person is credited (the project owner
+      agreed that general mathematics is credited this way)"
+    status: unverified
+sources:
+  - url: https://en.wikipedia.org/wiki/Helix
+    status: unverified
+
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: >
+  General mathematics: standard definitions, not claimed as owned. Written fresh for this project;
+  no code from any program was read or copied. Source details are unverified (see credits).
+reviewed: false
+
+parameters:
+  - { name: radius, label: Spiral radius, default: 0.8, min: 0.05, max: 3 }
+  - { name: pitch, label: Height per turn, default: 1, min: 0.05, max: 5 }
+  - { name: tube, label: Tube radius, default: 0.15, min: 0.01, max: 1 }
+  - { name: height, label: Half height, default: 1.5, min: 0.1, max: 10 }
+
+iteration:
+  iterations: 1
+  # A shape: it does not move the point, it measures the distance to the shape at the end of a chain.
+  carry: [ z, dr ]
+  variables:
+    - { name: z, type: vec3, init: pos }
+    - { name: dr, type: float, init: 1 }
+    - { name: dy, type: float, init: 0 }
+    - { name: rho, type: float, init: 0 }
+  steps:
+    - "rho = sqrt(z.x * z.x + z.z * z.z)"
+    # Height difference to the nearest turn of the spiral at this angle.
+    - "dy = z.y - pitch * atan2(z.z, z.x) / (2.0 * pi)"
+    - "dy = dy - pitch * floor(dy / pitch + 0.5)"
+  distance: "max(length(vec3(rho - radius, dy * 6.283185307179586 * radius / sqrt(39.47841760435743 *
+    radius * radius + pitch * pitch), 0.0)) - tube, abs(z.y) - height) / abs(dr)"
+
+view:
+  camera_distance: 4

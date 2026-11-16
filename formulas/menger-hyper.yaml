@@ -1,0 +1,107 @@
+format: 3
+id: menger-hyper
+name: MengerHyper
+description: Inversion-based escape-time IFS in 3D. See the batch specification for domains and states.
+credits:
+  - name: okänd
+    role: Credited author according to the specification
+    status: unverified
+  - name: Buddhi
+    role: inspiration; distributed formula author not established
+    status: unverified
+sources:
+  - reference: "NewFormulas/batch-02/07-MengerHyper.md; authorised normalised mathematical specification
+      from M3Formulas/MengerHyper.m3f. Provenance and recovery evidence:
+      NewFormulas/batch-02/manifest.json (m3formulas--mengerhyper--a6d0e8a7)."
+    status: unverified
+  - url: http://www.fractalforums.com/3d-fractal-generation/revenge-of-the-half-eaten-menger-sponge/msg8920/#msg8920
+    status: unverified
+added_by: Codex
+math_status: Independent implementation from the authorised mathematical migration package of the
+  project owner; the licence of the project.
+reviewed: false
+provenance:
+  origin: mandelbulb3d
+  file: MengerHyper.m3f
+  credited_author: okänd
+  collection: M3Formulas
+  note: Independent reimplementation from the normalized mathematical migration specification
+    authorized by the project owner. The [CODE] section was not read, copied or translated by this
+    implementation. Mathematical recovery validation is not native MB3D or image verification.
+  verified_against_mb3d: false
+parameters:
+  - name: scale
+    label: Scale
+    default: 3
+    min: -8
+    max: 8
+  - name: cscale_x
+    label: CScale X
+    default: 1
+    min: -8
+    max: 8
+  - name: cscale_y
+    label: CScale Y
+    default: 1
+    min: -8
+    max: 8
+  - name: cscale_z
+    label: CScale Z
+    default: 0.5
+    min: -8
+    max: 8
+  - name: x_inv
+    label: X inv
+    default: -0.75
+    min: -8
+    max: 8
+  - name: y_inv
+    label: Y inv
+    default: 0
+    min: -8
+    max: 8
+  - name: z_inv
+    label: Z inv
+    default: 0
+    min: -8
+    max: 8
+  - name: max_radius
+    label: MaxRadius
+    default: 0.318
+    min: 0
+    max: 4
+  - name: min_radius
+    label: MinRadius
+    default: 0.048
+    min: 0
+    max: 4
+  - name: cent_rad_mul
+    label: CentRadMul
+    default: 0.9
+    min: 0
+    max: 4
+  - name: fold_again
+    label: Fold again
+    default: 1
+    min: 0
+    max: 1
+  - name: slice_w
+    label: 4D slice / extra w
+    default: 0
+    min: -4
+    max: 4
+  - name: constant_w
+    label: Julia constant w
+    default: 0
+    min: -4
+    max: 4
+  - name: bailout_squared
+    label: Escape limit (radius²)
+    default: 1024
+    min: 1
+    max: 65536
+iteration:
+  kernel: menger-hyper
+  iterations: 16
+view:
+  camera_distance: 5

@@ -1,0 +1,82 @@
+format: 3
+id: menger-ifs
+name: MengerIFS
+description: Menger IFS with sorting, rotation and signed derivative.
+credits:
+  - name: okänd
+    role: Authorship not established in the handoff
+    status: unverified
+sources:
+  - reference: NewFormulas/claude-handoff-batch-01/05-MengerIFS.md; normalised validated mathematical
+      specification, from M3Formulas/MengerIFS.m3f
+    status: unverified
+added_by: Codex
+math_status: Independent implementation from the authorised mathematical migration package of the
+  project owner; the licence of the project.
+reviewed: false
+provenance:
+  origin: mandelbulb3d
+  file: MengerIFS.m3f
+  credited_author: okänd
+  collection: M3Formulas
+  note: Independent reimplementation from the normalized mathematical migration specification
+    authorized by the project owner. The [CODE] section was not read, copied or translated by this
+    implementation. The handoff documents recovered mathematics; it is not an MB3D image
+    verification.
+  verified_against_mb3d: false
+parameters:
+  - name: scale
+    label: Scale
+    default: 3
+    min: -8
+    max: 8
+  - name: cscale_x
+    label: CScale X
+    default: 1
+    min: -8
+    max: 8
+  - name: cscale_y
+    label: CScale Y
+    default: 1
+    min: -8
+    max: 8
+  - name: cscale_z
+    label: CScale Z
+    default: 0.5
+    min: -8
+    max: 8
+  - name: rotation_x
+    label: rotation X (degrees)
+    default: 0
+    min: -180
+    max: 180
+  - name: rotation_y
+    label: rotation Y (degrees)
+    default: 0
+    min: -180
+    max: 180
+  - name: rotation_z
+    label: rotation Z (degrees)
+    default: 0
+    min: -180
+    max: 180
+  - name: slice_w
+    label: 4D slice / extra w
+    default: 0
+    min: -4
+    max: 4
+  - name: constant_w
+    label: Julia constant w
+    default: 0
+    min: -4
+    max: 4
+  - name: bailout_squared
+    label: Escape limit (radius²)
+    default: 1024
+    min: 1
+    max: 65536
+iteration:
+  kernel: menger-ifs
+  iterations: 16
+view:
+  camera_distance: 5

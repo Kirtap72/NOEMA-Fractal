@@ -1,0 +1,160 @@
+{
+  "format": 3,
+  "id": "mb3d-tetratubeifs",
+  "name": "tetratubeIFS",
+  "description": "Of course this formula is inspired by the awesome work of Knighty.\nThose scripts are a lot more customizable, but forgive me...\n\nA tetrahedral shape based on a plain cylinder DE, after a foldingTetraFull and a rotation on XZ plane.\nNice variations can be seen for different angles and values!",
+  "credits": [
+    {
+      "name": "okänd",
+      "role": "creator not identified in recovered source",
+      "status": "unverified"
+    },
+    {
+      "name": "Knighty",
+      "role": "inspiration",
+      "status": "unverified"
+    }
+  ],
+  "sources": [
+    {
+      "reference": "NewFormulas/preset-compatibility/tetratubeIFS.md",
+      "status": "unverified"
+    }
+  ],
+  "added_by": "Codex",
+  "math_status": "Independent equations from authorized recovered mathematics; project license.",
+  "reviewed": false,
+  "provenance": {
+    "origin": "mandelbulb3d",
+    "file": "tetratubeIFS.m3f",
+    "credited_author": "okänd; Knighty",
+    "credited_authors": [
+      "okänd",
+      "Knighty"
+    ],
+    "collection": "M3Formulas",
+    "note": "Independent reimplementation. Explicitly authorized mathematical recovery; normalized equations validated against the typed reference pipeline. No legacy executable code copied.",
+    "verified_against_mb3d": false
+  },
+  "parameters": [
+    {
+      "name": "radius",
+      "label": "Radius",
+      "default": 0.1,
+      "min": -10000,
+      "max": 10000
+    },
+    {
+      "name": "sub_y",
+      "label": "Sub Y",
+      "default": 1,
+      "min": -10000,
+      "max": 10000
+    },
+    {
+      "name": "sub_z",
+      "label": "Sub Z",
+      "default": 0,
+      "min": -10000,
+      "max": 10000
+    },
+    {
+      "name": "scale",
+      "label": "Scale",
+      "default": 2,
+      "min": -10000,
+      "max": 10000
+    },
+    {
+      "name": "z_add",
+      "label": "Z add",
+      "default": 0,
+      "min": -10000,
+      "max": 10000
+    },
+    {
+      "name": "y_add",
+      "label": "Y add",
+      "default": 0,
+      "min": -10000,
+      "max": 10000
+    },
+    {
+      "name": "x_add",
+      "label": "X add",
+      "default": 3,
+      "min": -10000,
+      "max": 10000
+    },
+    {
+      "name": "rotate_xz",
+      "label": "Rotate XZ",
+      "default": 45,
+      "min": -10000,
+      "max": 10000
+    },
+    {
+      "name": "rotate_xy",
+      "label": "Rotate XY",
+      "default": 0,
+      "min": -10000,
+      "max": 10000
+    },
+    {
+      "name": "apply_scale_add",
+      "label": "apply scale+add",
+      "default": 1,
+      "min": -16777216,
+      "max": 16777216
+    },
+    {
+      "name": "sphere_pos",
+      "label": "Sphere pos",
+      "default": 1.414,
+      "min": -10000,
+      "max": 10000
+    },
+    {
+      "name": "sphere_r",
+      "label": "Sphere R",
+      "default": 0.2,
+      "min": -10000,
+      "max": 10000
+    },
+    {
+      "name": "otclr_tube",
+      "label": "OTClr Tube",
+      "default": 1.0,
+      "min": -10000,
+      "max": 10000
+    },
+    {
+      "name": "otclr_sphere",
+      "label": "OTClr Sphere",
+      "default": 2.0,
+      "min": -10000,
+      "max": 10000
+    },
+    {
+      "name": "inside_render",
+      "label": "Inside rendering",
+      "default": 0,
+      "min": 0,
+      "max": 1
+    },
+    {
+      "name": "de_stop",
+      "label": "Query fallback threshold",
+      "default": 0,
+      "min": -10000,
+      "max": 10000
+    }
+  ],
+  "iteration": {
+    "kernel": "mb3d-tetratubeifs",
+    "iterations": 1
+  },
+  "view": {
+    "camera_distance": 5
+  }
+}

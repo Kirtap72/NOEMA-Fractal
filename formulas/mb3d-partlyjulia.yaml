@@ -1,0 +1,79 @@
+format: 3
+id: mb3d-partlyjulia
+name: _PartlyJulia
+catalog:
+  category: julia
+description: axis-conditional change of C
+credits:
+  - name: okänd
+    role: Authorship according to the authorised specification
+    status: unverified
+sources:
+  - reference: NewFormulas/essentials-40/30-1-_PartlyJulia.md
+    status: unverified
+added_by: Codex
+math_status: Independent implementation from authorised normalised mathematical material; the
+  licence of the project.
+reviewed: false
+provenance:
+  origin: mandelbulb3d
+  file: _PartlyJulia.m3f
+  credited_author: okänd
+  credited_authors:
+    - okänd
+  collection: M3Formulas
+  note: Independent reimplementation from the authorized normalized Essentials specifications. The
+    [CODE] section was not read, copied or translated. Mathematical validation is separate from MB3D
+    image verification.
+  verified_against_mb3d: false
+parameters:
+  - name: x_above
+    label: X above
+    default: 999
+    min: -8
+    max: 999
+  - name: x_below
+    label: X below
+    default: -999
+    min: -999
+    max: 8
+  - name: x_add
+    label: X add
+    default: 0
+    min: -8
+    max: 8
+  - name: y_above
+    label: Y above
+    default: 999
+    min: -8
+    max: 999
+  - name: y_below
+    label: Y below
+    default: -999
+    min: -999
+    max: 8
+  - name: y_add
+    label: Y add
+    default: 0
+    min: -8
+    max: 8
+  - name: z_above
+    label: Z above
+    default: 999
+    min: -8
+    max: 999
+  - name: z_below
+    label: Z below
+    default: -999
+    min: -999
+    max: 8
+  - name: z_add
+    label: Z add
+    default: 0
+    min: -8
+    max: 8
+iteration:
+  kernel: mb3d-partlyjulia
+  iterations: 1
+view:
+  camera_distance: 5

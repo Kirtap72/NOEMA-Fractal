@@ -1,0 +1,86 @@
+format: 3
+id: mb3d-magvsxyzabs3
+name: MagVsXYZabs3
+description: radial/axial transcendental map
+credits:
+  - name: M.Benesi
+    role: MagVsXYZ base formula
+    status: unverified
+  - name: Luca G.N.
+    role: variant and implementation, 2011
+    status: unverified
+sources:
+  - reference: NewFormulas/essentials-40/10-MagVsXYZabs3.md
+    status: unverified
+added_by: Codex
+math_status: Independent implementation from authorised normalised mathematical material; the
+  licence of the project.
+reviewed: false
+provenance:
+  origin: mandelbulb3d
+  file: MagVsXYZabs3.m3f
+  credited_author: M.Benesi; Luca G.N.
+  credited_authors:
+    - M.Benesi
+    - Luca G.N.
+  collection: M3Formulas
+  note: Independent reimplementation from the authorized normalized Essentials specifications. The
+    [CODE] section was not read, copied or translated. Mathematical validation is separate from MB3D
+    image verification.
+  verified_against_mb3d: false
+parameters:
+  - name: power
+    label: Power
+    default: 2
+    min: -8
+    max: 8
+  - name: axiom_1
+    label: Axiom 1
+    default: 1.5707963
+    min: -8
+    max: 8
+  - name: axiom_2
+    label: Axiom 2
+    default: 1.5707963
+    min: -8
+    max: 8
+  - name: cosshift
+    label: CosShift
+    default: 0
+    min: -8
+    max: 8
+  - name: cxm
+    label: CxM
+    default: 1
+    min: -8
+    max: 8
+  - name: cym
+    label: CyM
+    default: 1
+    min: -8
+    max: 8
+  - name: czm
+    label: CzM
+    default: 1
+    min: -8
+    max: 8
+  - name: slice_w
+    label: 4D slice / extra w
+    default: 0
+    min: -4
+    max: 4
+  - name: constant_w
+    label: Julia constant w
+    default: 0
+    min: -4
+    max: 4
+  - name: bailout_squared
+    label: Escape limit (radius²)
+    default: 16
+    min: 1
+    max: 65536
+iteration:
+  kernel: mb3d-magvsxyzabs3
+  iterations: 16
+view:
+  camera_distance: 5

@@ -1,0 +1,38 @@
+format: 3
+id: mb3d-brotatetomag
+name: _BRotateToMag
+catalog:
+  category: transforms
+  tags: [ transform, rotation, Benesi ]
+description: >-
+  Rotates the whole coordinate system so that the x axis ends up on the "magnet axis" (−1,−1,−1) →
+  (1,1,1). The matrix is orthogonal, so the distance estimate is not affected.
+credits:
+  - {
+      name: M. Benesi,
+      role: "Formula author (signed M Benesi in the formula description)",
+      status: unverified
+    }
+sources:
+  - {
+      reference: "Mandelbulb 3D 1.9.9 (sr37), M3Formulas, file _BRotateToMag.m3f: [OPTIONS] and the
+        description after [END]; the code block and code listings was never read.",
+      status: unverified
+    }
+  - { reference: NewFormulas/formula-08/BATCH-08.md, status: unverified }
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: The equations are the formula file's own description; implementation in
+  src/engine/formula/batch08Kernels.ts. No comparison with a running Mandelbulb 3D.
+reviewed: false
+provenance:
+  origin: mandelbulb3d
+  file: _BRotateToMag.m3f
+  credited_author: M. Benesi
+  credited_authors: [ M. Benesi ]
+  collection: M3Formulas
+  note: Independent reimplementation from the equations in the formula file's own description. The
+    [CODE] section was not read. Native image equivalence unverified.
+  verified_against_mb3d: false
+parameters: []
+iteration: { kernel: mb3d-brotatetomag, iterations: 1 }
+view: { camera_distance: 5 }

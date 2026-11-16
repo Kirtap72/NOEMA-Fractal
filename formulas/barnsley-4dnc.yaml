@@ -1,0 +1,103 @@
+format: 3
+id: barnsley-4dnc
+name: Barnsley4Dnc
+description: Conditional Hamilton/tent map in 4D. See the batch specification for domains and states.
+credits:
+  - name: Luca G.N.
+    role: Credited author according to the specification
+    status: unverified
+  - name: Olivier Steiger
+    role: inspiration
+    status: unverified
+  - name: Kerry Mitchell
+    role: inspiration
+    status: unverified
+  - name: Ron Barnett
+    role: inspiration
+    status: unverified
+sources:
+  - reference: "NewFormulas/batch-02/05-Barnsley4Dnc.md; authorised normalised mathematical
+      specification from M3Formulas/Barnsley4Dnc.m3f. Provenance and recovery evidence:
+      NewFormulas/batch-02/manifest.json (m3formulas--barnsley4dnc--1d875465)."
+    status: unverified
+  - url: http://en.wikipedia.org/wiki/Quaternion
+    status: unverified
+added_by: Codex
+math_status: Independent implementation from the authorised mathematical migration package of the
+  project owner; the licence of the project.
+reviewed: false
+provenance:
+  origin: mandelbulb3d
+  file: Barnsley4Dnc.m3f
+  credited_author: Luca G.N.
+  collection: M3Formulas
+  note: Independent reimplementation from the normalized mathematical migration specification
+    authorized by the project owner. The [CODE] section was not read, copied or translated by this
+    implementation. Mathematical recovery validation is not native MB3D or image verification.
+  verified_against_mb3d: false
+parameters:
+  - name: dx
+    label: dx
+    default: 1
+    min: -8
+    max: 8
+  - name: dy
+    label: dy
+    default: 0
+    min: -8
+    max: 8
+  - name: dz
+    label: dz
+    default: 0
+    min: -8
+    max: 8
+  - name: dw
+    label: dw
+    default: 0
+    min: -8
+    max: 8
+  - name: w_add
+    label: w add
+    default: 0
+    min: -8
+    max: 8
+  - name: thresold
+    label: Thresold
+    default: 0
+    min: -8
+    max: 8
+  - name: conj_mode
+    label: ConjMode
+    default: 0
+    min: 0
+    max: 1
+  - name: flip_mode
+    label: FlipMode
+    default: 0
+    min: 0
+    max: 1
+  - name: tent_mode
+    label: TentMode
+    default: 0
+    min: 0
+    max: 1
+  - name: slice_w
+    label: 4D slice / extra w
+    default: 0
+    min: -4
+    max: 4
+  - name: constant_w
+    label: Julia constant w
+    default: 0
+    min: -4
+    max: 4
+  - name: bailout_squared
+    label: Escape limit (radius²)
+    default: 16
+    min: 1
+    max: 65536
+iteration:
+  kernel: barnsley-4dnc
+  iterations: 16
+view:
+  camera_distance: 5

@@ -1,0 +1,53 @@
+{
+  "format": 3,
+  "id": "mb3d-asurfsmoothfold",
+  "name": "ASurfSmoothFold",
+  "description": "Independent recovered MB3D mathematics.",
+  "credits": [ { "name": "okänd", "role": "Author of the distributed variant", "status": "unverified" } ],
+  "sources": [ { "reference": "NewFormulas/preset-compatibility/ASurfSmoothFold.md", "status": "unverified" } ],
+  "added_by": "Codex",
+  "math_status": "Typed numeric reference verified; native picture similarity unverified.",
+  "reviewed": false,
+  "provenance":
+    {
+      "origin": "mandelbulb3d",
+      "file": "ASurfSmoothFold.m3f",
+      "credited_author": "okänd",
+      "credited_authors": [ "okänd" ],
+      "collection": "M3Formulas",
+      "note": "Independent reimplementation of the mathematical formula. Explicitly authorized
+        mathematical recovery; original executable code is not distributed.",
+      "verified_against_mb3d": false
+    },
+  "parameters":
+    [
+      { "name": "scale", "label": "Scale", "default": 2, "min": 1e-6, "max": 10000 },
+      { "name": "min_r", "label": "Min R", "default": 0.5, "min": 1e-6, "max": 10000 },
+      { "name": "fold", "label": "Fold", "default": 1, "min": -10000, "max": 10000 },
+      { "name": "scale_vary", "label": "Scale vary", "default": 0, "min": -10000, "max": 10000 },
+      { "name": "sharpness", "label": "Sharpness (Integer 2+)", "default": 6, "min": 2, "max": 32 },
+      { "name": "fix_box", "label": "Fix (BoxFold)", "default": 1, "min": -10000, "max": 10000 },
+      {
+          "name": "ball_sharpness",
+          "label": "Sh. of BallFold (Int 3+)",
+          "default": 4,
+          "min": 2,
+          "max": 32
+        },
+      { "name": "fix_ball", "label": "Fix (BallFold)", "default": 0.3, "min": -10000, "max": 10000 },
+      { "name": "rotation1_x", "label": "Rotation1 X", "default": 0, "min": -10000, "max": 10000 },
+      { "name": "rotation1_y", "label": "Rotation1 Y", "default": 0, "min": -10000, "max": 10000 },
+      { "name": "rotation1_z", "label": "Rotation1 Z", "default": 0, "min": -10000, "max": 10000 },
+      { "name": "slice_w", "label": "slice_w", "default": 0, "min": -4, "max": 4 },
+      { "name": "constant_w", "label": "constant_w", "default": 0, "min": -4, "max": 4 },
+      {
+          "name": "bailout_squared",
+          "label": "bailout_squared",
+          "default": 1024,
+          "min": 1,
+          "max": 65536
+        }
+    ],
+  "iteration": { "kernel": "mb3d-asurfsmoothfold", "iterations": 12 },
+  "view": { "camera_distance": 5 }
+}

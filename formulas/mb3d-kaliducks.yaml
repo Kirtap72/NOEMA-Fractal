@@ -1,0 +1,44 @@
+format: 3
+id: mb3d-kaliducks
+name: KaliDucks
+catalog:
+  category: fractals
+  tags: [ Kali, abs, inversion ]
+description: >-
+  Kali's "ducks": absolute value of x, y, z, m = x²+y²+z²; if m < Min R then m = 1/Min R², otherwise
+  Scale/m; then x = x·m + Cx (and the same for y and z). Low escape limits and Julia give the
+  interesting pictures.
+credits:
+  - {
+      name: Kali,
+      role: "Formula author (fractalforums.com, according to the formula description)",
+      status: unverified
+    }
+sources:
+  - {
+      reference: "Mandelbulb 3D 1.9.9 (sr37), M3Formulas, file KaliDucks.m3f: [OPTIONS] and the
+        description after [END]; the code block and code listings was never read.",
+      status: unverified
+    }
+  - { reference: NewFormulas/formula-07/BATCH-07.md, status: unverified }
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: The equations are the formula file's own description; implementation in
+  src/engine/formula/batch07Kernels.ts. No comparison with a running Mandelbulb 3D.
+reviewed: false
+provenance:
+  origin: mandelbulb3d
+  file: KaliDucks.m3f
+  credited_author: Kali
+  credited_authors: [ Kali ]
+  collection: M3Formulas
+  note: Independent reimplementation from the equations in the formula file's own description. The
+    [CODE] section was not read. Native image equivalence unverified.
+  verified_against_mb3d: false
+parameters:
+  - { name: scale, label: "Scale", default: 1, min: -100, max: 100 }
+  - { name: min_r, label: "Min R", default: 0.5, min: -100, max: 100 }
+  - { name: slice_w, label: "4D slice / extra w", default: 0, min: -4, max: 4 }
+  - { name: constant_w, label: "Julia constant w", default: 0, min: -4, max: 4 }
+  - { name: bailout_squared, label: "Escape limit (radius²)", default: 2, min: 1, max: 65536 }
+iteration: { kernel: mb3d-kaliducks, iterations: 16 }
+view: { camera_distance: 5 }

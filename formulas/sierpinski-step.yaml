@@ -1,0 +1,66 @@
+# Sierpinski step (transform). Format: see formulas/README.md
+format: 1
+id: sierpinski-step
+name: Sierpinski step (transform)
+description: >
+  The step of the Sierpinski tetrahedron as a building block: finds the
+  nearest of the four corners (1,1,1), (-1,-1,1), (-1,1,-1) and (1,-1,-1) and
+  scales the point away from it (by 2 for the classic shape). It can then be
+  mixed with other steps; followed by a shape (or the Sierpinski formula) it
+  draws. The derivative is multiplied by the scale.
+
+# NOTE: the AI assistant wrote this step from the definition of the Sierpinski
+# tetrahedron (Wikipedia: Sierpinski triangle; four maps with ratio 1/2 towards
+# the corners), the same way as the project's sierpinski-tetrahedron formula.
+# The scale as a parameter is the assistant's generalisation.
+# A person must still check each name and link before this is set to
+# "verified" (and reviewed: true).
+credits:
+  - name: Wacław Sierpiński
+    role: "described the Sierpiński triangle in 1915; the tetrahedron is its three-dimensional counterpart"
+    status: unverified
+sources:
+  - url: https://en.wikipedia.org/wiki/Sierpi%C5%84ski_triangle
+    status: unverified
+
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: >
+  Mathematical idea, not claimed as owned. Written fresh for this project from
+  the definition of the shape; no code from any program was read or copied.
+  Source details are unverified (see credits).
+reviewed: false
+
+parameters:
+  - { name: scale, label: Scale, default: 2, min: 1.2, max: 3 }
+
+iteration:
+  iterations: 1
+  # This is a transform: it has no distance. It passes the point on to the next step.
+  carry: [z, dr]
+  variables:
+    - { name: z, type: vec3, init: pos }
+    - { name: dr, type: float, init: 1 }
+    - { name: v, type: vec3, init: "vec3(0.0, 0.0, 0.0)" }
+    - { name: w, type: vec3, init: "vec3(0.0, 0.0, 0.0)" }
+    - { name: best, type: float, init: 0 }
+    - { name: dk, type: float, init: 0 }
+  steps:
+    # The nearest corner is the one with the largest dot product (all corners are equally far from the centre).
+    - "v = vec3(1.0, 1.0, 1.0)"
+    - "best = dot(z, v)"
+    - "w = vec3(-1.0, -1.0, 1.0)"
+    - "dk = dot(z, w)"
+    - "v = select(v, w, dk > best)"
+    - "best = max(best, dk)"
+    - "w = vec3(-1.0, 1.0, -1.0)"
+    - "dk = dot(z, w)"
+    - "v = select(v, w, dk > best)"
+    - "best = max(best, dk)"
+    - "w = vec3(1.0, -1.0, -1.0)"
+    - "dk = dot(z, w)"
+    - "v = select(v, w, dk > best)"
+    - "z = scale * z - v * (scale - 1.0)"
+    - "dr = dr * scale"
+
+view:
+  camera_distance: 4

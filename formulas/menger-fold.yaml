@@ -1,0 +1,62 @@
+# Menger fold (transform). Format: see formulas/README.md
+format: 1
+id: menger-fold
+name: Menger fold (transform)
+description: >
+  One step of the Menger sponge as a building block: absolute values, sorting
+  the coordinates, and scaling by 3 towards the nearest of the smaller cubes
+  that remain. Followed by "Form: box" (or repeated with other steps) it gives
+  the Menger sponge; with other scales and centres it gives related sponges.
+  The derivative is multiplied by the scale.
+
+# NOTE: the AI assistant derived this step from the definition of the Menger sponge
+# (Wikipedia: Menger sponge; Paul Bourke, Polyhedral fractals, 1993: 20 of the
+# 27 smaller cubes, scale 1/3). After folding into x >= y >= z >= 0, the nearest
+# remaining small cube is centred at (2/3, 2/3, 0) when z < 1/3, otherwise at
+# (2/3, 2/3, 2/3); scaling by 3 around it gives the rules below. The scale and
+# centre as parameters are a generalisation by the assistant.
+# A person must still check each name and link before this is set to
+# "verified" (and reviewed: true).
+credits:
+  - name: Karl Menger
+    role: "described the sponge in 1926"
+    status: unverified
+sources:
+  - url: https://en.wikipedia.org/wiki/Menger_sponge
+    status: unverified
+  - url: https://paulbourke.net/fractals/polyhedral/
+    status: unverified
+
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: >
+  Mathematical idea, not claimed as owned. Written fresh for this project from
+  the definition of the shape; no code from any program was read or copied. The
+  folding form is derived by the assistant. Source details are unverified (see
+  credits).
+reviewed: false
+
+parameters:
+  - { name: scale, label: Scale, default: 3, min: 1.2, max: 4 }
+  - { name: cx, label: Centre x, default: 1, min: 0, max: 2 }
+  - { name: cy, label: Centre y, default: 1, min: 0, max: 2 }
+  - { name: cz, label: Centre z, default: 1, min: 0, max: 2 }
+
+iteration:
+  iterations: 1
+  # This is a transform: it has no distance. It passes the point on to the next step.
+  carry: [z, dr]
+  variables:
+    - { name: z, type: vec3, init: pos }
+    - { name: dr, type: float, init: 1 }
+  steps:
+    - "z = abs(z)"
+    - "z = select(z, z.yxz, z.x < z.y)"
+    - "z = select(z, z.zyx, z.x < z.z)"
+    - "z = select(z, z.xzy, z.y < z.z)"
+    - "z = vec3(z.x * scale - cx * (scale - 1.0), z.y * scale - cy * (scale - 1.0), z.z * scale)"
+    # The cube nearest in z: move it back only when the point is past the middle.
+    - "z = vec3(z.x, z.y, select(z.z, z.z - cz * (scale - 1.0), z.z > 0.5 * cz * (scale - 1.0)))"
+    - "dr = dr * scale"
+
+view:
+  camera_distance: 4

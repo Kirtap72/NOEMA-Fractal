@@ -1,0 +1,62 @@
+# Rotation (transform). Format: see formulas/README.md
+format: 1
+id: rotate
+name: Rotation (transform)
+catalog:
+  category: spatial
+description: >
+  Rotates the point by an angle around the x axis, then the y axis, then the z axis (angles in
+  degrees, right-handed). It keeps distances, so the running derivative is unchanged. It has no
+  distance estimate of its own, so it is used in front of a formula that has one. Combined with
+  other steps and the "repeat the chain" setting, it twists the shape a little more at every round.
+
+# NOTE: the AI assistant read the page below on 2026-10-06 and wrote this step
+# from the three basic rotation formulas it gives (right-handed, about x, then y,
+# then z). A person must still check each name and link before this is set to
+# "verified".
+credits:
+  - name: General mathematics (textbook)
+    role: "standard definitions found in any textbook; no single person is credited (the project owner
+      agreed that general mathematics is credited this way)"
+    status: unverified
+sources:
+  - url: https://en.wikipedia.org/wiki/Rotation_matrix
+    status: unverified
+
+added_by: Claude (AI assistant), first draft for the project owner to check
+math_status: >
+  General mathematics: standard definitions, not claimed as owned. Written fresh for this project;
+  no code from any program was read or copied. Source details are unverified (see credits).
+reviewed: false
+
+parameters:
+  - { name: ax, label: Angle x (degrees), default: 20, min: -180, max: 180 }
+  - { name: ay, label: Angle y (degrees), default: 0, min: -180, max: 180 }
+  - { name: az, label: Angle z (degrees), default: 0, min: -180, max: 180 }
+
+iteration:
+  iterations: 1
+  # This is a transform: it has no distance. It passes the point on to the next step.
+  carry: [ z, dr ]
+  variables:
+    - { name: z, type: vec3, init: pos }
+    - { name: dr, type: float, init: 1 }
+    - { name: sx, type: float, init: 0 }
+    - { name: cx, type: float, init: 1 }
+    - { name: sy, type: float, init: 0 }
+    - { name: cy, type: float, init: 1 }
+    - { name: sz, type: float, init: 0 }
+    - { name: cz, type: float, init: 1 }
+  steps:
+    - "sx = sin(ax * pi / 180.0)"
+    - "cx = cos(ax * pi / 180.0)"
+    - "sy = sin(ay * pi / 180.0)"
+    - "cy = cos(ay * pi / 180.0)"
+    - "sz = sin(az * pi / 180.0)"
+    - "cz = cos(az * pi / 180.0)"
+    - "z = vec3(z.x, z.y * cx - z.z * sx, z.y * sx + z.z * cx)"
+    - "z = vec3(z.x * cy + z.z * sy, z.y, -z.x * sy + z.z * cy)"
+    - "z = vec3(z.x * cz - z.y * sz, z.x * sz + z.y * cz, z.z)"
+
+view:
+  camera_distance: 4
