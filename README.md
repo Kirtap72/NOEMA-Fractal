@@ -2,6 +2,8 @@
 
 **Create and explore 3D fractal artwork.**
 
+**[Official website](https://patrickkarlsson.se/program)**
+
 NOEMA Fractal is an open-source Windows application for exploring fractal formulas, shaping materials and lighting, and rendering still images. It uses WebGPU for interactive previews and final rendering.
 
 ![Original artwork created with NOEMA Fractal](artwork/noema-fractal-organic-lattice.jpg)
